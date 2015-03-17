@@ -1380,7 +1380,7 @@
                         'SummaryTpl': 'summaryTpl',
                         'SummaryType': 'summaryType',
                         'JqGrid': 'JqGrid'
-                    }
+                    };
                     var colConf = lsDataOrger.setData(colConfigs.results, propDict);
                     var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
                     var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', colConf);
