@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MSBuildVersion="4.0" ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{aeab5bae-ecbd-4f0b-a4eb-e192a9d2c5c8}</ProjectGuid>
+    <OutputType>WinEXE</OutputType>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <RootNamespace>HongshanSportsite</RootNamespace>
+    <AssemblyName>Microsoft.LightSwitch.Server.Host</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <LightSwitchVersion>v4.0</LightSwitchVersion>
+    <LightSwitchProjectVersion>v3.8</LightSwitchProjectVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+    <Name>HongshanSportsite</Name>
+    <LightSwitchProjectTypeV3>LightSwitch</LightSwitchProjectTypeV3>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <BaseIntermediateOutputPath>bin</BaseIntermediateOutputPath>
+    <ApplicationClientType>Desktop</ApplicationClientType>
+    <ApplicationServerType>LocalHost</ApplicationServerType>
+    <AuthenticationType>Forms</AuthenticationType>
+    <ApplicationName>HongshanSportsite</ApplicationName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <ServiceDefinitionFile>ServiceDefinition.csdef</ServiceDefinitionFile>
+    <ServiceConfigurationFile>ServiceConfiguration.cscfg</ServiceConfigurationFile>
+    <SqlExpressInstanceName>(LocalDB)\v11.0</SqlExpressInstanceName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug</OutputPath>
+    <UseDesignTimeFeatures>true</UseDesignTimeFeatures>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release</OutputPath>
+    <UseDesignTimeFeatures>false</UseDesignTimeFeatures>
+  </PropertyGroup>
+  <ItemGroup>
+    <ServiceDefinition Include="ServiceDefinition.csdef">
+      <Visible>False</Visible>
+    </ServiceDefinition>
+    <ServiceConfiguration Include="ServiceConfiguration.cscfg">
+      <Visible>False</Visible>
+    </ServiceConfiguration>
+    <DiagnosticsConfiguration Include="diagnostics.wadcfg">
+      <Visible>False</Visible>
+    </DiagnosticsConfiguration>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <ItemGroup>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Design\vslshost.exe">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>EntryPoint</PublishType>
+    </_BuildFile>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Design\vslshost.exe.config">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>Desktop</PublishType>
+    </_BuildFile>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Design\vslshost.exe.manifest">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>Exclude</PublishType>
+    </_BuildFile>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Server\ClientAccessPolicy.xml">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>Exclude</PublishType>
+    </_BuildFile>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Server\Microsoft.LightSwitch.Design.svc">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>Exclude</PublishType>
+    </_BuildFile>
+    <_BuildFile Include="$(LightSwitchSDKPath)\Server\Microsoft.LightSwitch.SecurityData.svc">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+    <_BuildFile Include="HongshanSportsite.Server\web.config">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+    <_BuildFile Include="HongshanSportsite.Server\default.aspx">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+    <_BuildFile Include="diagnostics.wadcfg">
+      <SubFolder>bin</SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="HongshanSportsite.DesktopClient\HongshanSportsite.DesktopClient.csproj">
+      <Name>HongshanSportsite.DesktopClient</Name>
+      <Project>{c11f3a8c-4022-47d6-8dbd-30124cfb178b}</Project>
+      <Private>True</Private>
+      <Type>Client</Type>
+    </ProjectReference>
+    <ProjectReference Include="HongshanSportsite.HTMLClient\HongshanSportsite.HTMLClient.jsproj">
+      <Name>HongshanSportsite.HTMLClient</Name>
+      <Project>{15b4f10b-d929-4cfc-83fb-e68e42c7ab51}</Project>
+      <Private>True</Private>
+      <Type>Client</Type>
+    </ProjectReference>
+    <ProjectReference Include="HongshanSportsite.Server\HongshanSportsite.Server.csproj">
+      <Name>HongshanSportsite.Server</Name>
+      <Project>{1b4f3cee-97d7-4a5b-81e6-36be5f857ec9}</Project>
+      <Private>True</Private>
+      <Type>Server</Type>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <LightSwitchExtension Include="Extensions\Microsoft.LightSwitch.Cosmopolitan.lspkg">
+      <ExtensionId>Microsoft.LightSwitch.Cosmopolitan</ExtensionId>
+      <Client>MICROSOFT.LIGHTSWITCH.COSMOPOLITAN.CLIENT</Client>
+    </LightSwitchExtension>
+    <LightSwitchExtension Include="Extensions\Microsoft.LightSwitch.Extensions.lspkg">
+      <ExtensionId>Microsoft.LightSwitch.Extensions</ExtensionId>
+      <Client>MICROSOFT.LIGHTSWITCH.EXTENSIONS.CLIENT;MICROSOFT.LIGHTSWITCH.EXTENSIONS.DESIGN.CLIENT</Client>
+      <Server>MICROSOFT.LIGHTSWITCH.EXTENSIONS.SERVER</Server>
+    </LightSwitchExtension>
+  </ItemGroup>
+  <ItemGroup Condition="'$(AuthenticationType)' == 'Forms'">
+    <_BuildFile Include="HongshanSportsite.Server\LogIn.aspx">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+    <_BuildFile Include="HongshanSportsite.Server\LogOut.aspx">
+      <SubFolder>
+      </SubFolder>
+      <PublishType>
+      </PublishType>
+    </_BuildFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\LightSwitch\$(LightSwitchVersion)\Microsoft.LightSwitch.targets" />
+</Project>

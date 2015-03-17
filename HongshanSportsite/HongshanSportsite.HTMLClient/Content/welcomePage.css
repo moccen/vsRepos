@@ -1,0 +1,47 @@
+﻿#mask,#albumMask,#backgroundMask{
+    position: absolute; /* important */
+    top: 0px; /* start from top */
+    left: 0px; /* start from left */
+    height: 100%; /* cover the whole page */
+    width: 100%; /* cover the whole page */
+    display: none; /* don't show it '*/
+    /* styling bellow */
+    background-color: black;
+    z-index: 1001;
+}
+
+.modal_window {
+    position: absolute; /* important so we can position it on center later */
+    display: none; /* don't show it */
+    /* styling bellow */
+    color: white;
+    z-index: 1002;
+}
+
+/* style a specific modal window  */
+#modal_window {
+    padding: 50px;
+    border: 1px solid gray;
+    background: #246493;
+    color: black;
+    width: 80%;
+    height: 80%;
+    background-image: url('Images/welcome-screen.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1003;
+}
+
+#albumClose {
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 30px;
+    height: 30px;
+    z-index: 1002;
+}
+
+#albumMask .slider {
+    z-index: 1002;
+}
+
+

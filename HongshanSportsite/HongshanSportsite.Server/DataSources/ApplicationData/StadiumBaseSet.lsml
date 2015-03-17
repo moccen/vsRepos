@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceApplication
+  Name="LightSwitchServiceApplication" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <ServiceApplication.Attributes>
+    <Partial />
+  </ServiceApplication.Attributes>
+  <EntityType
+    Name="StadiumBase">
+    <EntityType.Attributes>
+      <CreatedModifiedPropertiesEnabled />
+      <DisplayName
+        Value="场地基本信息" />
+    </EntityType.Attributes>
+    <EntityType.Methods>
+      <EntityMethod
+        Name="Delete">
+        <EntityMethod.Attributes>
+          <Generated />
+        </EntityMethod.Attributes>
+      </EntityMethod>
+    </EntityType.Methods>
+    <EntityType.Properties>
+      <KeyProperty
+        Name="Id"
+        PropertyType=":Int32">
+        <KeyProperty.Attributes>
+          <Required />
+          <NotSearchable />
+        </KeyProperty.Attributes>
+      </KeyProperty>
+      <NavigationProperty
+        Name="Stadium"
+        Association="Stadium_StadiumBase"
+        FromEnd="StadiumBase"
+        ToEnd="Stadium">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="场地名称" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <EntityProperty
+        Name="OrgCode"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="组织机构代码" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Place"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="场地分布（如遇交叉，自上而下依次填写）" />
+          <SupportedValue
+            DisplayName="广场"
+            Value="广场" />
+          <SupportedValue
+            DisplayName="公园"
+            Value="公园" />
+          <SupportedValue
+            DisplayName="校园"
+            Value="校园" />
+          <SupportedValue
+            DisplayName="工矿"
+            Value="工矿" />
+          <SupportedValue
+            DisplayName="机关企事业单位楼院"
+            Value="机关企事业单位楼院" />
+          <SupportedValue
+            DisplayName="宾馆商场饭店"
+            Value="宾馆商场饭店" />
+          <SupportedValue
+            DisplayName="居住小区/街道"
+            Value="居住小区/街道" />
+          <SupportedValue
+            DisplayName="乡镇/村"
+            Value="乡镇/村" />
+          <SupportedValue
+            DisplayName="军营"
+            Value="军营" />
+          <SupportedValue
+            DisplayName="其他"
+            Value="其他" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="FoundYear"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="建成年份" />
+          <Range
+            Maximum="2050"
+            Minimum="1949" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="LandArea"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="用地面积（m²）" />
+          <Range
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="BuildingArea"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="建筑面积（m²）" />
+          <Range
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="SiteArea"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="场地面积（m²）" />
+          <Range
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Investment"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <Range
+            Minimum="0" />
+          <DisplayName
+            Value="投资合计" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Fiscal"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="财政拨款" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="CommonWeal"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="体育公益基金（财政拨款）" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="SelfRaised"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="单位自筹" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="SocialDonate"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="社会捐赠" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Other"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="其他" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Name"
+        PropertyType=":String">
+        <EntityProperty.Attributes>
+          <Computed />
+          <DisplayName
+            Value="场馆名称" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Longitude"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="经度" />
+          <Range
+            Maximum="116"
+            Minimum="113" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Latitude"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <DisplayName
+            Value="纬度" />
+          <NotSearchable />
+          <Range
+            Maximum="32"
+            Minimum="29" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Photo"
+        PropertyType="Microsoft.LightSwitch.Extensions:Image?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="照片" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="CreatedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Created"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="ModifiedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Modified"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="RowVersion"
+        PropertyType=":RowVersion">
+        <EntityProperty.Attributes>
+          <UseForConcurrency />
+          <Generated />
+          <Hidden />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+    </EntityType.Properties>
+  </EntityType>
+  <EntityContainer
+    Name="ApplicationData">
+    <EntityContainer.Attributes>
+      <Partial />
+    </EntityContainer.Attributes>
+    <EntitySet
+      Name="StadiumBaseSet"
+      CanDelete="True"
+      CanInsert="True"
+      CanUpdate="True"
+      EntityType="StadiumBase" />
+    <QueryOperation
+      Name="StadiumBaseSet_Single"
+      ReturnType="StadiumBase">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="StadiumBaseSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <QueryOperation
+      Name="StadiumBaseSet_SingleOrDefault"
+      ReturnType="StadiumBase">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体；如果不存在这样的实体，则返回 Null。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="StadiumBaseSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+  </EntityContainer>
+  <DataService
+    Name="ApplicationDataMapping">
+    <DataService.Attributes>
+      <Partial />
+    </DataService.Attributes>
+    <EntitySetMapping
+      EntitySet="StadiumBaseSet">
+      <EntitySetMapping.Attributes>
+        <SsdlForeignKeyProperty
+          Name="Id"
+          Nullable="False"
+          Type="int" />
+      </EntitySetMapping.Attributes>
+    </EntitySetMapping>
+  </DataService>
+</ServiceApplication>

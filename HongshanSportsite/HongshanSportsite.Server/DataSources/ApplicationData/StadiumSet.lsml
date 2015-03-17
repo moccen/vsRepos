@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceApplication
+  Name="LightSwitchServiceApplication" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <ServiceApplication.Attributes>
+    <Partial />
+  </ServiceApplication.Attributes>
+  <EntityType
+    Name="Stadium">
+    <EntityType.Attributes>
+      <CreatedModifiedPropertiesEnabled />
+      <DisplayName
+        Value="场馆" />
+    </EntityType.Attributes>
+    <EntityType.Methods>
+      <EntityMethod
+        Name="Delete">
+        <EntityMethod.Attributes>
+          <Generated />
+        </EntityMethod.Attributes>
+      </EntityMethod>
+    </EntityType.Methods>
+    <EntityType.Properties>
+      <KeyProperty
+        Name="Id"
+        PropertyType=":Int32">
+        <KeyProperty.Attributes>
+          <Required />
+          <NotSearchable />
+        </KeyProperty.Attributes>
+      </KeyProperty>
+      <EntityProperty
+        Name="Name"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="场地名称" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <NavigationProperty
+        Name="StadiumBase"
+        Association="Stadium_StadiumBase"
+        FromEnd="Stadium"
+        ToEnd="StadiumBase" />
+      <NavigationProperty
+        Name="EcoStatusCollection"
+        Association="Stadium_EcoStatus"
+        FromEnd="Stadium"
+        ToEnd="EcoStatus">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="场地运营情况" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <NavigationProperty
+        Name="StadiumPhotoCollection"
+        Association="StadiumPhoto_Stadium"
+        FromEnd="Stadium"
+        ToEnd="StadiumPhoto">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="场馆照片" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <NavigationProperty
+        Name="Category"
+        Association="Stadium_Category"
+        FromEnd="Stadium"
+        ToEnd="Category">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="场地代码" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <NavigationProperty
+        Name="Street"
+        Association="Stadium_Street"
+        FromEnd="Stadium"
+        ToEnd="Street">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="所属街道" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <NavigationProperty
+        Name="Owner2StadiumMediatorCollection"
+        Association="Owner2StadiumMediator_Stadium"
+        FromEnd="Stadium"
+        ToEnd="Owner2StadiumMediator" />
+      <EntityProperty
+        Name="CreatedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Created"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="ModifiedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Modified"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="RowVersion"
+        PropertyType=":RowVersion">
+        <EntityProperty.Attributes>
+          <UseForConcurrency />
+          <Generated />
+          <Hidden />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+    </EntityType.Properties>
+  </EntityType>
+  <EntityContainer
+    Name="ApplicationData">
+    <EntityContainer.Attributes>
+      <Partial />
+    </EntityContainer.Attributes>
+    <EntitySet
+      Name="StadiumSet"
+      CanDelete="True"
+      CanInsert="True"
+      CanUpdate="True"
+      EntityType="Stadium" />
+    <QueryOperation
+      Name="StadiumSet_Single"
+      ReturnType="Stadium">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="StadiumSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <QueryOperation
+      Name="StadiumSet_SingleOrDefault"
+      ReturnType="Stadium">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体；如果不存在这样的实体，则返回 Null。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="StadiumSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <AssociationSet
+      Name="Stadium_StadiumBaseSet"
+      Association="Stadium_StadiumBase">
+      <AssociationSetEnd
+        Name="Stadium"
+        EntitySet="StadiumSet" />
+      <AssociationSetEnd
+        Name="StadiumBase"
+        EntitySet="StadiumBaseSet" />
+    </AssociationSet>
+    <AssociationSet
+      Name="Stadium_EcoStatusSet"
+      Association="Stadium_EcoStatus">
+      <AssociationSetEnd
+        Name="Stadium"
+        EntitySet="StadiumSet" />
+      <AssociationSetEnd
+        Name="EcoStatus"
+        EntitySet="EcoStatusSet" />
+    </AssociationSet>
+    <AssociationSet
+      Name="StadiumPhoto_StadiumSet"
+      Association="StadiumPhoto_Stadium">
+      <AssociationSetEnd
+        Name="StadiumPhoto"
+        EntitySet="StadiumPhotoSet" />
+      <AssociationSetEnd
+        Name="Stadium"
+        EntitySet="StadiumSet" />
+    </AssociationSet>
+    <AssociationSet
+      Name="Owner2StadiumMediator_StadiumSet"
+      Association="Owner2StadiumMediator_Stadium">
+      <AssociationSetEnd
+        Name="Owner2StadiumMediator"
+        EntitySet="Owner2StadiumMediatorSet" />
+      <AssociationSetEnd
+        Name="Stadium"
+        EntitySet="StadiumSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association
+    Name="Stadium_StadiumBase">
+    <AssociationEnd
+      Name="Stadium"
+      Multiplicity="One"
+      EntityType="Stadium">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Cascade" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+    <AssociationEnd
+      Name="StadiumBase"
+      EntityType="StadiumBase" />
+  </Association>
+  <DataService
+    Name="ApplicationDataMapping">
+    <DataService.Attributes>
+      <Partial />
+    </DataService.Attributes>
+    <AssociationSetMapping
+      AssociationSet="Stadium_StadiumBaseSet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="Stadium_StadiumBaseSet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_StadiumBaseSet]/Members[Stadium]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_StadiumBaseSet]/Members[StadiumBase]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+    <AssociationSetMapping
+      AssociationSet="Stadium_EcoStatusSet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="Stadium_EcoStatusSet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_EcoStatusSet]/Members[Stadium]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_EcoStatusSet]/Members[EcoStatus]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Stadium_EcoStatus" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+    <AssociationSetMapping
+      AssociationSet="StadiumPhoto_StadiumSet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="StadiumPhoto_StadiumSet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[StadiumPhoto_StadiumSet]/Members[StadiumPhoto]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="StadiumPhoto_Stadium" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[StadiumPhoto_StadiumSet]/Members[Stadium]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+    <EntitySetMapping
+      EntitySet="StadiumSet">
+      <EntitySetMapping.Attributes>
+        <SsdlForeignKeyProperty
+          Name="Street_Stadium"
+          Nullable="False"
+          Type="int" />
+        <SsdlForeignKeyProperty
+          Name="Category_Stadium"
+          Nullable="False"
+          Type="int" />
+        <SsdlForeignKeyProperty
+          Name="Stadium_Category"
+          Nullable="False"
+          Type="int" />
+        <SsdlForeignKeyProperty
+          Name="Stadium_Street"
+          Nullable="False"
+          Type="int" />
+      </EntitySetMapping.Attributes>
+    </EntitySetMapping>
+    <AssociationSetMapping
+      AssociationSet="Owner2StadiumMediator_StadiumSet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="Owner2StadiumMediator_StadiumSet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Owner2StadiumMediator_StadiumSet]/Members[Owner2StadiumMediator]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Owner2StadiumMediator_Stadium" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Owner2StadiumMediator_StadiumSet]/Members[Stadium]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+  </DataService>
+  <Association
+    Name="Stadium_EcoStatus">
+    <AssociationEnd
+      Name="Stadium"
+      Multiplicity="One"
+      EntityType="Stadium">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Cascade" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+    <AssociationEnd
+      Name="EcoStatus"
+      Multiplicity="Many"
+      EntityType="EcoStatus" />
+  </Association>
+  <Association
+    Name="StadiumPhoto_Stadium">
+    <AssociationEnd
+      Name="StadiumPhoto"
+      Multiplicity="Many"
+      EntityType="StadiumPhoto" />
+    <AssociationEnd
+      Name="Stadium"
+      Multiplicity="One"
+      EntityType="Stadium">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Cascade" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+  </Association>
+  <Association
+    Name="Owner2StadiumMediator_Stadium">
+    <AssociationEnd
+      Name="Owner2StadiumMediator"
+      Multiplicity="Many"
+      EntityType="Owner2StadiumMediator" />
+    <AssociationEnd
+      Name="Stadium"
+      Multiplicity="One"
+      EntityType="Stadium">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Restrict" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+  </Association>
+</ServiceApplication>

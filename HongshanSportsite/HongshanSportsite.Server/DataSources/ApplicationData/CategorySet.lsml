@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceApplication
+  Name="LightSwitchServiceApplication" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <ServiceApplication.Attributes>
+    <Partial />
+  </ServiceApplication.Attributes>
+  <EntityType
+    Name="Category">
+    <EntityType.Attributes>
+      <CreatedModifiedPropertiesEnabled />
+      <DisplayName
+        Value="场地代码" />
+    </EntityType.Attributes>
+    <EntityType.Methods>
+      <EntityMethod
+        Name="Delete">
+        <EntityMethod.Attributes>
+          <Generated />
+        </EntityMethod.Attributes>
+      </EntityMethod>
+    </EntityType.Methods>
+    <EntityType.Properties>
+      <KeyProperty
+        Name="Id"
+        PropertyType=":Int32">
+        <KeyProperty.Attributes>
+          <Required />
+          <NotSearchable />
+        </KeyProperty.Attributes>
+      </KeyProperty>
+      <EntityProperty
+        Name="Name"
+        PropertyType=":String">
+        <EntityProperty.Attributes>
+          <Required />
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="场地代码" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <NavigationProperty
+        Name="Parent"
+        Association="Category_Category"
+        FromEnd="Category1"
+        ToEnd="Category2">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="父类型" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <NavigationProperty
+        Name="CategoryCollection"
+        Association="Category_Category"
+        FromEnd="Category2"
+        ToEnd="Category1" />
+      <NavigationProperty
+        Name="StadiumCollection"
+        Association="Stadium_Category"
+        FromEnd="Category"
+        ToEnd="Stadium" />
+      <EntityProperty
+        Name="Code"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="代码" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="CreatedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Created"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="ModifiedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Modified"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="RowVersion"
+        PropertyType=":RowVersion">
+        <EntityProperty.Attributes>
+          <UseForConcurrency />
+          <Generated />
+          <Hidden />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+    </EntityType.Properties>
+  </EntityType>
+  <EntityContainer
+    Name="ApplicationData">
+    <EntityContainer.Attributes>
+      <Partial />
+    </EntityContainer.Attributes>
+    <EntitySet
+      Name="CategorySet"
+      CanDelete="True"
+      CanInsert="True"
+      CanUpdate="True"
+      EntityType="Category" />
+    <QueryOperation
+      Name="CategorySet_Single"
+      ReturnType="Category">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="CategorySet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <QueryOperation
+      Name="CategorySet_SingleOrDefault"
+      ReturnType="Category">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体；如果不存在这样的实体，则返回 Null。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="CategorySet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <AssociationSet
+      Name="Category_CategorySet"
+      Association="Category_Category">
+      <AssociationSetEnd
+        Name="Category1"
+        EntitySet="CategorySet" />
+      <AssociationSetEnd
+        Name="Category2"
+        EntitySet="CategorySet" />
+    </AssociationSet>
+    <AssociationSet
+      Name="Stadium_CategorySet"
+      Association="Stadium_Category">
+      <AssociationSetEnd
+        Name="Stadium"
+        EntitySet="StadiumSet" />
+      <AssociationSetEnd
+        Name="Category"
+        EntitySet="CategorySet" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association
+    Name="Category_Category">
+    <AssociationEnd
+      Name="Category1"
+      Multiplicity="Many"
+      EntityType="Category" />
+    <AssociationEnd
+      Name="Category2"
+      EntityType="Category">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Restrict" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+  </Association>
+  <DataService
+    Name="ApplicationDataMapping">
+    <DataService.Attributes>
+      <Partial />
+    </DataService.Attributes>
+    <AssociationSetMapping
+      AssociationSet="Category_CategorySet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="Category_CategorySet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Category_CategorySet]/Members[Category1]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Category_Category" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Category_CategorySet]/Members[Category2]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+    <EntitySetMapping
+      EntitySet="CategorySet">
+      <EntitySetMapping.Attributes>
+        <SsdlForeignKeyProperty
+          Name="Category_Category"
+          Nullable="True"
+          Type="int" />
+      </EntitySetMapping.Attributes>
+    </EntitySetMapping>
+    <AssociationSetMapping
+      AssociationSet="Stadium_CategorySet">
+      <AssociationSetMapping.Attributes>
+        <SsdlAssociationSet
+          Name="Stadium_CategorySet" />
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_CategorySet]/Members[Stadium]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Stadium_Category" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+        <SsdlAssociationSetEnd
+          End="ApplicationData/Members[Stadium_CategorySet]/Members[Category]">
+          <SsdlAssociationSetEnd.Attributes>
+            <SsdlPropertyRef
+              Name="Id" />
+          </SsdlAssociationSetEnd.Attributes>
+        </SsdlAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
+  </DataService>
+  <Association
+    Name="Stadium_Category">
+    <AssociationEnd
+      Name="Stadium"
+      Multiplicity="Many"
+      EntityType="Stadium" />
+    <AssociationEnd
+      Name="Category"
+      Multiplicity="One"
+      EntityType="Category">
+      <AssociationEnd.Attributes>
+        <DeleteRule
+          Action="Restrict" />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+  </Association>
+</ServiceApplication>

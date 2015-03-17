@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application
+  Name="LightSwitchApplication.HongshanSportsite.HTMLClient" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <Application.Attributes>
+    <Partial />
+  </Application.Attributes>
+  <Screen
+    Name="BrowseStadiumSet">
+    <Screen.Attributes>
+      <SaveChangesTo
+        EntityContainer="ApplicationData" />
+      <DisplayName
+        Value="洪山区体育场馆电子地图服务平台" />
+    </Screen.Attributes>
+    <Screen.RootContentItem>
+      <ContentItem
+        Name="RootContentItem"
+        Kind="Screen"
+        View="Microsoft.LightSwitch.MobileWeb:Screen">
+        <ContentItem
+          Name="Tabs"
+          Kind="Group"
+          View="Microsoft.LightSwitch.MobileWeb:TabPages">
+          <ContentItem
+            Name="Group"
+            Kind="Group"
+            View="Microsoft.LightSwitch.MobileWeb:GroupCustomControl" />
+          <ContentItem.PropertySources>
+            <ControlPropertySource
+              Property="Microsoft.LightSwitch.MobileWeb:RootControl/Properties[BrowseOnly]">
+              <ScreenExpressionTree>
+                <ChainExpression>
+                  <ConstantExpression
+                    Value="True"
+                    ResultType=":Boolean" />
+                </ChainExpression>
+              </ScreenExpressionTree>
+            </ControlPropertySource>
+          </ContentItem.PropertySources>
+        </ContentItem>
+        <ContentItem
+          Name="Popups"
+          Kind="Group"
+          View="Microsoft.LightSwitch.MobileWeb:DialogPages" />
+      </ContentItem>
+    </Screen.RootContentItem>
+    <Screen.Methods>
+      <ScreenMethod
+        Name="showTab">
+        <ScreenMethod.Attributes>
+          <DisplayMethodByDefault
+            Display="True" />
+          <Generated />
+        </ScreenMethod.Attributes>
+        <ScreenMethodParameter
+          Name="tabName"
+          ParameterType=":String" />
+      </ScreenMethod>
+      <ScreenMethod
+        Name="showDialog">
+        <ScreenMethod.Attributes>
+          <DisplayMethodByDefault
+            Display="True" />
+          <Generated />
+        </ScreenMethod.Attributes>
+        <ScreenMethodParameter
+          Name="dialogName"
+          ParameterType=":String" />
+      </ScreenMethod>
+    </Screen.Methods>
+    <Screen.Properties>
+      <ScreenCollectionProperty
+        Name="StadiumQuery"
+        DisablePaging="True"
+        PageSize="2"
+        PropertyType="CollectionView$Stadium">
+        <ScreenCollectionProperty.Query>
+          <ScreenQueryDefinition
+            Name="StadiumQueryQuery"
+            ReturnType="Stadium*">
+            <ScreenQueryDefinition.FilterExpression>
+              <QueryFilterExpressionTree />
+            </ScreenQueryDefinition.FilterExpression>
+            <ScreenQueryDefinition.Source>
+              <QuerySourceExpressionTree>
+                <MemberExpression
+                  Member="ApplicationData/Members[StadiumQuery]" />
+              </QuerySourceExpressionTree>
+            </ScreenQueryDefinition.Source>
+            <ScreenQueryDefinition.Includes>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Category" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Category" />
+                  <MemberExpression
+                    Member="Parent" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Category" />
+                  <MemberExpression
+                    Member="Parent" />
+                  <MemberExpression
+                    Member="Parent" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="StadiumBase" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="StadiumBase" />
+                  <MemberExpression
+                    Member="Stadium" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Street" />
+                </ChainExpression>
+              </IncludeCriterion>
+            </ScreenQueryDefinition.Includes>
+          </ScreenQueryDefinition>
+        </ScreenCollectionProperty.Query>
+        <ScreenExpressionTree>
+          <ChainExpression>
+            <CallExpression
+              Target="BrowseStadiumSet/Properties[StadiumQuery]/Query">
+              <ArgumentExpression
+                Parameter="placePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[placePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="streetPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[streetPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="ownerPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[ownerPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="catePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[catePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="openPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[openPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="recievePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[recievePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="operModePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[operModePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+            </CallExpression>
+          </ChainExpression>
+        </ScreenExpressionTree>
+      </ScreenCollectionProperty>
+      <ScreenProperty
+        Name="placePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="streetPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="ownerPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="catePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="openPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="recievePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="operModePara"
+        PropertyType=":String?" />
+    </Screen.Properties>
+  </Screen>
+  <Application.Methods>
+    <ApplicationMethod
+      Name="showBrowseStadiumSet">
+      <ApplicationMethod.Attributes>
+        <ShowScreenMethod
+          TargetScreen="BrowseStadiumSet" />
+      </ApplicationMethod.Attributes>
+    </ApplicationMethod>
+  </Application.Methods>
+</Application>

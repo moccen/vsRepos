@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceApplication
+  Name="LightSwitchServiceApplication" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <ServiceApplication.Attributes>
+    <Partial />
+  </ServiceApplication.Attributes>
+  <EntityType
+    Name="EcoStatus">
+    <EntityType.Attributes>
+      <CreatedModifiedPropertiesEnabled />
+      <DisplayName
+        Value="运营情况" />
+    </EntityType.Attributes>
+    <EntityType.Methods>
+      <EntityMethod
+        Name="Delete">
+        <EntityMethod.Attributes>
+          <Generated />
+        </EntityMethod.Attributes>
+      </EntityMethod>
+    </EntityType.Methods>
+    <EntityType.Properties>
+      <KeyProperty
+        Name="Id"
+        PropertyType=":Int32">
+        <KeyProperty.Attributes>
+          <Required />
+          <NotSearchable />
+        </KeyProperty.Attributes>
+      </KeyProperty>
+      <NavigationProperty
+        Name="StadiumEco"
+        Association="Stadium_EcoStatus"
+        FromEnd="EcoStatus"
+        ToEnd="Stadium">
+        <NavigationProperty.Attributes>
+          <DisplayName
+            Value="场馆" />
+        </NavigationProperty.Attributes>
+      </NavigationProperty>
+      <EntityProperty
+        Name="Year"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <Range
+            Maximum="2050"
+            Minimum="1949" />
+          <DisplayName
+            Value="年份" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Employee"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="场地从业人员人数" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="OperateMode"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="运营模式" />
+          <SupportedValue
+            DisplayName="自主运营"
+            Value="自主运营" />
+          <SupportedValue
+            DisplayName="合作运营"
+            Value="合作运营" />
+          <SupportedValue
+            DisplayName="委托运营"
+            Value="委托运营" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="OpenStatus"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <SupportedValue
+            DisplayName="不开放"
+            Value="不开放" />
+          <SupportedValue
+            DisplayName="部分时段开放"
+            Value="部分时段开放" />
+          <SupportedValue
+            DisplayName="全天开放"
+            Value="全天开放" />
+          <DisplayName
+            Value="对外开放情况" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="OpeningDays"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="年开放天数" />
+          <Range
+            Maximum="366"
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="ClientCount"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <DisplayName
+            Value="平均每周接待健身人次" />
+          <MaxLength
+            Value="255" />
+          <SupportedValue
+            DisplayName="500人次以下/周"
+            Value="500人次以下/周" />
+          <SupportedValue
+            DisplayName="501-2500人次/周"
+            Value="501-2500人次/周" />
+          <SupportedValue
+            DisplayName="2501-5000人次/周"
+            Value="2501-5000人次/周" />
+          <SupportedValue
+            DisplayName="5001-10000人次/周"
+            Value="5001-10000人次/周" />
+          <SupportedValue
+            DisplayName="10000人次以上/周"
+            Value="10000人次以上/周" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Income"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="收入合计（千元）" />
+          <Range
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Expend"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <DisplayName
+            Value="支出合计（千元）" />
+          <Range
+            Minimum="0" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="CreatedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Created"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="ModifiedBy"
+        IsReadOnly="True"
+        PropertyType=":Person?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+          <MaxLength
+            Value="255" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Modified"
+        IsReadOnly="True"
+        PropertyType=":DateTimeOffset?">
+        <EntityProperty.Attributes>
+          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="RowVersion"
+        PropertyType=":RowVersion">
+        <EntityProperty.Attributes>
+          <UseForConcurrency />
+          <Generated />
+          <Hidden />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+    </EntityType.Properties>
+  </EntityType>
+  <EntityContainer
+    Name="ApplicationData">
+    <EntityContainer.Attributes>
+      <Partial />
+    </EntityContainer.Attributes>
+    <EntitySet
+      Name="EcoStatusSet"
+      CanDelete="True"
+      CanInsert="True"
+      CanUpdate="True"
+      EntityType="EcoStatus" />
+    <QueryOperation
+      Name="EcoStatusSet_Single"
+      ReturnType="EcoStatus">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="EcoStatusSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+    <QueryOperation
+      Name="EcoStatusSet_SingleOrDefault"
+      ReturnType="EcoStatus">
+      <QueryOperation.Attributes>
+        <Generated />
+        <Description
+          Value="返回参数指定的标识所对应的实体；如果不存在这样的实体，则返回 Null。" />
+      </QueryOperation.Attributes>
+      <QueryOperation.FilterExpression>
+        <QueryFilterExpressionTree>
+          <BinaryExpression
+            NodeType="Equal">
+            <BinaryExpression.Left>
+              <ChainExpression>
+                <MemberExpression
+                  Member="Id" />
+              </ChainExpression>
+            </BinaryExpression.Left>
+            <BinaryExpression.Right>
+              <ParameterExpression
+                Parameter="Id" />
+            </BinaryExpression.Right>
+          </BinaryExpression>
+        </QueryFilterExpressionTree>
+      </QueryOperation.FilterExpression>
+      <QueryOperation.Source>
+        <QuerySourceExpressionTree>
+          <MemberExpression
+            Member="EcoStatusSet" />
+        </QuerySourceExpressionTree>
+      </QueryOperation.Source>
+      <QueryOperationParameter
+        Name="Id"
+        ParameterType=":Int32?">
+        <QueryOperationParameter.Attributes>
+          <Description
+            Value="要检索的实体的“Id”键属性的值。" />
+        </QueryOperationParameter.Attributes>
+      </QueryOperationParameter>
+    </QueryOperation>
+  </EntityContainer>
+  <DataService
+    Name="ApplicationDataMapping">
+    <DataService.Attributes>
+      <Partial />
+    </DataService.Attributes>
+    <EntitySetMapping
+      EntitySet="EcoStatusSet">
+      <EntitySetMapping.Attributes>
+        <SsdlForeignKeyProperty
+          Name="Stadium_EcoStatus"
+          Nullable="False"
+          Type="int" />
+      </EntitySetMapping.Attributes>
+    </EntitySetMapping>
+  </DataService>
+</ServiceApplication>

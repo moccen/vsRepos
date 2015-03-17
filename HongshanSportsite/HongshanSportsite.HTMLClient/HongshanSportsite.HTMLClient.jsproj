@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)' != 'Release' ">
+    <UseDesignTimeFeatures>true</UseDesignTimeFeatures>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{15b4f10b-d929-4cfc-83fb-e68e42c7ab51}</ProjectGuid>
+    <LightSwitchVersion>v4.0</LightSwitchVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\LightSwitch\v4.0\MobileClient\Microsoft.LightSwitch.MobileClient.Default.props" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\LightSwitch\v4.0\MobileClient\Microsoft.LightSwitch.MobileClient.props" />
+  <PropertyGroup>
+    <!--TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>8.0</TargetPlatformVersion-->
+    <LightSwitchProjectTypeV3>Client</LightSwitchProjectTypeV3>
+    <LightSwitchProjectSubType>JScript</LightSwitchProjectSubType>
+    <ProjectTypeGuids>{DA98106F-DEFA-4A62-8804-0BD2F166A45D};{262852c6-cd72-467d-83fe-5eeb1973a190}</ProjectTypeGuids>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <SupportedCultures>en-US</SupportedCultures>
+    <DefaultPlatform>AnyCPU</DefaultPlatform>
+    <ClientProjectName>HTMLClient</ClientProjectName>
+    <ServerProjectReference>..\HongshanSportsite.Server\HongshanSportsite.Server.csproj</ServerProjectReference>
+    <LightSwitchDisplayName>HTMLClient</LightSwitchDisplayName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Content\dark-theme-2.0.0.css" />
+    <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\close.png" />
+    <Content Include="Content\Images\groupByClose.png" />
+    <Content Include="Content\Images\icons-18-black.png" />
+    <Content Include="Content\Images\icons-18-white.png" />
+    <Content Include="Content\Images\icons-36-black.png" />
+    <Content Include="Content\Images\icons-36-white.png" />
+    <Content Include="Content\Images\loadingAlbum.gif" />
+    <Content Include="Content\Images\msls-black-icons-18.png" />
+    <Content Include="Content\Images\msls-black-icons-36.png" />
+    <Content Include="Content\Images\msls-loader-dark.gif" />
+    <Content Include="Content\Images\msls-loader-light.gif" />
+    <Content Include="Content\Images\msls-white-icons-18.png" />
+    <Content Include="Content\Images\msls-white-icons-36.png" />
+    <Content Include="Content\Images\msls-blue-icons-36.png" />
+    <Content Include="Content\Images\sprite.png" />
+    <Content Include="Content\Images\welcome-screen.gif" />
+    <Content Include="Content\jquery.mobile-1.3.0.css" />
+    <Content Include="Content\jquery.mobile-1.3.0.min.css" />
+    <Content Include="Content\jquery.mobile.structure-1.3.0.css" />
+    <Content Include="Content\jquery.mobile.structure-1.3.0.min.css" />
+    <Content Include="Content\jquery.mobile.theme-1.3.0.css" />
+    <Content Include="Content\jquery.mobile.theme-1.3.0.min.css" />
+    <Content Include="Content\light-theme-2.0.0.css" />
+    <Content Include="Content\msls-2.0.0.css" />
+    <Content Include="Content\msls-2.0.0.min.css" />
+    <Content Include="Content\msls-dark-2.0.0.css" />
+    <Content Include="Content\msls-light-2.0.0.css" />
+    <Content Include="Content\baiduAlbum.css" />
+    <Content Include="Content\mygroup.css" />
+    <Content Include="Content\welcomePage.css" />
+    <Content Include="default.htm" />
+    <Content Include="Content\user-customization.css" />
+    <Content Include="Content\Images\user-logo.png" />
+    <Content Include="Content\Images\user-splash-screen.png" />
+    <Content Include="Content\Web.config" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\adapters\standalone-framework.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\adapters\standalone-framework.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts-3d.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts-3d.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts-all.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts-more.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts-more.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\highcharts.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\canvas-tools.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\canvas-tools.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\data.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\data.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\drilldown.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\drilldown.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\exporting.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\exporting.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\funnel.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\funnel.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\heatmap.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\heatmap.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\no-data-to-display.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\no-data-to-display.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\solid-gauge.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\modules\solid-gauge.src.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\dark-blue.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\dark-green.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\dark-unica.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\gray.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\grid-light.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\grid.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\sand-signika.js" />
+    <Content Include="OpenSource\Highcharts-4.0.4\js\themes\skies.js" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-icons_222222_256x240.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="OpenSource\jqGrid\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="OpenSource\jqGrid\css\jquery-ui.css" />
+    <Content Include="OpenSource\jqGrid\css\ui.jqgrid.css" />
+    <Content Include="OpenSource\jqGrid\js\Changes.txt" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-ar.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-bg.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-bg1251.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-cat.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-cn.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-cs.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-da.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-de.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-dk.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-el.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-en.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-es.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-fa.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-fi.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-fr.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-gl.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-he.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-hr.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-hr1250.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-hu.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-id.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-is.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-it.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-ja.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-kr.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-lt.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-mne.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-nl.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-no.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-pl.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-pt-br.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-pt.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-ro.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-ru.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-sk.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-sr-latin.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-sr.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-sv.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-th.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-tr.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-tw.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-ua.js" />
+    <Content Include="OpenSource\jqGrid\js\i18n\grid.locale-vi.js" />
+    <Content Include="OpenSource\jqGrid\js\install.txt" />
+    <Content Include="OpenSource\jqGrid\js\jquery.jqGrid.min.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\changelog.txt" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\easyloader.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\jquery.easyui.min.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\jquery.min.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\licence_gpl.txt" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-af.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-am.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-ar.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-bg.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-ca.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-cs.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-cz.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-da.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-de.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-el.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-en.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-es.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-fr.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-it.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-jp.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-nl.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-pl.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-pt_BR.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-ru.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-sv_SE.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-tr.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-zh_CN.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\locale\easyui-lang-zh_TW.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.accordion.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.calendar.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.combo.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.combobox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.combogrid.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.combotree.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.datagrid.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.datebox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.datetimebox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.datetimespinner.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.dialog.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.draggable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.droppable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.filebox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.form.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.layout.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.linkbutton.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.menu.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.menubutton.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.messager.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.numberbox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.numberspinner.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.pagination.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.panel.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.parser.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.progressbar.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.propertygrid.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.resizable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.searchbox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.slider.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.spinner.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.splitbutton.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.tabs.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.textbox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.timespinner.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.tooltip.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.tree.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.treegrid.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.validatebox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\plugins\jquery.window.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\readme.txt" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\easyloader.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.accordion.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.calendar.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.combobox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.datebox.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.draggable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.droppable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.form.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.linkbutton.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.menu.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.parser.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.progressbar.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.propertygrid.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.resizable.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.slider.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.tabs.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\src\jquery.window.js" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\accordion.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\calendar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\combo.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\combobox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\datagrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\datebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\dialog.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\easyui.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\filebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\accordion_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\calendar_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\combo_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\datagrid_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\datebox_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\layout_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\linkbutton_bg.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\loading.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\menu_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\messager_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\pagination_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\panel_tools.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\searchbox_button.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\slider_handle.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\spinner_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\tabs_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\tree_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\images\validatebox_warning.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\layout.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\linkbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\menu.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\menubutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\messager.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\numberbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\pagination.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\panel.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\progressbar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\propertygrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\searchbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\slider.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\spinner.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\splitbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\tabs.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\textbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\tooltip.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\tree.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\validatebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\black\window.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\accordion.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\calendar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\combo.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\combobox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\datagrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\datebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\dialog.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\easyui.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\filebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\loading.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\layout.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\linkbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\menu.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\menubutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\messager.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\numberbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\pagination.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\panel.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\progressbar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\propertygrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\searchbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\slider.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\spinner.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\splitbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\tabs.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\textbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\tooltip.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\tree.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\validatebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\bootstrap\window.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\color.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\accordion.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\calendar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\combo.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\combobox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\datagrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\datebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\dialog.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\easyui.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\filebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\accordion_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\calendar_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\combo_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\datagrid_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\datebox_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\layout_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\linkbutton_bg.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\loading.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\menu_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\messager_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\pagination_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\panel_tools.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\searchbox_button.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\slider_handle.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\spinner_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\tabs_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\tree_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\images\validatebox_warning.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\layout.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\linkbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\menu.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\menubutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\messager.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\numberbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\pagination.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\panel.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\progressbar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\propertygrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\searchbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\slider.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\spinner.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\splitbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\tabs.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\textbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\tooltip.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\tree.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\validatebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\default\window.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\accordion.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\calendar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\combo.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\combobox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\datagrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\datebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\dialog.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\easyui.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\filebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\accordion_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\calendar_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\combo_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\datagrid_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\datebox_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\layout_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\loading.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\menu_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\messager_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\pagination_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\panel_tools.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\searchbox_button.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\slider_handle.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\spinner_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\tabs_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\tree_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\images\validatebox_warning.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\layout.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\linkbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\menu.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\menubutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\messager.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\numberbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\pagination.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\panel.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\progressbar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\propertygrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\searchbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\slider.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\spinner.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\splitbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\tabs.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\textbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\tooltip.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\tree.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\validatebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\gray\window.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icon.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\back.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\cancel.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\clear.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\cut.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\edit_add.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\edit_remove.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\filesave.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\filter.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\help.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\large_chart.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\large_clipart.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\large_picture.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\large_shapes.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\large_smartart.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\lock.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\man.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\mini_add.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\mini_edit.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\mini_refresh.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\no.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\ok.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\pencil.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\print.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\redo.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\reload.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\search.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\sum.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\tip.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\icons\undo.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\accordion.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\calendar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\combo.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\combobox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\datagrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\datebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\dialog.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\easyui.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\filebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\accordion_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\blank.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\calendar_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\combo_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\datagrid_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\datebox_arrow.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\layout_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\loading.gif" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\menu_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\messager_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\pagination_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\panel_tools.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\searchbox_button.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\slider_handle.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\spinner_arrows.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\tabs_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\tree_icons.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\images\validatebox_warning.png" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\layout.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\linkbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\menu.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\menubutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\messager.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\numberbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\pagination.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\panel.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\progressbar.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\propertygrid.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\searchbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\slider.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\spinner.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\splitbutton.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\tabs.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\textbox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\tooltip.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\tree.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\validatebox.css" />
+    <Content Include="OpenSource\jquery-easyui-1.4.1\themes\metro\window.css" />
+    <Content Include="OpenSource\pivottable-master\bower.json" />
+    <Content Include="OpenSource\pivottable-master\customjs\getCharts.js" />
+    <Content Include="OpenSource\pivottable-master\customjs\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="OpenSource\pivottable-master\d3_renderers.coffee" />
+    <Content Include="OpenSource\pivottable-master\dist\custom_render.js" />
+    <Content Include="OpenSource\pivottable-master\dist\d3_renderers.js" />
+    <Content Include="OpenSource\pivottable-master\dist\gchart_renderers.js" />
+    <Content Include="OpenSource\pivottable-master\dist\hightcharts_renderers.js" />
+    <Content Include="OpenSource\pivottable-master\dist\pivot.css" />
+    <Content Include="OpenSource\pivottable-master\dist\pivot.fr.js" />
+    <Content Include="OpenSource\pivottable-master\dist\pivot.js" />
+    <Content Include="OpenSource\pivottable-master\dist\pivot.zh.js" />
+    <Content Include="OpenSource\pivottable-master\gchart_renderers.coffee" />
+    <Content Include="OpenSource\pivottable-master\pivot.coffee" />
+    <Content Include="OpenSource\pivottable-master\pivot.fr.coffee" />
+    <Content Include="OpenSource\pivottable-master\pivottable.jquery.json" />
+    <Content Include="OpenSource\pivottable-master\ReadMe.md" />
+    <Content Include="packages.config" />
+    <Content Include="Screens\BrowseStadiumSet.lsml.js">
+      <DependentUpon>BrowseStadiumSet.lsml</DependentUpon>
+    </Content>
+    <Content Include="Scripts\datajs-1.1.1.js" />
+    <Content Include="Scripts\datajs-1.1.1.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery.mobile-1.3.0-vsdoc.js" />
+    <Content Include="Scripts\jquery.mobile-1.3.0.js" />
+    <Content Include="Scripts\jquery.mobile-1.3.0.min.js" />
+    <Content Include="Scripts\msls.js" />
+    <Content Include="Scripts\msls-2.0.0-vsdoc.js" />
+    <Content Include="Scripts\msls-2.0.0.js" />
+    <Content Include="Scripts\msls-2.0.0.min.js" />
+    <Content Include="Scripts\myScripts\mainManager.js" />
+    <Content Include="Scripts\myScripts\mygroup.js" />
+    <Content Include="Scripts\myScripts\slider.js" />
+    <Content Include="Scripts\myScripts\welcomePage.js" />
+    <Content Include="Scripts\winjs-1.0.js" />
+    <Content Include="Scripts\winjs-1.0.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ServiceMetadataReference Include="..\HongshanSportsite.Server\HongshanSportsite.Server.csproj">
+      <Visible>false</Visible>
+    </ServiceMetadataReference>
+  </ItemGroup>
+  <ItemGroup>
+    <LightSwitchModel Include="Properties\Client.lsml">
+      <ProjectCritical>true</ProjectCritical>
+    </LightSwitchModel>
+    <LightSwitchModel Include="Properties\Proxies.lsml" />
+    <LightSwitchModel Include="Screens\BrowseStadiumSet.lsml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ClientBuildFile Include="GeneratedArtifacts\model.json">
+      <SubFolder>Content\Resources\Generated</SubFolder>
+    </_ClientBuildFile>
+    <_ClientBuildFile Include="GeneratedArtifacts\data.js">
+      <SubFolder>Scripts\Generated</SubFolder>
+    </_ClientBuildFile>
+    <_ClientBuildFile Include="GeneratedArtifacts\viewModel.js">
+      <SubFolder>Scripts\Generated</SubFolder>
+    </_ClientBuildFile>
+    <_ClientBuildFile Include="GeneratedArtifacts\usercode.js">
+      <SubFolder>Scripts\Generated</SubFolder>
+    </_ClientBuildFile>
+    <_ClientBuildFile Include="GeneratedArtifacts\resources.js">
+      <SubFolder>Scripts\Generated</SubFolder>
+    </_ClientBuildFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\LightSwitch\v4.0\MobileClient\Microsoft.LightSwitch.MobileClient.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\LightSwitch\v4.0\Microsoft.LightSwitch.Build.Tasks.targets" />
+  <!-- Redefine the targets to be empty -->
+  <Target Name="GetXapOutputFile" />
+  <PropertyGroup>
+    <AppxPackage>false</AppxPackage>
+    <AppxGeneratePriEnabled>false</AppxGeneratePriEnabled>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
