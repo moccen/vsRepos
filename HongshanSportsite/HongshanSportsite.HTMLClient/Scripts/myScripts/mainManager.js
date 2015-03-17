@@ -1102,7 +1102,7 @@
             //jqGridColumnsConfigs
         };
 
-        dataOrger.setData = function (data,intrinsicDict) {
+        dataOrger.setData = function (data, intrinsicDict) {
             var orgedData = [];
             resvDic = intrinsicDict || resvDict;//若用户传入自定义字典则替换保留字典
             util.eachProp(data, function (item) {
@@ -1390,16 +1390,20 @@
                     var colConf = lsDataOrger.setData(colConfigs.results, propDict);
                     var colNames = [];
                     util.eachAry(colConf, function (aryItem) {
-                        colNames.push(aryItem.Name);
+                        colNames.push(aryItem.name);
                     });
                     var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
-                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', {colNames:colNames,colModel:colConf});
+                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', { colNames: colNames, colModel: colConf });
                     jqGridMgr.setJqGridWithCustomBtns('#stadiumInfo', '#stadiumPager', stadiumConf);
 
                     var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
                     jqGridMgr.setJqGridWithCustomBtns('#ecoStatusInfo', '#ecoStatusPager', ecoStatusConf);
 
                     util.resizJqGrid();
+                    //初始化分组依据
+                    var groupByStock = $('#groupBySelector');
+
+                    jqGridGrouper.init({ 'pNode': groupByStock, 'groupCols': colNames });
                     //bindComboEvent();
                 });
         };
@@ -1526,10 +1530,10 @@
                 $(".easyui-tabs").tabs();
                 $('.easyui-linkbutton').linkbutton();
                 $('#accordionID').accordion();
-                var groupByStock = $('#groupBySelector');
-                if (groupByStock) {
-                    groupByStock.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div id='result-stock'><div class='text'><div>...</div></div><div id='groupBy-closeBtn' class='close'></div></div></div></div></div>");
-                }
+                //var groupByStock = $('#groupBySelector');
+                //if (groupByStock) {
+                //    groupByStock.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div id='result-stock'><div class='text'><div>...</div></div><div id='groupBy-closeBtn' class='close'></div></div></div></div></div>");
+                //}
 
 
                 dataManager.loadCateTree('#cateTree');
