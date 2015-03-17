@@ -557,8 +557,8 @@
     <Content Include="Scripts\msls-2.0.0-vsdoc.js" />
     <Content Include="Scripts\msls-2.0.0.js" />
     <Content Include="Scripts\msls-2.0.0.min.js" />
+    <Content Include="Scripts\myScripts\grouper.js" />
     <Content Include="Scripts\myScripts\mainManager.js" />
-    <Content Include="Scripts\myScripts\mygroup.js" />
     <Content Include="Scripts\myScripts\slider.js" />
     <Content Include="Scripts\myScripts\welcomePage.js" />
     <Content Include="Scripts\winjs-1.0.js" />

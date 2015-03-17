@@ -3,6 +3,11 @@
 })('mainManager', this, function () {
     window.__pivotHash__ = {};
     var util = {
+        eachAry: function (ary, func) {
+            for (var i = 0, len = ary.length; i < len; i++) {
+                func(ary[i]);
+            }
+        },
         //修改自requireJs 中的eachProp
         eachProp: function (obj, func) {
             var prop;
@@ -744,8 +749,8 @@
         getStadiumJqConfTest: function (tbName, pager, colConf) {
             var config = {};
             config.jqGridConfig = {
-                colNames: ['场地分布'],
-                colModel: colConf,
+                colNames: colConf.colNames,
+                colModel: colConf.colModel,
                 pager: pager,
                 sortname: '场地名称',
                 caption: "场地信息",
@@ -1060,8 +1065,9 @@
     })();
 
     var lsDataOrger = (function () {
+        var resvDic = {};
         var dataOrger = {};
-        var resvDic = {
+        var resvDict = {
             //stadium
             'Name': '场地名称',
             'Category': '场地代码',
@@ -1096,9 +1102,9 @@
             //jqGridColumnsConfigs
         };
 
-        dataOrger.setData = function (data) {
+        dataOrger.setData = function (data,intrinsicDict) {
             var orgedData = [];
-            resvDic = arguments[1] || resvDic;//若用户传入自定义字典则替换保留字典
+            resvDic = intrinsicDict || resvDict;//若用户传入自定义字典则替换保留字典
             util.eachProp(data, function (item) {
                 orgedData.push(iterateProp(item));
             });
@@ -1382,15 +1388,19 @@
                         'JqGrid': 'JqGrid'
                     };
                     var colConf = lsDataOrger.setData(colConfigs.results, propDict);
+                    var colNames = [];
+                    util.eachAry(colConf, function (aryItem) {
+                        colNames.push(aryItem.Name);
+                    });
                     var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
-                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', colConf);
+                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', {colNames:colNames,colModel:colConf});
                     jqGridMgr.setJqGridWithCustomBtns('#stadiumInfo', '#stadiumPager', stadiumConf);
 
                     var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
                     jqGridMgr.setJqGridWithCustomBtns('#ecoStatusInfo', '#ecoStatusPager', ecoStatusConf);
 
                     util.resizJqGrid();
-                    bindComboEvent();
+                    //bindComboEvent();
                 });
         };
 
@@ -1548,9 +1558,9 @@
                 addPanelSearch('#recievePanel');
                 addPanelSearch('#operModePanel');
 
-                initJqGrid();
-                //initJqGridTest(arguments[0]);//arguments[0]默认为用户权限
-                bindComboEvent();
+                //initJqGrid();
+                initJqGridTest(arguments[0]);//arguments[0]默认为用户权限
+                //bindComboEvent();
 
                 //initPivot('#ecoPivot');
                 //initPivot('#stadiumPivot');
