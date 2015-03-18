@@ -1403,7 +1403,7 @@
                     //初始化分组依据
                     var groupByStock = $('#groupBySelector');
 
-                    jqGridGrouper.init({ 'pNode': groupByStock, 'groupCols': colNames });
+                    jqGridGrouper.init({ 'pNode': groupByStock, 'groupCols': colNames, 'jqGridId': '#stadiumInfo' });
                     //bindComboEvent();
                 });
         };

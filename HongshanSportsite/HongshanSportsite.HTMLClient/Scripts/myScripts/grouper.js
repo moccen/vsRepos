@@ -9,10 +9,11 @@ var jqGridGrouper = (function ($) {
     var module = {
         exceptionary: [], //当前tab页选中的项目,用于排除下个tab页中过滤掉之前tab页选中项
         groupdata: null, //s数组，存放对象形式为{id:xxx,name:xxx}
-
+        pNode:null,
         //配置当前module中的参数
         config: function (config) {
             module.groupdata = config.groupdata;
+            module.pNode = config.pNode;
         },
 
         /* 获取当前tab的选项集合 */
@@ -113,38 +114,53 @@ var jqGridGrouper = (function ($) {
                 };
                 tabstrs += '>' + $(tabs[i]).text();
             }
-            $("#result-stock .text div").html(tabstrs);
+            //$("#result-stock .text div").html(tabstrs);
+            module.resultStock.find('.text div').html(tabstrs);
         },
 
         init: function (conf) {
             module.config(conf);
-            if (!module.groupdata || module.groupdata.length === 0) {
+            if (!module.groupdata ||!module.pNode|| module.groupdata.length === 0) {
                 return;
             }
+            module.resultStock = module.pNode.find('.resultStock');
+
             var grouphtml = '<div class="content"><div data-widget="tabs" class="m tabs-stock" id="tabs-stock">' + '<div class="mt">' + '    <ul class="tab">' + '        <li data-index="0" data-widget="tab-item" class="curr"><a href="#1" class="hover"><em>请选择</em></a></li>' + '    </ul>' + '    <div class="stock-line"></div>' + '</div>' + '<div class="mc curr" data-area="0" data-widget="tab-content" id="groupItems_0"></div>' + '</div></div>';
-            var resultStockTxt = $("#result-stock .text");
-            resultStockTxt.after(grouphtml); //构建最初始html页面
+            //var resultStockTxt = $("#result-stock .text");
+            var resultStockTxt = module.resultStock.find('.text');
+            //resultStockTxt.after(grouphtml); //构建最初始html页面
+            resultStockTxt.after(grouphtml);
 
             //绑定点击事件
             resultStockTxt.unbind("click").bind("click", function () {
-                $('#result-stock').addClass('hover');
-                $("#result-stock .content").show();
+                //$('#result-stock').addClass('hover');
+                module.resultStock.addClass('hover');
+                //$("#result-stock .content").show();
+                module.resultStock.find('.content').show();
             });
 
-            //点击关闭按钮事件
-            $('#groupBy-closeBtn').click(function (e) {
-                $('#result-stock').removeClass('hover');
-                e.stopPropagation(); //防止冒泡事件
-            });
+            ////点击关闭按钮事件
+            //$('#groupBy-closeBtn').click(function (e) {
+            //    $('#result-stock').removeClass('hover');
+            //    e.stopPropagation(); //防止冒泡事件
+            //});
 
             //为第一个tab页添加数据项
-            $('#groupItems_0').html(module.getgrouplist(module.groupdata));
-            $("#groupItems_0 ul li").click(function (e) {
+            var firstPanel = module.pNode.find('.mc.curr');
+            //$('#groupItems_0').html(module.getgrouplist(module.groupdata));
+            firstPanel.html(module.getgrouplist(module.groupdata));
+            firstPanel.find('ul li').click(function(e) {
                 module.onItemsClick(this);
             });
+            //$("#groupItems_0 ul li").click(function (e) {
+            //    module.onItemsClick(this);
+            //});
 
             //第一个tab的点击事件
-            $("#tabs-stock .mt .tab li").click(function (e) {
+            //$("#tabs-stock .mt .tab li").click(function (e) {
+            //    module.onTabClick(this);
+            //});
+            module.pNode.find('.m.tabs-stock .mt .tab li').click(function(e) {
                 module.onTabClick(this);
             });
         }
@@ -154,19 +170,29 @@ var jqGridGrouper = (function ($) {
         var groupModule = {
             groupCols: null, //从数据库中读取的用户可见列
             pNode: null, //html页面中包含选择器的父节点
+            jqGridId:null,
             config: function (conf) {
                 groupModule.groupCols = conf.groupCols;
                 groupModule.pNode = conf.pNode;
+                groupModule.jqGridId = conf.jqGridId;
             },
             init: function (conf) {
                 groupModule.config(conf);
-                if (!groupModule.groupCols || !groupModule.pNode || groupModule.groupCols.length === 0) {
+                if (!groupModule.groupCols || !groupModule.pNode || !groupModule.jqGridId || groupModule.groupCols.length === 0) {
                     return;
                 };
                 var groupItems = groupModule.getGroupData();
-                groupModule.pNode.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div id='result-stock'><div class='text'><div>请选择</div></div><div id='groupBy-closeBtn' class='close'></div></div></div></div></div>");
+                groupModule.pNode.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div class = 'resultStock' id='result-stock'><div class='text'><div>请选择</div></div><div class='close'></div></div></div></div></div>");
+
+                //点击关闭按钮事件
+                groupModule.pNode.find('.close').click(function (e) {
+                    groupModule.pNode.find('.resultStock').removeClass('hover');
+                    e.stopPropagation(); //防止冒泡事件
+                });
+
                 module.init({
-                    'groupdata': groupItems
+                    'groupdata': groupItems,
+                    'pNode':groupModule.pNode
                 });
             },
             getGroupData: function () {
