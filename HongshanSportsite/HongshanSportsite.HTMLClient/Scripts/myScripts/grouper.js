@@ -182,6 +182,7 @@ var jqGridGrouper = (function ($) {
                     return;
                 };
                 var groupItems = groupModule.getGroupData();
+                groupModule.pNode.addClass('groupSelector');
                 groupModule.pNode.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div class = 'resultStock' id='result-stock'><div class='text'><div>请选择</div></div><div class='close'></div></div></div></div></div>");
 
                 //点击关闭按钮事件
