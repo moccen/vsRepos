@@ -1,8 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<OutOfBrowserSettings ShortName="HongshanSportsite.DesktopClient" EnableGPUAcceleration="False" ShowInstallMenuItem="False">
-  <OutOfBrowserSettings.Blurb>HongshanSportsite.DesktopClient</OutOfBrowserSettings.Blurb>
+﻿<OutOfBrowserSettings ShortName="HongshanSportsite" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>HongshanSportsite</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="HongshanSportsite.DesktopClient" WindowStartupLocation="Manual" Top="0" Left="0"/>
+    <WindowSettings Title="HongshanSportsite" Top="0" Left="0" WindowStartupLocation="Manual" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.SecuritySettings>
     <SecuritySettings ElevatedPermissions="Required" />
