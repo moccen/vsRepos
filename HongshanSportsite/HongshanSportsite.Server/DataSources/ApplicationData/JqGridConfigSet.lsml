@@ -91,10 +91,10 @@
           <Required />
           <SupportedValue
             DisplayName="场馆信息表"
-            Value="StadiumInfo" />
+            Value="Stadium" />
           <SupportedValue
             DisplayName="运营情况表"
-            Value="EcostatusInfo" />
+            Value="Ecostatus" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty

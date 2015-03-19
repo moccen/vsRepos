@@ -440,8 +440,9 @@
                 var child = {};
                 tabConfig['parent'] = { id: 'ecoStatusTab', title: '运营情况', style: 'padding:5px', elType: 'tabs' };
                 tabConfig['children'] = child;
-                child['label1'] = { text: '分组依据', elType: 'div' };
-                child['groupSelecter'] = { id: 'ecoCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
+                //child['label1'] = { text: '分组依据', elType: 'div' };
+                //child['groupSelecter'] = { id: 'ecoCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
+                child['groupByEco'] = { id: 'EcoGroupByer', elType: 'div' };
                 child['jqGridTable'] = { id: 'ecoStatusInfo', elType: 'table' };
                 child['jqPager'] = { id: 'ecoStatusPager', elType: 'div' };
 
@@ -754,14 +755,14 @@
                 pager: pager,
                 sortname: '场地名称',
                 caption: "场地信息",
-                //grouping: true,
-                //groupingView: {
-                //    groupField: ['所属街道', '场地代码'],
-                //    groupColumnShow: [true, true],
-                //    groupText: ['<b>{0}<b> 总计: {1}', '{0} 小计: {1}'],
-                //    groupCollapse: true,
-                //    groupSummary: [false, true]
-                //},
+                grouping: true,
+                groupingView: {
+                    //groupField: ['所属街道', '场地代码'],
+                    groupColumnShow: [true, true],
+                    groupText: ['<b>{0}<b> 总计: {1}', '{0} 小计: {1}'],
+                    groupCollapse: true,
+                    groupSummary: [false, true]
+                },
 
             };
             var navConfigs = [];
@@ -1388,12 +1389,24 @@
                         'JqGrid': 'JqGrid'
                     };
                     var colConf = lsDataOrger.setData(colConfigs.results, propDict);
-                    var colNames = [];
+                    var colNamesStadium = [];
+                    var colNamesEconomy = [];
+                    var colConfStatdium = $.grep(colConf, function (e) {
+                        return e.JqGrid === 'Stadium';
+                    });
+                    var colConfEconomy = $.grep(colConf, function (e) {
+                        return e.jqGrid === 'Ecostatus';
+                    });
                     util.eachAry(colConf, function (aryItem) {
-                        colNames.push(aryItem.name);
+                        if (aryItem.JqGrid === 'Ecostatus') {
+                            colNamesEconomy.push(aryItem.name);
+                        } else {
+                            colNamesStadium.push(aryItem.name);
+                        }
+                        //colNames.push(aryItem.name);
                     });
                     var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
-                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', { colNames: colNames, colModel: colConf });
+                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', { colNames: colNamesStadium, colModel: colConfStatdium });
                     jqGridMgr.setJqGridWithCustomBtns('#stadiumInfo', '#stadiumPager', stadiumConf);
 
                     var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
@@ -1402,8 +1415,14 @@
                     util.resizJqGrid();
                     //初始化分组依据
                     var groupByStock = $('#groupBySelector');
+                    var ecoGroupByer = $('#EcoGroupByer');
 
-                    jqGridGrouper.init({ 'pNode': groupByStock, 'groupCols': colNames, 'jqGridId': '#stadiumInfo' });
+                    var grouperStadium = JqGridGrouper.createNew({ 'pNode': groupByStock, 'groupCols': colNamesStadium, 'jqGridId': '#stadiumInfo' });
+                    grouperStadium.init();
+                    var grouperEco = JqGridGrouper.createNew({ 'pNode': ecoGroupByer, 'groupCols': colNamesEconomy, 'jqGridId': '#ecoStatusInfo' });
+                    grouperEco.init();
+                    //grouperStadium.init({ 'pNode': groupByStock, 'groupCols': colNamesStadium, 'jqGridId': '#stadiumInfo' });
+                    //grouperEco.init({ 'pNode': ecoGroupByer, 'groupCols': colNamesEconomy, 'jqGridId': '#ecoStatusInfo' });
                     //bindComboEvent();
                 });
         };

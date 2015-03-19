@@ -5,7 +5,7 @@
  * @version $id$
  */
 
-var jqGridGrouper = (function ($) {
+var JqGridGrouper = (function ($) {
     var module = {
         exceptionary: [], //当前tab页选中的项目,用于排除下个tab页中过滤掉之前tab页选中项
         groupdata: null, //s数组，存放对象形式为{id:xxx,name:xxx}
@@ -125,17 +125,14 @@ var jqGridGrouper = (function ($) {
             }
             module.resultStock = module.pNode.find('.resultStock');
 
-            var grouphtml = '<div class="content"><div data-widget="tabs" class="m tabs-stock" id="tabs-stock">' + '<div class="mt">' + '    <ul class="tab">' + '        <li data-index="0" data-widget="tab-item" class="curr"><a href="#1" class="hover"><em>请选择</em></a></li>' + '    </ul>' + '    <div class="stock-line"></div>' + '</div>' + '<div class="mc curr" data-area="0" data-widget="tab-content" id="groupItems_0"></div>' + '</div></div>';
-            //var resultStockTxt = $("#result-stock .text");
+            var grouphtml = '<div class="content"><div data-widget="tabs" class="m tabs-stock">' + '<div class="mt">' + '    <ul class="tab">' + '        <li data-index="0" data-widget="tab-item" class="curr"><a href="#1" class="hover"><em>请选择</em></a></li>' + '    </ul>' + '    <div class="stock-line"></div>' + '</div>' + '<div class="mc curr" data-area="0" data-widget="tab-content"></div>' + '</div></div>';
             var resultStockTxt = module.resultStock.find('.text');
             //resultStockTxt.after(grouphtml); //构建最初始html页面
             resultStockTxt.after(grouphtml);
 
             //绑定点击事件
             resultStockTxt.unbind("click").bind("click", function () {
-                //$('#result-stock').addClass('hover');
                 module.resultStock.addClass('hover');
-                //$("#result-stock .content").show();
                 module.resultStock.find('.content').show();
             });
 
@@ -166,52 +163,102 @@ var jqGridGrouper = (function ($) {
         }
     };
 
-    var groupMgr = (function () {
-        var groupModule = {
-            groupCols: null, //从数据库中读取的用户可见列
-            pNode: null, //html页面中包含选择器的父节点
-            jqGridId:null,
-            config: function (conf) {
-                groupModule.groupCols = conf.groupCols;
-                groupModule.pNode = conf.pNode;
-                groupModule.jqGridId = conf.jqGridId;
-            },
-            init: function (conf) {
-                groupModule.config(conf);
-                if (!groupModule.groupCols || !groupModule.pNode || !groupModule.jqGridId || groupModule.groupCols.length === 0) {
-                    return;
-                };
-                var groupItems = groupModule.getGroupData();
-                groupModule.pNode.addClass('groupSelector');
-                groupModule.pNode.append("<div id='groupBy-ul' style='margin:5px auto 10px auto;'><div id='summary-stock'><div class='dt'>分组依据：</div><div class='dd'><div class = 'resultStock' id='result-stock'><div class='text'><div>请选择</div></div><div class='close'></div></div></div></div></div>");
+    var groupModule = {
+        groupCols: null, //从数据库中读取的用户可见列
+        pNode: null, //html页面中包含选择器的父节点
+        jqGridId: null,
+        formerGroupStr: null,//存储之前用户选择的分组依据
+        config: function (conf) {
+            groupModule.groupCols = conf.groupCols;
+            groupModule.pNode = conf.pNode;
+            groupModule.jqGridId = conf.jqGridId;
+        },
+        init: function (conf) {
+            groupModule.config(conf);
+            if (!groupModule.groupCols || !groupModule.pNode || !groupModule.jqGridId || groupModule.groupCols.length === 0) {
+                return;
+            };
+            var groupItems = groupModule.getGroupData();
+            groupModule.pNode.addClass('groupSelector');
+            groupModule.pNode.append("<div style='margin:5px auto 10px auto;'><div><div class='dt'>分组依据：</div><div class='dd'><div class = 'resultStock'><div class='text'><div>请选择</div></div><div class='close'></div></div></div></div></div>");
 
-                //点击关闭按钮事件
-                groupModule.pNode.find('.close').click(function (e) {
-                    groupModule.pNode.find('.resultStock').removeClass('hover');
-                    e.stopPropagation(); //防止冒泡事件
-                });
+            //点击关闭按钮事件
+            groupModule.pNode.find('.close').click(function (e) {
+                groupModule.pNode.find('.resultStock').removeClass('hover');
+                e.stopPropagation(); //防止冒泡事件
+                groupModule.setGroup();
+            });
 
-                module.init({
-                    'groupdata': groupItems,
-                    'pNode':groupModule.pNode
-                });
-            },
-            getGroupData: function () {
-                var groupItems = [];
-                for (var i = 0; i < groupModule.groupCols.length; i++) {
-                    var temp = {};
-                    temp.id = i;
-                    temp.name = groupModule.groupCols[i];
-                    groupItems.push(temp);
-                };
+            module.init({
+                'groupdata': groupItems,
+                'pNode': groupModule.pNode
+            });
+        },
+        getGroupData: function () {
+            var groupItems = [];
+            for (var i = 0; i < groupModule.groupCols.length; i++) {
+                var temp = {};
+                temp.id = i;
+                temp.name = groupModule.groupCols[i];
+                groupItems.push(temp);
+            };
 
-                return groupItems;
+            return groupItems;
+        },
+        setGroup: function () {
+            var groupStr = groupModule.pNode.find('.resultStock .text div').text();
+            if (groupModule.formerGroupStr === groupStr) {
+                return;
+            };
+            if (groupStr === '请选择') {
+                $(groupModule.jqGridId).setGridParam({
+                    grouping: false
+                }).trigger('reloadGrid');
+                return;
             }
-        };
+            var groupFields = groupStr.split('>');
+            $(groupModule.jqGridId).setGridParam({
+                groupingView: {
+                    groupField: groupFields
+                },
+                grouping: true
+            }).trigger('reloadGrid');
+
+            groupModule.formerGroupStr = groupStr;
+        }
+    };
+
+    function GroupMgr(conf) {
+        this.config = conf;
+        GroupMgr.prototype = {
+            init:function() {
+                try {
+                    groupModule.init();
+                } catch (e) {
+                    console.log(e.message);
+                } 
+            }
+        }
         return {
             init: groupModule.init
         };
-    })();
+    };
 
-    return groupMgr;
+    //function JqGridGrouper() {}
+
+    //JqGridGrouper.prototype = {
+    //    CreateNew: function (conf) {
+    //        return new GroupMgr(conf);
+    //    }
+    //}
+    return {
+        createNew: function (conf) {
+            var groupMgr = {};
+            groupMgr.config = conf;
+            groupMgr.init = function() {
+                
+            }
+            return groupMgr;
+        }
+    };
 })(jQuery);

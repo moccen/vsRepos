@@ -101,7 +101,7 @@ var JqGridGrouper = (function ($) {
                     //$('.tab li[data-index = ' + nexttabindex + ']').click(function (e) {
                     //    module.onTabClick(this);
                     //});
-                    nexttab.click(function (e) {
+                    module.pNode.find('.tab li[data-index = ' + nexttabindex + ']').click(function (e) {
                         module.onTabClick(this);
                     });
 
