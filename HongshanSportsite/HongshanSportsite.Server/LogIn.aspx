@@ -71,7 +71,7 @@
             font-size: 40px;
             text-align: left;
             letter-spacing: -1pt;
-            font-weight: normal!important;
+            font-weight: normal !important;
             margin-bottom: 12px;
         }
 
@@ -159,6 +159,9 @@
                     <div class="submit-login">
                         <div class="rememberme">
                             <asp:CheckBox ID="RememberMe" runat="server" Text="Remember me next time." CssClass="checkStyle" />
+                        </div>
+                        <div style="margin-bottom: 10px;" class="logInBtn">
+                            <asp:Button ID="Button1" runat="server" CommandName="Login" ValidationGroup="LoginUserValidationGroup" Text="游客登陆" Width="112" Height="38" CssClass="buttonStyle" />
                         </div>
                         <div style="margin-bottom: 10px;" class="logInBtn">
                             <asp:Button ID="LoginButton" runat="server" CommandName="Login" ValidationGroup="LoginUserValidationGroup" Text="LOG IN" Width="112" Height="38" CssClass="buttonStyle" />
