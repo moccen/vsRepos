@@ -45,6 +45,16 @@
         FromEnd="Owner"
         ToEnd="Owner2StadiumMediator" />
       <EntityProperty
+        Name="Code"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+          <Range
+            Maximum="6"
+            Minimum="1" />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
         Name="CreatedBy"
         IsReadOnly="True"
         PropertyType=":Person?">

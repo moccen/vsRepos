@@ -59,6 +59,23 @@
                 </ContentItem.DataSource>
               </ContentItem>
               <ContentItem
+                Name="Code"
+                Kind="Value"
+                DataType=":Int32?">
+                <ContentItem.Attributes>
+                  <DisplayName
+                    Value="代码" />
+                </ContentItem.Attributes>
+                <ContentItem.DataSource>
+                  <ScreenExpressionTree>
+                    <ChainExpression>
+                      <MemberExpression
+                        Member="Owner/Properties[Code]" />
+                    </ChainExpression>
+                  </ScreenExpressionTree>
+                </ContentItem.DataSource>
+              </ContentItem>
+              <ContentItem
                 Name="CreatedBy"
                 Kind="Value"
                 DataType=":Person?">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LightSwitchApplication.Helper;
 using Microsoft.LightSwitch;
 using Microsoft.LightSwitch.Security.Server;
 namespace LightSwitchApplication
@@ -127,6 +128,29 @@ namespace LightSwitchApplication
             query = permissionAry != null
                 ? query.Where(e => permissionAry.Any(per => e.Permission.Contains(per)))
                 : query.Where(e => false);
+        }
+
+        //自动录入数据使用
+        partial void DummyTableSet_CanUpdate(ref bool result)
+        {
+            try
+            {
+                ExcelReader xlsReader = new ExcelReader(@"E:\My Doc\洪山\洪山区有坐标表格\关山街.xls");
+                //var readedDtTable = xlsReader.Xls2DataTables();
+                xlsReader.Initial();
+                var readedDtTable = xlsReader.Xls2DataTables();
+                //var sportsTypeTB = xlsReader.Xls2DtTable(0, "sportType");
+                var dataCreator = new DataCreator(this.DataWorkspace);
+                dataCreator.CreateStadium(readedDtTable, "关山街");
+                //dataCreator.CreatSiteType(sportsTypeTB);录入场地代码用
+                //dataCreator.CreateSiteType();
+            }
+            catch (Exception)
+            {
+                result = false;
+                //throw;
+            }
+
         }
     }
 }

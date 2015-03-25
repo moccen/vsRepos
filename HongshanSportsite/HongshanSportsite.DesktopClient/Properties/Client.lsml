@@ -66,6 +66,9 @@
     <ApplicationCommand
       Name="ScreenCommandShowEditableJqGridConfigSetGrid"
       Target="!module/Methods[ShowEditableJqGridConfigSetGrid]" />
+    <ApplicationCommand
+      Name="ScreenCommandShowEditableDummyTableSetGrid"
+      Target="!module/Methods[ShowEditableDummyTableSetGrid]" />
   </Application.Commands>
   <Application.NavigationItems>
     <ApplicationNavigationGroup
@@ -93,6 +96,9 @@
       <ApplicationNavigationLink
         Name="EditableJqGridConfigSetGrid"
         Command="!module/Commands[ScreenCommandShowEditableJqGridConfigSetGrid]" />
+      <ApplicationNavigationLink
+        Name="EditableDummyTableSetGrid"
+        Command="!module/Commands[ScreenCommandShowEditableDummyTableSetGrid]" />
     </ApplicationNavigationGroup>
     <ApplicationNavigationGroup
       Name="Administration">

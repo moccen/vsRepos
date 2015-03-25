@@ -252,6 +252,7 @@
     <LightSwitchModel Include="Screens\EditableStadiumBaseSetGrid.lsml" />
     <LightSwitchModel Include="Screens\EditableOwnerSetGrid.lsml" />
     <LightSwitchModel Include="Screens\EditableJqGridConfigSetGrid.lsml" />
+    <LightSwitchModel Include="Screens\EditableDummyTableSetGrid.lsml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

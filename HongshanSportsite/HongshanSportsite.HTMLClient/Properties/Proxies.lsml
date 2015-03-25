@@ -112,4 +112,10 @@
         Target="ServiceInterface:JqGridConfig" />
     </EntityType.Attributes>
   </EntityType>
+  <EntityType>
+    <EntityType.Attributes>
+      <Proxy
+        Target="ServiceInterface:DummyTable" />
+    </EntityType.Attributes>
+  </EntityType>
 </Application>

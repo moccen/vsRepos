@@ -541,6 +541,18 @@
     <Content Include="OpenSource\pivottable-master\pivot.fr.coffee" />
     <Content Include="OpenSource\pivottable-master\pivottable.jquery.json" />
     <Content Include="OpenSource\pivottable-master\ReadMe.md" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\1.jpg" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\2.jpg" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\3.jpg" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\4.jpg" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\5.jpg" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\btn.png" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\float-bg.png" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\loading.gif" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\images\share-btn.png" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\index.html" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\js\jquery-1.9.1.min.js" />
+    <Content Include="OpenSource\原生JS实现3D效果轮播幻灯片效果\js\ZoomPic.js" />
     <Content Include="packages.config" />
     <Content Include="Screens\BrowseStadiumSet.lsml.js">
       <DependentUpon>BrowseStadiumSet.lsml</DependentUpon>
@@ -557,7 +569,6 @@
     <Content Include="Scripts\msls-2.0.0-vsdoc.js" />
     <Content Include="Scripts\msls-2.0.0.js" />
     <Content Include="Scripts\msls-2.0.0.min.js" />
-    <Content Include="Scripts\myScripts\grouper.js" />
     <Content Include="Scripts\myScripts\groupMgr.js" />
     <Content Include="Scripts\myScripts\mainManager.js" />
     <Content Include="Scripts\myScripts\slider.js" />
