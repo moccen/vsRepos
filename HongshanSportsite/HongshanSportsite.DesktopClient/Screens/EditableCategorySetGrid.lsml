@@ -444,6 +444,7 @@
     <Screen.Properties>
       <ScreenCollectionProperty
         Name="CategorySet"
+        DisablePaging="True"
         PageSize="45"
         PropertyType="CollectionView$Category">
         <ScreenCollectionProperty.Query>

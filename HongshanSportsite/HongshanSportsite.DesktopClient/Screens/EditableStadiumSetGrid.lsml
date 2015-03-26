@@ -46,6 +46,19 @@
                 </ScreenExpressionTree>
               </ContentItem.DataSource>
               <ContentItem
+                Name="Id"
+                Kind="Value"
+                DataType=":Int32">
+                <ContentItem.DataSource>
+                  <ScreenExpressionTree>
+                    <ChainExpression>
+                      <MemberExpression
+                        Member="Stadium/Properties[Id]" />
+                    </ChainExpression>
+                  </ScreenExpressionTree>
+                </ContentItem.DataSource>
+              </ContentItem>
+              <ContentItem
                 Name="Name"
                 Kind="Value"
                 DataType=":String?">
@@ -226,6 +239,16 @@
               </ControlPropertySource>
               <ControlPropertySource
                 Property="Microsoft.LightSwitch.RichClient:RowsLayout/Properties[IsRowResizable]">
+                <ScreenExpressionTree>
+                  <ChainExpression>
+                    <ConstantExpression
+                      Value="True"
+                      ResultType=":Boolean" />
+                  </ChainExpression>
+                </ScreenExpressionTree>
+              </ControlPropertySource>
+              <ControlPropertySource
+                Property="Microsoft.LightSwitch.RichClient:DataGrid/Properties[AutoSizeColumns]">
                 <ScreenExpressionTree>
                   <ChainExpression>
                     <ConstantExpression

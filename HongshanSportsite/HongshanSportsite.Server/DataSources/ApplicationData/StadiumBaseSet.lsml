@@ -232,6 +232,16 @@
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
+        Name="Note"
+        PropertyType=":String?">
+        <EntityProperty.Attributes>
+          <MaxLength
+            Value="255" />
+          <DisplayName
+            Value="备注信息 " />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
         Name="CreatedBy"
         IsReadOnly="True"
         PropertyType=":Person?">
