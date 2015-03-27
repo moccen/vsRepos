@@ -151,5 +151,99 @@ namespace LightSwitchApplication
             }
 
         }
+
+        partial void StadiumQueryWithOwner_PreprocessQuery(string placePara, string streetPara, string ownerPara, string catePara, string openPara, string recievePara, string operModePara, ref IQueryable<Owner2StadiumMediator> query)
+        {
+            var place = ParseParaStr(placePara);
+            if (place != null)
+            {
+                query = query.Where(e => place.Contains(e.Stadium.StadiumBase.Place));
+            }
+            var street = ParseParaInt(streetPara);
+            if (street != null)
+            {
+                query = query.Where(e => street.Contains(e.Stadium.Street.Id));
+            }
+            var owner = ParseParaInt(ownerPara);
+            if (owner != null)
+            {
+                query = query.Where(e => owner.Contains(e.Owner.Id));
+                //query = query.Where(e => e.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
+            }
+            var cate = ParseParaInt(catePara);
+            if (cate != null)
+            {
+                query = query.Where(e => cate.Contains(e.Stadium.Category.Id));
+            }
+            var open = ParseParaStr(openPara);
+            if (open != null)
+            {
+                query = query.Where(e => e.Stadium.EcoStatusCollection.Any(eco => open.Contains(eco.OpenStatus)));
+            }
+            var recv = ParseParaStr(recievePara);
+            if (recv != null)
+            {
+                query = query.Where(e => e.Stadium.EcoStatusCollection.Any(eco => recv.Contains(eco.ClientCount)));
+            }
+            var operMode = ParseParaStr(operModePara);
+            if (operMode != null)
+            {
+                query = query.Where(e => e.Stadium.EcoStatusCollection.Any(eco => operMode.Contains(eco.OperateMode)));
+            }
+            if (place == null && street == null && owner == null && cate == null && open == null && recv == null &&
+                operMode == null)
+            {
+                query = query.Where(item => false);
+            }
+
+        }
+
+        partial void StadiumQueryWithEcoStatus_PreprocessQuery(string placePara, string streetPara, string ownerPara, string catePara, string openPara, string recievePara, string operModePara, ref IQueryable<EcoStatus> query)
+        {
+            var place = ParseParaStr(placePara);
+            if (place != null)
+            {
+                query = query.Where(e => place.Contains(e.StadiumEco.StadiumBase.Place));
+            }
+            var street = ParseParaInt(streetPara);
+            if (street != null)
+            {
+                query = query.Where(e => street.Contains(e.StadiumEco.Street.Id));
+            }
+            var owner = ParseParaInt(ownerPara);
+            if (owner != null)
+            {
+                query = query.Where(e => e.StadiumEco.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
+            }
+            var cate = ParseParaInt(catePara);
+            if (cate != null)
+            {
+                query = query.Where(e => cate.Contains(e.StadiumEco.Category.Id));
+            }
+            var open = ParseParaStr(openPara);
+            if (open != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => open.Contains(eco.OpenStatus)));
+                query = query.Where(e => open.Contains(e.OpenStatus));
+            }
+            var recv = ParseParaStr(recievePara);
+            if (recv != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => recv.Contains(eco.ClientCount)));
+                query = query.Where(e => recv.Contains(e.ClientCount));
+            }
+            var operMode = ParseParaStr(operModePara);
+            if (operMode != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => operMode.Contains(eco.OperateMode)));
+                query = query.Where(e => operMode.Contains(e.OperateMode));
+            }
+            if (place == null && street == null && owner == null && cate == null && open == null && recv == null &&
+                operMode == null)
+            {
+                query = query.Where(item => false);
+            }
+
+        }
     }
 }

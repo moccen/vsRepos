@@ -914,6 +914,12 @@
                     var openIds = util.getCheckedTreeNode('#openingTree', 'text');
                     var recvIds = util.getCheckedTreeNode('#recieveTree', 'text');
                     var operIds = util.getCheckedTreeNode('#operModeTree', 'text');
+                    //myapp.activeDataWorkspace.ApplicationData.StadiumQueryWithOwner(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                    //    .expand('Stadium,Owner')
+                    //    .execute()
+                    //    .then(function(proItems) {
+                    //        var test = proItems;
+                    //    });
                     screen.streetPara = streetIds;
                     screen.catePara = cateIds;
                     screen.placePara = placeStrs;
@@ -922,16 +928,30 @@
                     screen.recievePara = recvIds;
                     screen.operModePara = operIds;
                 }
-                screen.StadiumQuery.load().then(function (promiseItems) {
-                    //var ids = getSelectedIDs(promiseItems);
-                    //myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids).expand('Owner,Stadium').execute().then(function(proItems) {
-                    //    var test = screen.StadiumQuery;
-                    //});
-                    //screen.StadiumQuery.selectedItem = screen.StadiumQuery.data[0];
-                    //screen.Owner2StadiumMediatorCollection.load().then(function(items) {
-                    //    var test = screen.StadiumQuery;
-                    //});
-                    itemsLoaded(screen.StadiumQuery);
+
+                //screen.StadiumQuery.load().then(function (promiseItems) {
+                //    //var ids = getSelectedIDs(promiseItems);
+                //    //myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids).expand('Owner,Stadium').execute().then(function(proItems) {
+                //    //    var test = screen.StadiumQuery;
+                //    //});
+                //    //screen.StadiumQuery.selectedItem = screen.StadiumQuery.data[0];
+                //    //screen.Owner2StadiumMediatorCollection.load().then(function(items) {
+                //    //    var test = screen.StadiumQuery;
+                //    //});
+                //    itemsLoaded(screen.StadiumQuery);
+                //});
+                screen.StadiumQueryWithOwner.load().then(function (e) {
+                    //itemsLoaded(screen.StadiumQueryWithOwner);
+                    var stadiumItems = o2SGroupByStadium(screen.StadiumQueryWithOwner);
+                    addPin2Map(stadiumItems);
+                    loadStadiumInfoGrid(stadiumItems);
+                });
+
+                screen.StadiumQueryWithEcoStatus.load().then(function (e) {
+                    var ecoData = lsDataOrger.setData(screen.StadiumQueryWithEcoStatus.data);
+                    jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                    util.upDatePivot('#ecoPivot', ecoData);
+
                 });
                 //var that = screen.StadiumQuery;
                 //screen.getStadiumQuery().then(function(pro) {
@@ -949,27 +969,30 @@
             } catch (e) {
                 console.log(e.message);
             }
-            //myapp.activeDataWorkspace.ApplicationData.StadiumQuery(placeStrs, streetIds, ownerIds, cateIds).expand('StadiumBase,StadiumPhoto,EcoStatus,Street,Owner2StadiumMediator,Category', '', '', '').execute().then(function (promiseItems) {
-            //    var items = screen.StadiumQuery;
-            //});
         }
 
         function itemsLoaded(promiseItems) {
-            addPin2Map(promiseItems);
-            loadGridData(promiseItems);
+            var stadiumItems = o2SGroupByStadium(promiseItems);
+            addPin2Map(stadiumItems);
+            //loadGridData(stadiumItems);
         }
 
         function addPin2Map(promiseItems) {
             if (baiduMap.bmap) {
                 //baiduMap.bmap.clearOverlays();
                 var markers = [];
-                for (var index in promiseItems.data) {
-                    var stadiumItem = promiseItems.data[index];
-                    if (stadiumItem) {
-                        var marker = baiduMap.addPin2Map(stadiumItem);
-                        markers.push(marker);
-                    }
-                };
+                util.eachProp(promiseItems, function (pStadium) {
+                    var marker = baiduMap.addPin2Map(pStadium);
+                    markers.push(marker);
+                });
+                //for (var index in promiseItems.data) {
+                //    var stadiumItem = promiseItems.data[index];
+                //    if (stadiumItem) {
+                //        var marker = baiduMap.addPin2Map(stadiumItem);
+                //        markers.push(marker);
+                //    }
+                //};
+
                 //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
                 if (baiduMap.markerClusterer) {
                     baiduMap.markerClusterer.clearMarkers();
@@ -977,10 +1000,17 @@
                 } else {
                     baiduMap.markerClusterer = new window.BMapLib.MarkerClusterer(baiduMap.bmap, { markers: markers });
                     baiduMap.markerClusterer.setMaxZoom(16);
-                    baiduMap.markerClusterer.setGridSize(100);
-                    baiduMap.markerClusterer.isAverangeCenter = true;
+                    //baiduMap.markerClusterer.setGridSize(100);
+                    baiduMap.markerClusterer.isAverangeCenter = false;
                 }
             }
+        }
+
+        //载入场馆基本信息
+        function loadStadiumInfoGrid(stadiumItems) {
+            var stadiumData = lsDataOrger.setData(stadiumItems);
+            jqGridMgr.setData('#stadiumInfo', stadiumData);
+            util.upDatePivot('#stadiumPivot', stadiumData);
         }
 
         function loadGridData(promiseItems) {
@@ -1026,24 +1056,27 @@
                 });
         }
 
-        //function groupByStadium(o2sItems) {
-        //    try {
-        //        var grouped = {};
-        //        // 对owner2stadium以stadium进行归类
-        //        util.eachProp(o2sItems.results, function (o2sItem) {
-        //            var stadiumId = o2sItem.Stadium.Id;
-        //            if (grouped[stadiumId]) {
-        //                grouped[stadiumId].owner = grouped[stadiumId].owner + ',' + o2sItem.Owner.Name;
-        //            } else {
-        //                grouped[stadiumId] = o2sItem.Stadium;
-        //                grouped[stadiumId].owner = o2sItem.Owner.Name;
-        //            }
-        //        });
-        //        return grouped;
-        //    } catch (e) {
-        //        console.log(e.message);
-        //    }
-        //}
+        //将owner2stadium转化为stadium的集合
+        function o2SGroupByStadium(o2sItems) {
+            try {
+                var grouped = {};
+                var unGroupedItems = o2sItems.results || o2sItems.data;
+                // 对owner2stadium以stadium进行归类
+                util.eachProp(unGroupedItems, function (o2sItem) {
+                    var stadiumId = o2sItem.Stadium.Id;
+                    if (grouped[stadiumId]) {
+                        grouped[stadiumId].Owner = grouped[stadiumId].Owner + ',' + o2sItem.Owner.Name;
+                    } else {
+                        grouped[stadiumId] = o2sItem.Stadium;
+                        grouped[stadiumId].Owner = o2sItem.Owner.Name;
+                    }
+                });
+                return grouped;
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
+
 
         //从数据库返回值中拿到选择场馆的id值
         function getSelectedIDs(promiseDatas) {
@@ -1088,8 +1121,8 @@
             'SelfRaised': '单位自筹',
             'SocialDonate': '社会捐赠',
             'Other': '其他',
-            'Owner2StadiumMediatorCollection': '场地归属',
-            'Owner2StadiumMediator': '场地归属',
+            //'Owner2StadiumMediatorCollection': '场地归属',
+            //'Owner2StadiumMediator': '场地归属',
             //ecostatus
             'StadiumEco': '场地名称',
             'Year': '年份',
@@ -1122,10 +1155,10 @@
                         iterateProp(item[prop], temp);
                         continue;
                     }
-                    if (prop === 'Owner2StadiumMediatorCollection') {
-                        iterateAry(item[prop].array, temp);
-                        continue;
-                    }
+                    //if (prop === 'Owner2StadiumMediatorCollection') {
+                    //    iterateAry(item[prop].array, temp);
+                    //    continue;
+                    //}
                     switch (typeof (item[prop])) {
                         case 'object':
                             {

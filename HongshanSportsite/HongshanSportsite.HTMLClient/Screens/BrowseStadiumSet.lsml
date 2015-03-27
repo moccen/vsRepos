@@ -69,22 +69,43 @@
       </ScreenMethod>
     </Screen.Methods>
     <Screen.Properties>
+      <ScreenProperty
+        Name="placePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="streetPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="ownerPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="catePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="openPara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="recievePara"
+        PropertyType=":String?" />
+      <ScreenProperty
+        Name="operModePara"
+        PropertyType=":String?" />
       <ScreenCollectionProperty
-        Name="StadiumQuery"
+        Name="StadiumQueryWithOwner"
         DisablePaging="True"
-        PageSize="2"
-        PropertyType="CollectionView$Stadium">
+        PageSize="45"
+        PropertyType="CollectionView$Owner2StadiumMediator">
         <ScreenCollectionProperty.Query>
           <ScreenQueryDefinition
-            Name="StadiumQueryQuery"
-            ReturnType="Stadium*">
+            Name="StadiumQueryWithOwnerQuery"
+            ReturnType="Owner2StadiumMediator*">
             <ScreenQueryDefinition.FilterExpression>
               <QueryFilterExpressionTree />
             </ScreenQueryDefinition.FilterExpression>
             <ScreenQueryDefinition.Source>
               <QuerySourceExpressionTree>
                 <MemberExpression
-                  Member="ApplicationData/Members[StadiumQuery]" />
+                  Member="ApplicationData/Members[StadiumQueryWithOwner]" />
               </QuerySourceExpressionTree>
             </ScreenQueryDefinition.Source>
             <ScreenQueryDefinition.Includes>
@@ -92,41 +113,12 @@
                 Mode="Included">
                 <ChainExpression>
                   <MemberExpression
-                    Member="Category" />
+                    Member="Owner" />
                 </ChainExpression>
               </IncludeCriterion>
               <IncludeCriterion
                 Mode="Included">
                 <ChainExpression>
-                  <MemberExpression
-                    Member="Category" />
-                  <MemberExpression
-                    Member="Parent" />
-                </ChainExpression>
-              </IncludeCriterion>
-              <IncludeCriterion
-                Mode="Included">
-                <ChainExpression>
-                  <MemberExpression
-                    Member="Category" />
-                  <MemberExpression
-                    Member="Parent" />
-                  <MemberExpression
-                    Member="Parent" />
-                </ChainExpression>
-              </IncludeCriterion>
-              <IncludeCriterion
-                Mode="Included">
-                <ChainExpression>
-                  <MemberExpression
-                    Member="StadiumBase" />
-                </ChainExpression>
-              </IncludeCriterion>
-              <IncludeCriterion
-                Mode="Included">
-                <ChainExpression>
-                  <MemberExpression
-                    Member="StadiumBase" />
                   <MemberExpression
                     Member="Stadium" />
                 </ChainExpression>
@@ -134,6 +126,26 @@
               <IncludeCriterion
                 Mode="Included">
                 <ChainExpression>
+                  <MemberExpression
+                    Member="Stadium" />
+                  <MemberExpression
+                    Member="Category" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Stadium" />
+                  <MemberExpression
+                    Member="StadiumBase" />
+                </ChainExpression>
+              </IncludeCriterion>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="Stadium" />
                   <MemberExpression
                     Member="Street" />
                 </ChainExpression>
@@ -144,7 +156,7 @@
         <ScreenExpressionTree>
           <ChainExpression>
             <CallExpression
-              Target="BrowseStadiumSet/Properties[StadiumQuery]/Query">
+              Target="BrowseStadiumSet/Properties[StadiumQueryWithOwner]/Query">
               <ArgumentExpression
                 Parameter="placePara">
                 <ChainExpression>
@@ -198,27 +210,92 @@
           </ChainExpression>
         </ScreenExpressionTree>
       </ScreenCollectionProperty>
-      <ScreenProperty
-        Name="placePara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="streetPara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="ownerPara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="catePara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="openPara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="recievePara"
-        PropertyType=":String?" />
-      <ScreenProperty
-        Name="operModePara"
-        PropertyType=":String?" />
+      <ScreenCollectionProperty
+        Name="StadiumQueryWithEcoStatus"
+        DisablePaging="True"
+        PageSize="45"
+        PropertyType="CollectionView$EcoStatus">
+        <ScreenCollectionProperty.Query>
+          <ScreenQueryDefinition
+            Name="StadiumQueryWithEcoStatusQuery"
+            ReturnType="EcoStatus*">
+            <ScreenQueryDefinition.FilterExpression>
+              <QueryFilterExpressionTree />
+            </ScreenQueryDefinition.FilterExpression>
+            <ScreenQueryDefinition.Source>
+              <QuerySourceExpressionTree>
+                <MemberExpression
+                  Member="ApplicationData/Members[StadiumQueryWithEcoStatus]" />
+              </QuerySourceExpressionTree>
+            </ScreenQueryDefinition.Source>
+            <ScreenQueryDefinition.Includes>
+              <IncludeCriterion
+                Mode="Included">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="StadiumEco" />
+                </ChainExpression>
+              </IncludeCriterion>
+            </ScreenQueryDefinition.Includes>
+          </ScreenQueryDefinition>
+        </ScreenCollectionProperty.Query>
+        <ScreenExpressionTree>
+          <ChainExpression>
+            <CallExpression
+              Target="BrowseStadiumSet/Properties[StadiumQueryWithEcoStatus]/Query">
+              <ArgumentExpression
+                Parameter="placePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[placePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="streetPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[streetPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="ownerPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[ownerPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="catePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[catePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="openPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[openPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="recievePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[recievePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="operModePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[operModePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+            </CallExpression>
+          </ChainExpression>
+        </ScreenExpressionTree>
+      </ScreenCollectionProperty>
     </Screen.Properties>
   </Screen>
   <Application.Methods>

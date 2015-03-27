@@ -250,6 +250,12 @@
       <DependentUpon>JqGridConfigSet.lsml</DependentUpon>
     </LightSwitchModel>
     <LightSwitchModel Include="DataSources\ApplicationData\DummyTableSet.lsml" />
+    <LightSwitchModel Include="DataSources\ApplicationData\StadiumQueryWithOwner.lsml">
+      <DependentUpon>Owner2StadiumMediatorSet.lsml</DependentUpon>
+    </LightSwitchModel>
+    <LightSwitchModel Include="DataSources\ApplicationData\StadiumQueryWithEcoStatus.lsml">
+      <DependentUpon>EcoStatusSet.lsml</DependentUpon>
+    </LightSwitchModel>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
