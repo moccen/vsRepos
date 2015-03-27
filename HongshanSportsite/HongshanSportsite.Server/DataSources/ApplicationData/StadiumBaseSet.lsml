@@ -235,8 +235,6 @@
         Name="Note"
         PropertyType=":String?">
         <EntityProperty.Attributes>
-          <MaxLength
-            Value="255" />
           <DisplayName
             Value="备注信息 " />
         </EntityProperty.Attributes>

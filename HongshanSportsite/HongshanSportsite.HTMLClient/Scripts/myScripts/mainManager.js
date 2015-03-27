@@ -838,8 +838,8 @@
             autowidth: true,
             datatype: "local",
             height: "auto",
-            rowNum: 20,
-            rowList: [10, 20, 30],
+            rowNum: 100,
+            rowList: [50, 100, 200, 400],
             viewrecords: true,
             shrinkToFit: true,
             rownumbers: true,
@@ -1258,6 +1258,7 @@
             var foundYear = baseInfo.FoundYear || '未填报';
             var cate = stadiumItem.Category.Name || '未填报';
             var street = stadiumItem.Street.Name || '未填报';
+            var noteInfo = baseInfo.Note || '未填报';
             var stadiumId = stadiumItem.Id;
             //var content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
             //              '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
@@ -1280,6 +1281,7 @@
                     '<b>建成年份   ：</b>' + foundYear + '<br/>' +
                     '<b>所属街道   ：</b>' + street + '<br/>' +
                     '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
+                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
                     '</div>';
             } else {
                 content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
@@ -1289,6 +1291,7 @@
                     '<b>建成年份   ：</b>' + foundYear + '<br/>' +
                     '<b>所属街道   ：</b>' + street + '<br/>' +
                     '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
+                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
                     '</div>';
             }
 

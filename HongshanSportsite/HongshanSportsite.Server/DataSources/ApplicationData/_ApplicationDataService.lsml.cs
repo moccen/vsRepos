@@ -135,14 +135,14 @@ namespace LightSwitchApplication
         {
             try
             {
-                ExcelReader xlsReader = new ExcelReader(@"E:\My Doc\洪山\洪山区有坐标表格\jqConf.xlsx");
+                ExcelReader xlsReader = new ExcelReader(@"E:\My Doc\洪山\洪山区有坐标表格\卓刀泉街.xls");
                 xlsReader.Initial();
-                //var readedDtTable = xlsReader.Xls2DataTables();
-                var sportsTypeTB = xlsReader.Xls2DtTable(0, "jqConf");
+                var readedDtTable = xlsReader.Xls2DataTables();
+                //var sportsTypeTB = xlsReader.Xls2DtTable(0, "场地代码");
                 var dataCreator = new DataCreator(this.DataWorkspace);
-                //dataCreator.CreateStadium(readedDtTable, "关山街");
-                //dataCreator.InsertSiteCategory(sportsTypeTB);
-                dataCreator.CreateJqGridConf(sportsTypeTB);//创建jqgrid配置文件
+                dataCreator.CreateStadium(readedDtTable, "卓刀泉街");
+                //dataCreator.InsertSiteCategory(sportsTypeTB);//创建场地类型
+                //dataCreator.CreateJqGridConf(sportsTypeTB);//创建jqgrid配置文件
             }
             catch (Exception exception)
             {

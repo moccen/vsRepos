@@ -203,18 +203,20 @@ var JqGridGrouper = (function ($) {
                     return;
                 };
                 if (groupStr === '请选择') {
-                    $(groupModule.jqGridId).setGridParam({
-                        grouping: false
-                    }).trigger('reloadGrid');
+                    //$(groupModule.jqGridId).setGridParam({
+                    //    grouping: false
+                    //}).trigger('reloadGrid');
+                    $(groupModule.jqGridId).jqGrid('groupingRemove', true);
                     return;
                 }
                 var groupFields = groupStr.split('>');
-                $(groupModule.jqGridId).setGridParam({
-                    groupingView: {
-                        groupField: groupFields
-                    },
-                    grouping: true
-                }).trigger('reloadGrid');
+                //$(groupModule.jqGridId).setGridParam({
+                //    groupingView: {
+                //        groupField: groupFields
+                //    },
+                //    grouping: true
+                //}).trigger('reloadGrid');
+                $(groupModule.jqGridId).jqGrid('groupingGroupBy', groupFields);
 
                 groupModule.formerGroupStr = groupStr;
             };
