@@ -123,7 +123,8 @@
         cursor: pointer;
         width: 16px;
         height: 16px;
-        background: url(images/groupByClose.png) no-repeat 0;
+        /*background: url(images/groupByClose.png) no-repeat 0;*/
+        background: url(images/sureButton.png) no-repeat 0;
     }
 
     .resultStock a:hover {

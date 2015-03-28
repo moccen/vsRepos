@@ -999,9 +999,9 @@
                     baiduMap.markerClusterer.addMarkers(markers);
                 } else {
                     baiduMap.markerClusterer = new window.BMapLib.MarkerClusterer(baiduMap.bmap, { markers: markers });
-                    baiduMap.markerClusterer.setMaxZoom(16);
+                    //baiduMap.markerClusterer.setMaxZoom(16);
                     //baiduMap.markerClusterer.setGridSize(100);
-                    baiduMap.markerClusterer.isAverangeCenter = false;
+                    baiduMap.markerClusterer.isAverangeCenter = true;
                 }
             }
         }
@@ -1281,6 +1281,7 @@
             para.panel = 'panel';
             para.enableAutoPan = true;
             para.searchTypes = [];
+            para.enableSendToPhone = false;
             return para;
         }
 
