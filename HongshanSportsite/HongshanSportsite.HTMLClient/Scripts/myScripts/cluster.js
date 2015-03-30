@@ -215,7 +215,7 @@ var BMapLib = window.BMapLib = BMapLib || {};
     MarkerClusterer.prototype._addToClosestCluster = function (marker) {
         var distance = 4000000;
         var clusterToAddTo = null;
-        var position = marker.getPosition();
+        //var position = marker.getPosition();
         for (var i = 0, cluster; cluster = this._clusters[i]; i++) {
             var center = cluster.getCenter();
             if (center) {

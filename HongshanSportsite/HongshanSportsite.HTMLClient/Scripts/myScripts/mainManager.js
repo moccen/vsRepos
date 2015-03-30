@@ -868,10 +868,19 @@
         };
 
         jqgridMgr.setData = function (jqGridId, gridData) {
-            $(jqGridId).clearGridData();
-            for (var i = 0; i <= gridData.length; i++)
-                $(jqGridId).jqGrid('addRowData', i + 1, gridData[i]);
-            $(jqGridId).jqGrid('setGridParam', { url: '', postData: '' }).trigger('reloadGrid'); //刷新一下表格
+            var theJqGrid = $(jqGridId);
+            theJqGrid.clearGridData();
+            theJqGrid.jqGrid('setGridParam', {
+                data: gridData,
+                localReader: {
+                    repeatitems: true,
+                    cell: "",
+                    id: 0
+                }
+            }).trigger('reloadGrid');
+            //for (var i = 0; i <= gridData.length; i++)
+            //    $(jqGridId).jqGrid('addRowData', i + 1, gridData[i]);
+            //$(jqGridId).jqGrid('setGridParam', { url: '', postData: '' }).trigger('reloadGrid'); //刷新一下表格
         };
 
         //将默认的jqgrid属性和每个表单独的属性结合
@@ -940,6 +949,7 @@
                 //    //});
                 //    itemsLoaded(screen.StadiumQuery);
                 //});
+
                 screen.StadiumQueryWithOwner.load().then(function (e) {
                     //itemsLoaded(screen.StadiumQueryWithOwner);
                     var stadiumItems = o2SGroupByStadium(screen.StadiumQueryWithOwner);
@@ -1000,7 +1010,7 @@
                 } else {
                     baiduMap.markerClusterer = new window.BMapLib.MarkerClusterer(baiduMap.bmap, { markers: markers });
                     //baiduMap.markerClusterer.setMaxZoom(16);
-                    //baiduMap.markerClusterer.setGridSize(100);
+                    //baiduMap.markerClusterer.setGridSize(20);
                     baiduMap.markerClusterer.isAverangeCenter = true;
                 }
             }
