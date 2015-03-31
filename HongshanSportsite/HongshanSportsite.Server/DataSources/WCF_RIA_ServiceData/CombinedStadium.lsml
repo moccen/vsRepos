@@ -5,12 +5,7 @@
     <Partial />
   </ServiceApplication.Attributes>
   <EntityType
-    Name="EcoStatus">
-    <EntityType.Attributes>
-      <DisplayName
-        Value="运营情况" />
-      <CreatedModifiedPropertiesEnabled />
-    </EntityType.Attributes>
+    Name="CombinedStadiumItem">
     <EntityType.Methods>
       <EntityMethod
         Name="Delete">
@@ -20,6 +15,28 @@
       </EntityMethod>
     </EntityType.Methods>
     <EntityType.Properties>
+      <EntityProperty
+        Name="Name"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="Category"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="Owner"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="OrgCode"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="Place"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="FoundYear"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
       <KeyProperty
         Name="Id"
         PropertyType=":Int32">
@@ -28,198 +45,109 @@
           <NotSearchable />
         </KeyProperty.Attributes>
       </KeyProperty>
-      <NavigationProperty
-        Name="StadiumEco"
-        Association="Stadium_EcoStatus"
-        FromEnd="EcoStatus"
-        ToEnd="Stadium">
-        <NavigationProperty.Attributes>
-          <DisplayName
-            Value="场馆" />
-        </NavigationProperty.Attributes>
-      </NavigationProperty>
       <EntityProperty
-        Name="Year"
-        PropertyType=":Int32?">
-        <EntityProperty.Attributes>
-          <NotSearchable />
-          <Range
-            Maximum="2050"
-            Minimum="1949" />
-          <DisplayName
-            Value="年份" />
-        </EntityProperty.Attributes>
-      </EntityProperty>
+        Name="Street"
+        PropertyType=":String?" />
       <EntityProperty
-        Name="Employee"
-        PropertyType=":Int32?">
-        <EntityProperty.Attributes>
-          <NotSearchable />
-          <DisplayName
-            Value="场地从业人员人数" />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="OperateMode"
-        PropertyType=":String?">
-        <EntityProperty.Attributes>
-          <MaxLength
-            Value="255" />
-          <DisplayName
-            Value="运营模式" />
-          <SupportedValue
-            DisplayName="自主运营"
-            Value="自主运营" />
-          <SupportedValue
-            DisplayName="合作运营"
-            Value="合作运营" />
-          <SupportedValue
-            DisplayName="委托运营"
-            Value="委托运营" />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="OpenStatus"
-        PropertyType=":String?">
-        <EntityProperty.Attributes>
-          <MaxLength
-            Value="255" />
-          <SupportedValue
-            DisplayName="不开放"
-            Value="不开放" />
-          <SupportedValue
-            DisplayName="部分时段开放"
-            Value="部分时段开放" />
-          <SupportedValue
-            DisplayName="全天开放"
-            Value="全天开放" />
-          <DisplayName
-            Value="对外开放情况" />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="OpeningDays"
+        Name="LandArea"
         PropertyType=":Double?">
         <EntityProperty.Attributes>
           <NotSearchable />
-          <DisplayName
-            Value="年开放天数" />
-          <Range
-            Maximum="366"
-            Minimum="0" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="ClientCount"
-        PropertyType=":String?">
-        <EntityProperty.Attributes>
-          <DisplayName
-            Value="平均每周接待健身人次" />
-          <MaxLength
-            Value="255" />
-          <SupportedValue
-            DisplayName="500人次以下/周"
-            Value="500人次以下/周" />
-          <SupportedValue
-            DisplayName="501-2500人次/周"
-            Value="501-2500人次/周" />
-          <SupportedValue
-            DisplayName="2501-5000人次/周"
-            Value="2501-5000人次/周" />
-          <SupportedValue
-            DisplayName="5001-10000人次/周"
-            Value="5001-10000人次/周" />
-          <SupportedValue
-            DisplayName="10000人次以上/周"
-            Value="10000人次以上/周" />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="Income"
+        Name="BuildingArea"
         PropertyType=":Double?">
         <EntityProperty.Attributes>
           <NotSearchable />
-          <DisplayName
-            Value="收入合计（千元）" />
-          <Range
-            Minimum="0" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="Expend"
+        Name="SiteArea"
         PropertyType=":Double?">
         <EntityProperty.Attributes>
           <NotSearchable />
-          <DisplayName
-            Value="支出合计（千元）" />
-          <Range
-            Minimum="0" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="RowVersion"
-        PropertyType=":RowVersion">
+        Name="Investment"
+        PropertyType=":Double?">
         <EntityProperty.Attributes>
-          <UseForConcurrency />
-          <Generated />
-          <Hidden />
           <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="CreatedBy"
-        IsReadOnly="True"
-        PropertyType=":Person?">
+        Name="Fiscal"
+        PropertyType=":Double?">
         <EntityProperty.Attributes>
-          <Generated />
           <NotSearchable />
-          <MaxLength
-            Value="255" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="Created"
-        IsReadOnly="True"
-        PropertyType=":DateTimeOffset?">
+        Name="CommonWeal"
+        PropertyType=":Double?">
         <EntityProperty.Attributes>
-          <Generated />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="ModifiedBy"
-        IsReadOnly="True"
-        PropertyType=":Person?">
-        <EntityProperty.Attributes>
-          <Generated />
           <NotSearchable />
-          <MaxLength
-            Value="255" />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
-        Name="Modified"
-        IsReadOnly="True"
-        PropertyType=":DateTimeOffset?">
+        Name="SelfRaised"
+        PropertyType=":Double?">
         <EntityProperty.Attributes>
-          <Generated />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="SocialDonate"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Other"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Longitude"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Latitude"
+        PropertyType=":Double?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="Note"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="Photo"
+        PropertyType=":Binary?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
     </EntityType.Properties>
   </EntityType>
   <EntityContainer
-    Name="ApplicationData">
+    Name="WCF_RIA_ServiceData">
     <EntityContainer.Attributes>
       <Partial />
     </EntityContainer.Attributes>
     <EntitySet
-      Name="EcoStatusSet"
-      CanDelete="True"
-      CanInsert="True"
-      CanUpdate="True"
-      EntityType="EcoStatus" />
+      Name="CombinedStadium"
+      EntityType="CombinedStadiumItem" />
     <QueryOperation
-      Name="EcoStatusSet_Single"
-      ReturnType="EcoStatus">
+      Name="CombinedStadium_Single"
+      ReturnType="CombinedStadiumItem">
       <QueryOperation.Attributes>
         <Generated />
         <Description
@@ -245,7 +173,7 @@
       <QueryOperation.Source>
         <QuerySourceExpressionTree>
           <MemberExpression
-            Member="EcoStatusSet" />
+            Member="CombinedStadium" />
         </QuerySourceExpressionTree>
       </QueryOperation.Source>
       <QueryOperationParameter
@@ -258,8 +186,8 @@
       </QueryOperationParameter>
     </QueryOperation>
     <QueryOperation
-      Name="EcoStatusSet_SingleOrDefault"
-      ReturnType="EcoStatus">
+      Name="CombinedStadium_SingleOrDefault"
+      ReturnType="CombinedStadiumItem">
       <QueryOperation.Attributes>
         <Generated />
         <Description
@@ -285,7 +213,7 @@
       <QueryOperation.Source>
         <QuerySourceExpressionTree>
           <MemberExpression
-            Member="EcoStatusSet" />
+            Member="CombinedStadium" />
         </QuerySourceExpressionTree>
       </QueryOperation.Source>
       <QueryOperationParameter
@@ -299,17 +227,79 @@
     </QueryOperation>
   </EntityContainer>
   <DataService
-    Name="ApplicationDataMapping">
+    Name="WCF_RIA_ServiceDataDataService">
     <DataService.Attributes>
       <Partial />
     </DataService.Attributes>
     <EntitySetMapping
-      EntitySet="EcoStatusSet">
+      EntitySet="CombinedStadium">
       <EntitySetMapping.Attributes>
-        <SsdlForeignKeyProperty
-          Name="Stadium_EcoStatus"
-          Nullable="False"
-          Type="int" />
+        <WcfRiaEntitySet
+          EntitySetQuery="GetAllStadiums"
+          EntityTypeName="WCF_RIA_Project.CombinedStadium" />
+        <WcfRiaProperty
+          Name="Id"
+          Property="CombinedStadiumItem/Properties[Id]" />
+        <WcfRiaProperty
+          Name="Name"
+          Property="CombinedStadiumItem/Properties[Name]" />
+        <WcfRiaProperty
+          Name="Category"
+          Property="CombinedStadiumItem/Properties[Category]" />
+        <WcfRiaProperty
+          Name="Owner"
+          Property="CombinedStadiumItem/Properties[Owner]" />
+        <WcfRiaProperty
+          Name="Street"
+          Property="CombinedStadiumItem/Properties[Street]" />
+        <WcfRiaProperty
+          Name="OrgCode"
+          Property="CombinedStadiumItem/Properties[OrgCode]" />
+        <WcfRiaProperty
+          Name="Place"
+          Property="CombinedStadiumItem/Properties[Place]" />
+        <WcfRiaProperty
+          Name="FoundYear"
+          Property="CombinedStadiumItem/Properties[FoundYear]" />
+        <WcfRiaProperty
+          Name="LandArea"
+          Property="CombinedStadiumItem/Properties[LandArea]" />
+        <WcfRiaProperty
+          Name="BuildingArea"
+          Property="CombinedStadiumItem/Properties[BuildingArea]" />
+        <WcfRiaProperty
+          Name="SiteArea"
+          Property="CombinedStadiumItem/Properties[SiteArea]" />
+        <WcfRiaProperty
+          Name="Investment"
+          Property="CombinedStadiumItem/Properties[Investment]" />
+        <WcfRiaProperty
+          Name="Fiscal"
+          Property="CombinedStadiumItem/Properties[Fiscal]" />
+        <WcfRiaProperty
+          Name="CommonWeal"
+          Property="CombinedStadiumItem/Properties[CommonWeal]" />
+        <WcfRiaProperty
+          Name="SelfRaised"
+          Property="CombinedStadiumItem/Properties[SelfRaised]" />
+        <WcfRiaProperty
+          Name="SocialDonate"
+          Property="CombinedStadiumItem/Properties[SocialDonate]" />
+        <WcfRiaProperty
+          Name="Other"
+          Property="CombinedStadiumItem/Properties[Other]" />
+        <WcfRiaProperty
+          Name="Longitude"
+          Property="CombinedStadiumItem/Properties[Longitude]" />
+        <WcfRiaProperty
+          Name="Latitude"
+          Property="CombinedStadiumItem/Properties[Latitude]" />
+        <WcfRiaProperty
+          Name="Note"
+          Property="CombinedStadiumItem/Properties[Note]" />
+        <WcfRiaProperty
+          Name="Photo"
+          Property="CombinedStadiumItem/Properties[Photo]" />
       </EntitySetMapping.Attributes>
     </EntitySetMapping>
   </DataService>

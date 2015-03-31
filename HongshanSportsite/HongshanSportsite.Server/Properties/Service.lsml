@@ -24,6 +24,9 @@
     <EntityContainerGroupProperty
       Name="ApplicationData"
       EntityContainer="ApplicationData" />
+    <EntityContainerGroupProperty
+      Name="WCF_RIA_ServiceData"
+      EntityContainer="WCF_RIA_ServiceData" />
   </EntityContainerGroup>
   <GlobalAttributeGroup
     Name="LightSwitchServiceApplicationGroup">

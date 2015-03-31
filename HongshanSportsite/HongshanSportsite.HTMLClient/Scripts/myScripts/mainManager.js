@@ -950,19 +950,26 @@
                 //    itemsLoaded(screen.StadiumQuery);
                 //});
 
-                screen.StadiumQueryWithOwner.load().then(function (e) {
-                    //itemsLoaded(screen.StadiumQueryWithOwner);
-                    var stadiumItems = o2SGroupByStadium(screen.StadiumQueryWithOwner);
-                    addPin2Map(stadiumItems);
-                    loadStadiumInfoGrid(stadiumItems);
+                screen.CombinedStadium.load().then(function (e) {
+                    var test = screen.CombinedStadium.data;
+                    addPin2Map(test);
+                    loadStadiumInfoGrid(test);
                 });
 
-                screen.StadiumQueryWithEcoStatus.load().then(function (e) {
-                    var ecoData = lsDataOrger.setData(screen.StadiumQueryWithEcoStatus.data);
-                    jqGridMgr.setData('#ecoStatusInfo', ecoData);
-                    util.upDatePivot('#ecoPivot', ecoData);
+                //screen.StadiumQueryWithEcoStatus.load().then(function (e) {
+                //    var ecoData = lsDataOrger.setData(screen.StadiumQueryWithEcoStatus.data);
+                //    jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                //    util.upDatePivot('#ecoPivot', ecoData);
 
-                });
+                //});
+
+                //screen.StadiumQueryWithOwner.load().then(function (e) {
+                //    //itemsLoaded(screen.StadiumQueryWithOwner);
+                //    var stadiumItems = o2SGroupByStadium(screen.StadiumQueryWithOwner.data);
+                //    addPin2Map(stadiumItems);
+                //    loadStadiumInfoGrid(stadiumItems);
+                //});
+                //////////////////////////////////////////////////////////////////////////
                 //var that = screen.StadiumQuery;
                 //screen.getStadiumQuery().then(function(pro) {
                 //    pro.data.forEach(function(subPro) {
@@ -981,11 +988,11 @@
             }
         }
 
-        function itemsLoaded(promiseItems) {
-            var stadiumItems = o2SGroupByStadium(promiseItems);
-            addPin2Map(stadiumItems);
-            //loadGridData(stadiumItems);
-        }
+        //function itemsLoaded(promiseItems) {
+        //    var stadiumItems = o2SGroupByStadium(promiseItems);
+        //    addPin2Map(stadiumItems);
+        //    //loadGridData(stadiumItems);
+        //}
 
         function addPin2Map(promiseItems) {
             if (baiduMap.bmap) {
@@ -1023,54 +1030,55 @@
             util.upDatePivot('#stadiumPivot', stadiumData);
         }
 
-        function loadGridData(promiseItems) {
-            var ids = getSelectedIDs(promiseItems);
-            //if (promiseItems.count == 1) {
-            //    ids += ',' + '';
-            //}
+        //function loadGridData(promiseItems) {
+        //    var ids = getSelectedIDs(promiseItems);
+        //    //if (promiseItems.count == 1) {
+        //    //    ids += ',' + '';
+        //    //}
 
-            //myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids)
-            //    .expand('Owner,Stadium')
-            //    .execute()
-            //    .then(function (o2sItems) {
-            //        var groupVals = groupByStadium(o2sItems);
-            //        var stadiumData = lsDataOrger.setData(groupVals);
-            //        jqGridMgr.setData('#stadiumInfo', stadiumData);
-            //        util.upDatePivot('#stadiumPivot', stadiumData);
-            //    });
-            myapp.activeDataWorkspace.ApplicationData.StadiumQueryByIds(ids)
-                .expand('Owner2StadiumMediatorCollection')
-                .execute()
-                .then(function (stadiumItems) {
-                    myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids)
-                        .expand('Owner,Stadium')
-                        .execute()
-                        .then(function (o2sItems) {
-                            //var groupVals = groupByStadium(o2sItems);
-                            var stadiumData = lsDataOrger.setData(stadiumItems.results);
-                            jqGridMgr.setData('#stadiumInfo', stadiumData);
-                            util.upDatePivot('#stadiumPivot', stadiumData);
-                            //$('#stadiumPivot').pivotUI(stadiumData);
-                        });
-                });
+        //    //myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids)
+        //    //    .expand('Owner,Stadium')
+        //    //    .execute()
+        //    //    .then(function (o2sItems) {
+        //    //        var groupVals = groupByStadium(o2sItems);
+        //    //        var stadiumData = lsDataOrger.setData(groupVals);
+        //    //        jqGridMgr.setData('#stadiumInfo', stadiumData);
+        //    //        util.upDatePivot('#stadiumPivot', stadiumData);
+        //    //    });
+        //    myapp.activeDataWorkspace.ApplicationData.StadiumQueryByIds(ids)
+        //        .expand('Owner2StadiumMediatorCollection')
+        //        .execute()
+        //        .then(function (stadiumItems) {
+        //            myapp.activeDataWorkspace.ApplicationData.Owner2StaduimQuery(ids)
+        //                .expand('Owner,Stadium')
+        //                .execute()
+        //                .then(function (o2sItems) {
+        //                    //var groupVals = groupByStadium(o2sItems);
+        //                    var stadiumData = lsDataOrger.setData(stadiumItems.results);
+        //                    jqGridMgr.setData('#stadiumInfo', stadiumData);
+        //                    util.upDatePivot('#stadiumPivot', stadiumData);
+        //                    //$('#stadiumPivot').pivotUI(stadiumData);
+        //                });
+        //        });
 
 
-            myapp.activeDataWorkspace.ApplicationData.EcoStatusQuery(ids)
-                .expand('StadiumEco')
-                .execute()
-                .then(function (ecoItems) {
-                    var ecoData = lsDataOrger.setData(ecoItems.results);
-                    jqGridMgr.setData('#ecoStatusInfo', ecoData);
-                    util.upDatePivot('#ecoPivot', ecoData);
-                    //$('#ecoPivot').pivotUI(ecoData);
-                });
-        }
+        //    myapp.activeDataWorkspace.ApplicationData.EcoStatusQuery(ids)
+        //        .expand('StadiumEco')
+        //        .execute()
+        //        .then(function (ecoItems) {
+        //            var ecoData = lsDataOrger.setData(ecoItems.results);
+        //            jqGridMgr.setData('#ecoStatusInfo', ecoData);
+        //            util.upDatePivot('#ecoPivot', ecoData);
+        //            //$('#ecoPivot').pivotUI(ecoData);
+        //        });
+        //}
 
         //将owner2stadium转化为stadium的集合
         function o2SGroupByStadium(o2sItems) {
             try {
                 var grouped = {};
-                var unGroupedItems = o2sItems.results || o2sItems.data;
+                //var unGroupedItems = o2sItems.results || o2sItems.data;
+                var unGroupedItems = o2sItems;
                 // 对owner2stadium以stadium进行归类
                 util.eachProp(unGroupedItems, function (o2sItem) {
                     var stadiumId = o2sItem.Stadium.Id;
@@ -1246,7 +1254,7 @@
         baiduapi.addPin2Map = function (stadiumItem) {
             try {
                 //如果存储百度地图才运行下面代码
-                var x = stadiumItem.StadiumBase.Longitude, y = stadiumItem.StadiumBase.Latitude;
+                var x = stadiumItem.Longitude, y = stadiumItem.Latitude;
                 var siteName = stadiumItem.Name;
                 if (bMap) {
                     var marker;//点聚合
@@ -1296,13 +1304,13 @@
         }
 
         function getContent(stadiumItem) {
-            var baseInfo = stadiumItem.StadiumBase;
-            var orgCode = baseInfo.OrgCode || '未填报';
-            var place = baseInfo.Place || '未填报';
-            var foundYear = baseInfo.FoundYear || '未填报';
+            //var baseInfo = stadiumItem.StadiumBase;
+            var orgCode = stadiumItem.OrgCode || '未填报';
+            var place = stadiumItem.Place || '未填报';
+            var foundYear = stadiumItem.FoundYear || '未填报';
             var cate = stadiumItem.Category.Name || '未填报';
             var street = stadiumItem.Street.Name || '未填报';
-            var noteInfo = baseInfo.Note || '未填报';
+            var noteInfo = stadiumItem.Note || '未填报';
             var stadiumId = stadiumItem.Id;
             //var content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
             //              '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
@@ -1313,8 +1321,8 @@
             //              '</div>';
 
             var content;
-            if (stadiumItem.StadiumBase.Photo) {
-                var imageSrc = 'data:image/svg;base64,' + stadiumItem.StadiumBase.Photo;
+            if (stadiumItem.Photo) {
+                var imageSrc = 'data:image/svg;base64,' + stadiumItem.Photo;
                 var imageStr = '\"' + imageSrc.toString() + '\"';
 
                 content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +

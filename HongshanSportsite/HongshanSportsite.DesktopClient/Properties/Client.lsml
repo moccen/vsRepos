@@ -28,6 +28,9 @@
     <EntityContainerGroupProperty
       Name="ApplicationData"
       EntityContainer="ApplicationData" />
+    <EntityContainerGroupProperty
+      Name="WCF_RIA_ServiceData"
+      EntityContainer="WCF_RIA_ServiceData" />
   </EntityContainerGroup>
   <GlobalAttributeGroup>
     <GlobalAttributeGroup.Attributes>
@@ -69,6 +72,9 @@
     <ApplicationCommand
       Name="ScreenCommandShowEditableDummyTableSetGrid"
       Target="!module/Methods[ShowEditableDummyTableSetGrid]" />
+    <ApplicationCommand
+      Name="ScreenCommandShowEditableCombinedStadiumGrid"
+      Target="!module/Methods[ShowEditableCombinedStadiumGrid]" />
   </Application.Commands>
   <Application.NavigationItems>
     <ApplicationNavigationGroup
@@ -99,6 +105,9 @@
       <ApplicationNavigationLink
         Name="EditableDummyTableSetGrid"
         Command="!module/Commands[ScreenCommandShowEditableDummyTableSetGrid]" />
+      <ApplicationNavigationLink
+        Name="EditableCombinedStadiumGrid"
+        Command="!module/Commands[ScreenCommandShowEditableCombinedStadiumGrid]" />
     </ApplicationNavigationGroup>
     <ApplicationNavigationGroup
       Name="Administration">

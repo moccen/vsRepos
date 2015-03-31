@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceApplication
+  Name="LightSwitchServiceApplication" xmlns="http://schemas.microsoft.com/LightSwitch/2010/xaml/model">
+  <ServiceApplication.Attributes>
+    <Partial />
+  </ServiceApplication.Attributes>
+  <EntityContainer
+    Name="WCF_RIA_ServiceData">
+    <EntityContainer.Attributes>
+      <Partial
+        IsPrimary="True" />
+    </EntityContainer.Attributes>
+    <SubmitOperation
+      Name="SaveChanges" />
+  </EntityContainer>
+  <DataService
+    Name="WCF_RIA_ServiceDataDataService"
+    DataProvider="CustomDataProvider"
+    EntityContainer="WCF_RIA_ServiceData">
+    <DataService.Attributes>
+      <Partial
+        IsPrimary="True" />
+    </DataService.Attributes>
+    <DataService.ConnectionProperties>
+      <ConnectionProperty
+        Name="AssemblyName"
+        Value="WCF_RIA_Project" />
+      <ConnectionProperty
+        Name="FullClassName"
+        Value="WCF_RIA_Project.WCF_RIA_Service" />
+      <ConnectionProperty
+        Name="ConnectionStringGuid"
+        Value="9fd2a295-ed4f-4559-8fbf-de0b5678a4fd" />
+      <ConnectionProperty
+        Name="ConnectionStringDescription"
+        Value="" />
+    </DataService.ConnectionProperties>
+  </DataService>
+</ServiceApplication>

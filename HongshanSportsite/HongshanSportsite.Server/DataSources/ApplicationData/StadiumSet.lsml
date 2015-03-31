@@ -7,9 +7,9 @@
   <EntityType
     Name="Stadium">
     <EntityType.Attributes>
-      <CreatedModifiedPropertiesEnabled />
       <DisplayName
         Value="场馆" />
+      <CreatedModifiedPropertiesEnabled />
     </EntityType.Attributes>
     <EntityType.Methods>
       <EntityMethod
@@ -89,6 +89,16 @@
         FromEnd="Stadium"
         ToEnd="Owner2StadiumMediator" />
       <EntityProperty
+        Name="RowVersion"
+        PropertyType=":RowVersion">
+        <EntityProperty.Attributes>
+          <UseForConcurrency />
+          <Generated />
+          <Hidden />
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
         Name="CreatedBy"
         IsReadOnly="True"
         PropertyType=":Person?">
@@ -105,7 +115,6 @@
         PropertyType=":DateTimeOffset?">
         <EntityProperty.Attributes>
           <Generated />
-          <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
       <EntityProperty
@@ -125,17 +134,6 @@
         PropertyType=":DateTimeOffset?">
         <EntityProperty.Attributes>
           <Generated />
-          <NotSearchable />
-        </EntityProperty.Attributes>
-      </EntityProperty>
-      <EntityProperty
-        Name="RowVersion"
-        PropertyType=":RowVersion">
-        <EntityProperty.Attributes>
-          <UseForConcurrency />
-          <Generated />
-          <Hidden />
-          <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
     </EntityType.Properties>
