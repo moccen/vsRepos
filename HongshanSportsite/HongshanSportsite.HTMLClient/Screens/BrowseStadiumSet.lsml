@@ -307,7 +307,6 @@
       </ScreenCollectionProperty>
       <ScreenCollectionProperty
         Name="CombinedStadium"
-        DisablePaging="True"
         PageSize="45"
         PropertyType="CollectionView$CombinedStadiumItem">
         <ScreenCollectionProperty.Query>

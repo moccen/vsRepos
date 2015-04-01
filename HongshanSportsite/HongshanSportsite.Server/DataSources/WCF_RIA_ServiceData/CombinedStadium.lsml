@@ -15,6 +15,14 @@
       </EntityMethod>
     </EntityType.Methods>
     <EntityType.Properties>
+      <KeyProperty
+        Name="SiteId"
+        PropertyType=":Int32">
+        <KeyProperty.Attributes>
+          <Required />
+          <NotSearchable />
+        </KeyProperty.Attributes>
+      </KeyProperty>
       <EntityProperty
         Name="Name"
         PropertyType=":String?" />
@@ -23,6 +31,9 @@
         PropertyType=":String?" />
       <EntityProperty
         Name="Owner"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="Street"
         PropertyType=":String?" />
       <EntityProperty
         Name="OrgCode"
@@ -37,17 +48,6 @@
           <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
-      <KeyProperty
-        Name="Id"
-        PropertyType=":Int32">
-        <KeyProperty.Attributes>
-          <Required />
-          <NotSearchable />
-        </KeyProperty.Attributes>
-      </KeyProperty>
-      <EntityProperty
-        Name="Street"
-        PropertyType=":String?" />
       <EntityProperty
         Name="LandArea"
         PropertyType=":Double?">
@@ -135,8 +135,27 @@
           <NotSearchable />
         </EntityProperty.Attributes>
       </EntityProperty>
+      <NavigationProperty
+        Name="EcoStatus"
+        Association="Stadium_EcoStatus1"
+        FromEnd="CombinedStadiumItem"
+        ToEnd="CombindeEcoStatusItem" />
     </EntityType.Properties>
   </EntityType>
+  <Association
+    Name="Stadium_EcoStatus1">
+    <AssociationEnd
+      Name="CombinedStadiumItem"
+      EntityType="CombinedStadiumItem">
+      <AssociationEnd.Attributes>
+        <DeleteRule />
+      </AssociationEnd.Attributes>
+    </AssociationEnd>
+    <AssociationEnd
+      Name="CombindeEcoStatusItem"
+      Multiplicity="Many"
+      EntityType="CombindeEcoStatusItem" />
+  </Association>
   <EntityContainer
     Name="WCF_RIA_ServiceData">
     <EntityContainer.Attributes>
@@ -145,6 +164,16 @@
     <EntitySet
       Name="CombinedStadium"
       EntityType="CombinedStadiumItem" />
+    <AssociationSet
+      Name="Stadium_EcoStatus"
+      Association="Stadium_EcoStatus1">
+      <AssociationSetEnd
+        Name="CombinedStadiumItem"
+        EntitySet="CombinedStadium" />
+      <AssociationSetEnd
+        Name="CombindeEcoStatusItem"
+        EntitySet="CombindeEcoStatus" />
+    </AssociationSet>
     <QueryOperation
       Name="CombinedStadium_Single"
       ReturnType="CombinedStadiumItem">
@@ -160,12 +189,12 @@
             <BinaryExpression.Left>
               <ChainExpression>
                 <MemberExpression
-                  Member="Id" />
+                  Member="SiteId" />
               </ChainExpression>
             </BinaryExpression.Left>
             <BinaryExpression.Right>
               <ParameterExpression
-                Parameter="Id" />
+                Parameter="SiteId" />
             </BinaryExpression.Right>
           </BinaryExpression>
         </QueryFilterExpressionTree>
@@ -177,11 +206,11 @@
         </QuerySourceExpressionTree>
       </QueryOperation.Source>
       <QueryOperationParameter
-        Name="Id"
+        Name="SiteId"
         ParameterType=":Int32?">
         <QueryOperationParameter.Attributes>
           <Description
-            Value="要检索的实体的“Id”键属性的值。" />
+            Value="要检索的实体的“SiteId”键属性的值。" />
         </QueryOperationParameter.Attributes>
       </QueryOperationParameter>
     </QueryOperation>
@@ -200,12 +229,12 @@
             <BinaryExpression.Left>
               <ChainExpression>
                 <MemberExpression
-                  Member="Id" />
+                  Member="SiteId" />
               </ChainExpression>
             </BinaryExpression.Left>
             <BinaryExpression.Right>
               <ParameterExpression
-                Parameter="Id" />
+                Parameter="SiteId" />
             </BinaryExpression.Right>
           </BinaryExpression>
         </QueryFilterExpressionTree>
@@ -217,11 +246,11 @@
         </QuerySourceExpressionTree>
       </QueryOperation.Source>
       <QueryOperationParameter
-        Name="Id"
+        Name="SiteId"
         ParameterType=":Int32?">
         <QueryOperationParameter.Attributes>
           <Description
-            Value="要检索的实体的“Id”键属性的值。" />
+            Value="要检索的实体的“SiteId”键属性的值。" />
         </QueryOperationParameter.Attributes>
       </QueryOperationParameter>
     </QueryOperation>
@@ -238,8 +267,8 @@
           EntitySetQuery="GetAllStadiums"
           EntityTypeName="WCF_RIA_Project.CombinedStadium" />
         <WcfRiaProperty
-          Name="Id"
-          Property="CombinedStadiumItem/Properties[Id]" />
+          Name="SiteId"
+          Property="CombinedStadiumItem/Properties[SiteId]" />
         <WcfRiaProperty
           Name="Name"
           Property="CombinedStadiumItem/Properties[Name]" />
@@ -300,7 +329,29 @@
         <WcfRiaProperty
           Name="Photo"
           Property="CombinedStadiumItem/Properties[Photo]" />
+        <WcfRiaProperty
+          Name="EcoStatus"
+          Property="CombinedStadiumItem/Properties[EcoStatus]" />
       </EntitySetMapping.Attributes>
     </EntitySetMapping>
+    <AssociationSetMapping
+      AssociationSet="Stadium_EcoStatus">
+      <AssociationSetMapping.Attributes>
+        <WcfRiaAssociationSetEnd
+          End="WCF_RIA_ServiceData/Members[Stadium_EcoStatus]/Members[CombinedStadiumItem]">
+          <WcfRiaAssociationSetEnd.Attributes>
+            <WcfRiaPropertyRef
+              Name="SiteId" />
+          </WcfRiaAssociationSetEnd.Attributes>
+        </WcfRiaAssociationSetEnd>
+        <WcfRiaAssociationSetEnd
+          End="WCF_RIA_ServiceData/Members[Stadium_EcoStatus]/Members[CombindeEcoStatusItem]">
+          <WcfRiaAssociationSetEnd.Attributes>
+            <WcfRiaPropertyRef
+              Name="StadiumId" />
+          </WcfRiaAssociationSetEnd.Attributes>
+        </WcfRiaAssociationSetEnd>
+      </AssociationSetMapping.Attributes>
+    </AssociationSetMapping>
   </DataService>
 </ServiceApplication>

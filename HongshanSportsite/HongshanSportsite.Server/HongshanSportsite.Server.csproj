@@ -257,8 +257,8 @@
       <DependentUpon>EcoStatusSet.lsml</DependentUpon>
     </LightSwitchModel>
     <LightSwitchModel Include="DataSources\WCF_RIA_ServiceData\CombinedStadium.lsml" />
-    <LightSwitchModel Include="Properties\DataSources\WCF_RIA_ServiceData.lsml" />
     <LightSwitchModel Include="DataSources\WCF_RIA_ServiceData\CombindeEcoStatus.lsml" />
+    <LightSwitchModel Include="Properties\DataSources\WCF_RIA_ServiceData.lsml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel.DomainServices.Server;
 using System.Data.EntityClient;
+using System.Data.Metadata.Edm;
 using System.Data.Objects.DataClasses;
 using System.Web.Configuration;
 using LightSwitchApplication.Implementation;
@@ -15,8 +16,10 @@ namespace WCF_RIA_Project
 
     public class CombinedStadium
     {
+        //private CombindeEcoStatus _ecoStatus;
+
         [Key]
-        public int Id { get; set; }
+        public int SiteId { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
         public string Owner { get; set; }
@@ -37,15 +40,19 @@ namespace WCF_RIA_Project
         public double? Latitude { get; set; }
         public string Note { get; set; }
         public byte[] Photo { get; set; }
-        //[Include]
-        //public EntityCollection<EcoStatus> EcoStatuses { get; set; } 
+
+        [Include]
+        [Association("Stadium_EcoStatus", "SiteId", "StadiumId")]
+        public IQueryable<CombindeEcoStatus> EcoStatus { get; set; }
     }
 
     public class CombindeEcoStatus
     {
+        //private CombinedStadium _combinedStadium;
         [Key]
-        public int Id { get; set; }
+        public int EcoId { get; set; }
         public string StatdiumName { get; set; }
+        public int? StadiumId { get; set; }
         public int? Year { get; set; }
         public int? EmployeeNum { get; set; }
         public string OperateMode { get; set; }
@@ -54,8 +61,25 @@ namespace WCF_RIA_Project
         public string ClientCount { get; set; }
         public double? Income { get; set; }
         public double? Expend { get; set; }
-    }
 
+        [Include]
+        [Association("Stadium_EcoStatus", "StadiumId", "SiteId", IsForeignKey = true)]
+        public CombinedStadium Stadium
+        {
+            //get { return this._combinedStadium; }
+            //set
+            //{
+            //    this._combinedStadium = value;
+            //    if (value == null)
+            //    {
+            //        this.Id = value.Id;
+            //    }
+            //}
+            get;
+            set;
+        }
+
+    }
 
     public class WCF_RIA_Service : DomainService
     {
@@ -108,12 +132,12 @@ namespace WCF_RIA_Project
                                     Longitude = stadium.StadiumBase.Longitude,
                                     Latitude = stadium.StadiumBase.Latitude,
                                     Note = stadium.StadiumBase.Note,
-                                    Photo = stadium.StadiumBase.Photo
+                                    Photo = stadium.StadiumBase.Photo,
                                 };
 
-            return stadiumsQuery.AsEnumerable().Select(x => new CombinedStadium()
+            var result = stadiumsQuery.AsEnumerable().Select(x => new CombinedStadium()
             {
-                Id = x.ID,
+                SiteId = x.ID,
                 Name = x.Name,
                 Category = x.Category,
                 Owner = string.Join("/", x.OwnerParts),
@@ -132,8 +156,10 @@ namespace WCF_RIA_Project
                 Longitude = x.Longitude,
                 Latitude = x.Latitude,
                 Note = x.Note,
-                Photo = x.Photo
-            }).AsQueryable<CombinedStadium>();
+                Photo = x.Photo,
+            }).AsQueryable();
+
+            return result;
         }
 
         [Query(IsDefault = true)]
@@ -142,8 +168,9 @@ namespace WCF_RIA_Project
             var stadiumEco = from eco in this.Context.EcoStatusSet
                              select new CombindeEcoStatus()
                              {
-                                 Id = eco.Id,
+                                 EcoId = eco.Id,
                                  StatdiumName = eco.StadiumEco.Name,
+                                 StadiumId = eco.StadiumEco.Id,
                                  Year = eco.Year,
                                  EmployeeNum = eco.Employee,
                                  OperateMode = eco.OperateMode,
@@ -155,7 +182,6 @@ namespace WCF_RIA_Project
                              };
             return stadiumEco;
         }
-
 
         protected override int Count<T>(IQueryable<T> queryable)
         {

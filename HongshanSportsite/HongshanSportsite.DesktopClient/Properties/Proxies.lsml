@@ -118,16 +118,22 @@
         Target="ServiceInterface:CombinedStadiumItem" />
     </EntityType.Attributes>
   </EntityType>
-  <EntityContainer>
-    <EntityContainer.Attributes>
-      <Proxy
-        Target="ServiceInterface:WCF_RIA_ServiceData" />
-    </EntityContainer.Attributes>
-  </EntityContainer>
   <EntityType>
     <EntityType.Attributes>
       <Proxy
         Target="ServiceInterface:CombindeEcoStatusItem" />
     </EntityType.Attributes>
   </EntityType>
+  <Association>
+    <Association.Attributes>
+      <Proxy
+        Target="ServiceInterface:Stadium_EcoStatus1" />
+    </Association.Attributes>
+  </Association>
+  <EntityContainer>
+    <EntityContainer.Attributes>
+      <Proxy
+        Target="ServiceInterface:WCF_RIA_ServiceData" />
+    </EntityContainer.Attributes>
+  </EntityContainer>
 </Application>

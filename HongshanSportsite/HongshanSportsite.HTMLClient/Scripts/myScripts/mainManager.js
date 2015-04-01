@@ -916,10 +916,16 @@
                         });
                     }
                 } else {
-                    var streetIds = util.getCheckedTreeNode('#streetTree', 'id');
-                    var cateIds = util.getCheckedTreeNode('#cateTree', 'id');
+                    //var streetIds = util.getCheckedTreeNode('#streetTree', 'id');
+                    var streetIds = util.getCheckedTreeNode('#streetTree', 'text');
+
+                    //var cateIds = util.getCheckedTreeNode('#cateTree', 'id');
+                    var cateIds = util.getCheckedTreeNode('#cateTree', 'text');
+
                     var placeStrs = util.getCheckedTreeNode('#placeTree', 'text');
-                    var ownerIds = util.getCheckedTreeNode('#ownerTree', 'id');
+                    //var ownerIds = util.getCheckedTreeNode('#ownerTree', 'id');
+                    var ownerIds = util.getCheckedTreeNode('#ownerTree', 'text');
+
                     var openIds = util.getCheckedTreeNode('#openingTree', 'text');
                     var recvIds = util.getCheckedTreeNode('#recieveTree', 'text');
                     var operIds = util.getCheckedTreeNode('#operModeTree', 'text');
@@ -948,6 +954,12 @@
                 //    //    var test = screen.StadiumQuery;
                 //    //});
                 //    itemsLoaded(screen.StadiumQuery);
+                //});
+
+                //screen.CombinedStadiumQuery.load().then(function(e) {
+                //    var test = screen.CombinedStadiumQuery.data;
+                //    addPin2Map(test);
+                //    loadStadiumInfoGrid(test);
                 //});
 
                 screen.CombinedStadium.load().then(function (e) {

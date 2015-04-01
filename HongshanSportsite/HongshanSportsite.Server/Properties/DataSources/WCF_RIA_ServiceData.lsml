@@ -30,7 +30,7 @@
         Value="WCF_RIA_Project.WCF_RIA_Service" />
       <ConnectionProperty
         Name="ConnectionStringGuid"
-        Value="9fd2a295-ed4f-4559-8fbf-de0b5678a4fd" />
+        Value="e102902c-983a-488b-a323-80f43156b1cc" />
       <ConnectionProperty
         Name="ConnectionStringDescription"
         Value="" />
