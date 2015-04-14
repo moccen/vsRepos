@@ -140,6 +140,20 @@
         Association="Stadium_EcoStatus1"
         FromEnd="CombinedStadiumItem"
         ToEnd="CombindeEcoStatusItem" />
+      <EntityProperty
+        Name="CateId"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="StreetId"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
     </EntityType.Properties>
   </EntityType>
   <Association
@@ -276,11 +290,17 @@
           Name="Category"
           Property="CombinedStadiumItem/Properties[Category]" />
         <WcfRiaProperty
+          Name="CateId"
+          Property="CombinedStadiumItem/Properties[CateId]" />
+        <WcfRiaProperty
           Name="Owner"
           Property="CombinedStadiumItem/Properties[Owner]" />
         <WcfRiaProperty
           Name="Street"
           Property="CombinedStadiumItem/Properties[Street]" />
+        <WcfRiaProperty
+          Name="StreetId"
+          Property="CombinedStadiumItem/Properties[StreetId]" />
         <WcfRiaProperty
           Name="OrgCode"
           Property="CombinedStadiumItem/Properties[OrgCode]" />

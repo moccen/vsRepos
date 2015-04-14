@@ -22,8 +22,10 @@ namespace WCF_RIA_Project
         public int SiteId { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
+        public int? CateId { get; set; } 
         public string Owner { get; set; }
         public string Street { get; set; }
+        public int? StreetId { get; set; }
         public string OrgCode { get; set; }
         public string Place { get; set; }
         public int? FoundYear { get; set; }
@@ -115,8 +117,10 @@ namespace WCF_RIA_Project
                                     ID = stadium.Id,
                                     Name = stadium.Name,
                                     Category = stadium.Category.Name,
+                                    CateID = stadium.Category.Id,
                                     OwnerParts = stadium.Owner2StadiumMediatorCollection.Select(x => x.Owner.Name),
                                     Street = stadium.Street.Name,
+                                    StreetID= stadium.Street.Id,
                                     OrgCode = stadium.StadiumBase.OrgCode,
                                     Place = stadium.StadiumBase.Place,
                                     FoundYear = stadium.StadiumBase.FoundYear,
@@ -140,8 +144,10 @@ namespace WCF_RIA_Project
                 SiteId = x.ID,
                 Name = x.Name,
                 Category = x.Category,
+                CateId = x.CateID,
                 Owner = string.Join("/", x.OwnerParts),
                 Street = x.Street,
+                StreetId = x.StreetID,
                 OrgCode = x.OrgCode,
                 Place = x.Place,
                 FoundYear = x.FoundYear,
@@ -158,7 +164,7 @@ namespace WCF_RIA_Project
                 Note = x.Note,
                 Photo = x.Photo,
             }).AsQueryable();
-
+            
             return result;
         }
 

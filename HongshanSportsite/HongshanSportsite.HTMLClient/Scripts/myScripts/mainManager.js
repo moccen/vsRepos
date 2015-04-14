@@ -942,6 +942,20 @@
                     screen.openPara = openIds;
                     screen.recievePara = recvIds;
                     screen.operModePara = operIds;
+                    myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                        .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                        .expand('EcoStatus')
+                        .execute()
+                        .then(function (proItems) {
+                            var test = screen.CombinedStadium.array;
+                            addPin2Map(test);
+                            loadStadiumInfoGrid(test);
+                            var ecoData = lsDataOrger.setData(test);
+                            jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                            util.upDatePivot('#ecoPivot', ecoData);
+
+                        });
+
                 }
 
                 //screen.StadiumQuery.load().then(function (promiseItems) {
@@ -962,11 +976,12 @@
                 //    loadStadiumInfoGrid(test);
                 //});
 
-                screen.CombinedStadium.load().then(function (e) {
-                    var test = screen.CombinedStadium.data;
-                    addPin2Map(test);
-                    loadStadiumInfoGrid(test);
-                });
+                //screen.CombinedStadium.load().then(function (e) {
+                //    var test = screen.CombinedStadium.data;
+                //    addPin2Map(test);
+                //    loadStadiumInfoGrid(test);
+                //});
+
 
                 //screen.StadiumQueryWithEcoStatus.load().then(function (e) {
                 //    var ecoData = lsDataOrger.setData(screen.StadiumQueryWithEcoStatus.data);
@@ -1185,10 +1200,10 @@
                         iterateProp(item[prop], temp);
                         continue;
                     }
-                    //if (prop === 'Owner2StadiumMediatorCollection') {
-                    //    iterateAry(item[prop].array, temp);
-                    //    continue;
-                    //}
+                    if (prop === 'EcoStatus') {
+                        iterateAry(item[prop].array, temp);
+                        continue;
+                    }
                     switch (typeof (item[prop])) {
                         case 'object':
                             {

@@ -205,6 +205,7 @@
       <DependentUpon>StadiumBaseSet.lsml</DependentUpon>
     </Compile>
     <Compile Include="DataSources\ApplicationData\_ApplicationDataService.lsml.cs" />
+    <Compile Include="DataSources\WCF_RIA_ServiceData\_WCF_RIA_ServiceDataService.lsml.cs" />
     <Compile Include="handlers\GetUserPermissions.ashx.cs">
       <DependentUpon>GetUserPermissions.ashx</DependentUpon>
     </Compile>
@@ -259,6 +260,9 @@
     <LightSwitchModel Include="DataSources\WCF_RIA_ServiceData\CombinedStadium.lsml" />
     <LightSwitchModel Include="DataSources\WCF_RIA_ServiceData\CombindeEcoStatus.lsml" />
     <LightSwitchModel Include="Properties\DataSources\WCF_RIA_ServiceData.lsml" />
+    <LightSwitchModel Include="DataSources\WCF_RIA_ServiceData\CombindedStadiumQuery.lsml">
+      <DependentUpon>CombinedStadium.lsml</DependentUpon>
+    </LightSwitchModel>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
