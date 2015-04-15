@@ -160,6 +160,7 @@
     Name="Stadium_EcoStatus1">
     <AssociationEnd
       Name="CombinedStadiumItem"
+      Multiplicity="One"
       EntityType="CombinedStadiumItem">
       <AssociationEnd.Attributes>
         <DeleteRule />

@@ -75,6 +75,33 @@
         Association="Stadium_EcoStatus1"
         FromEnd="CombindeEcoStatusItem"
         ToEnd="CombinedStadiumItem" />
+      <EntityProperty
+        Name="PlaceId"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="StreetId"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="OwnerIds"
+        PropertyType=":String?" />
+      <EntityProperty
+        Name="CateId"
+        PropertyType=":Int32?">
+        <EntityProperty.Attributes>
+          <NotSearchable />
+        </EntityProperty.Attributes>
+      </EntityProperty>
+      <EntityProperty
+        Name="StreetStr"
+        PropertyType=":String?" />
     </EntityType.Properties>
   </EntityType>
   <EntityContainer
@@ -183,6 +210,21 @@
         <WcfRiaProperty
           Name="StatdiumName"
           Property="CombindeEcoStatusItem/Properties[StatdiumName]" />
+        <WcfRiaProperty
+          Name="PlaceId"
+          Property="CombindeEcoStatusItem/Properties[PlaceId]" />
+        <WcfRiaProperty
+          Name="StreetId"
+          Property="CombindeEcoStatusItem/Properties[StreetId]" />
+        <WcfRiaProperty
+          Name="OwnerIds"
+          Property="CombindeEcoStatusItem/Properties[OwnerIds]" />
+        <WcfRiaProperty
+          Name="CateId"
+          Property="CombindeEcoStatusItem/Properties[CateId]" />
+        <WcfRiaProperty
+          Name="StreetStr"
+          Property="CombindeEcoStatusItem/Properties[StreetStr]" />
         <WcfRiaProperty
           Name="Year"
           Property="CombindeEcoStatusItem/Properties[Year]" />

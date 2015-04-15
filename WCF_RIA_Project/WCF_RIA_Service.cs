@@ -22,7 +22,7 @@ namespace WCF_RIA_Project
         public int SiteId { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
-        public int? CateId { get; set; } 
+        public int? CateId { get; set; }
         public string Owner { get; set; }
         public string Street { get; set; }
         public int? StreetId { get; set; }
@@ -42,19 +42,29 @@ namespace WCF_RIA_Project
         public double? Latitude { get; set; }
         public string Note { get; set; }
         public byte[] Photo { get; set; }
+        //public ICollection<EcoStatus> EcoStatuses { get; set; }
 
         [Include]
         [Association("Stadium_EcoStatus", "SiteId", "StadiumId")]
-        public IQueryable<CombindeEcoStatus> EcoStatus { get; set; }
+        //public IQueryable<CombindeEcoStatus> EcoStatus { get; set; }
+        public ICollection<CombindeEcoStatus> EcoStatus { get; set; }
+
     }
 
     public class CombindeEcoStatus
     {
-        //private CombinedStadium _combinedStadium;
+        private CombinedStadium _combinedStadium;
         [Key]
         public int EcoId { get; set; }
+        //stadium properties
         public string StatdiumName { get; set; }
-        public int? StadiumId { get; set; }
+        public int StadiumId { get; set; }
+        public int? PlaceId { get; set; }
+        public int? StreetId { get; set; }
+        public string OwnerIds { get; set; }
+        public int? CateId { get; set; }
+        public string StreetStr { get; set; }
+        //economy properties
         public int? Year { get; set; }
         public int? EmployeeNum { get; set; }
         public string OperateMode { get; set; }
@@ -66,19 +76,19 @@ namespace WCF_RIA_Project
 
         [Include]
         [Association("Stadium_EcoStatus", "StadiumId", "SiteId", IsForeignKey = true)]
-        public CombinedStadium Stadium
+        public virtual CombinedStadium Stadium
         {
-            //get { return this._combinedStadium; }
-            //set
-            //{
-            //    this._combinedStadium = value;
-            //    if (value == null)
-            //    {
-            //        this.Id = value.Id;
-            //    }
-            //}
-            get;
-            set;
+            get { return this._combinedStadium; }
+            set
+            {
+                this._combinedStadium = value;
+                if (value == null)
+                {
+                    this.StadiumId = value.SiteId;
+                }
+            }
+            //get;
+            //set;
         }
 
     }
@@ -120,7 +130,7 @@ namespace WCF_RIA_Project
                                     CateID = stadium.Category.Id,
                                     OwnerParts = stadium.Owner2StadiumMediatorCollection.Select(x => x.Owner.Name),
                                     Street = stadium.Street.Name,
-                                    StreetID= stadium.Street.Id,
+                                    StreetID = stadium.Street.Id,
                                     OrgCode = stadium.StadiumBase.OrgCode,
                                     Place = stadium.StadiumBase.Place,
                                     FoundYear = stadium.StadiumBase.FoundYear,
@@ -137,6 +147,7 @@ namespace WCF_RIA_Project
                                     Latitude = stadium.StadiumBase.Latitude,
                                     Note = stadium.StadiumBase.Note,
                                     Photo = stadium.StadiumBase.Photo,
+                                    //EcoStatus = stadium.EcoStatusCollection
                                 };
 
             var result = stadiumsQuery.AsEnumerable().Select(x => new CombinedStadium()
@@ -163,8 +174,9 @@ namespace WCF_RIA_Project
                 Latitude = x.Latitude,
                 Note = x.Note,
                 Photo = x.Photo,
+                //EcoStatuses = x.EcoStatus
             }).AsQueryable();
-            
+
             return result;
         }
 
@@ -176,7 +188,7 @@ namespace WCF_RIA_Project
                              {
                                  EcoId = eco.Id,
                                  StatdiumName = eco.StadiumEco.Name,
-                                 StadiumId = eco.StadiumEco.Id,
+                                 //StadiumId = eco.StadiumEco.Id,
                                  Year = eco.Year,
                                  EmployeeNum = eco.Employee,
                                  OperateMode = eco.OperateMode,
@@ -184,7 +196,8 @@ namespace WCF_RIA_Project
                                  OpeningDays = eco.OpeningDays,
                                  ClientCount = eco.ClientCount,
                                  Income = eco.Income,
-                                 Expend = eco.Expend
+                                 Expend = eco.Expend,
+                                 StreetStr = eco.StadiumEco.Street.Name
                              };
             return stadiumEco;
         }

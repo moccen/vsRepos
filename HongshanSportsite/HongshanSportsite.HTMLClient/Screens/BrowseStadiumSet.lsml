@@ -305,32 +305,6 @@
           </ChainExpression>
         </ScreenExpressionTree>
       </ScreenCollectionProperty>
-      <ScreenCollectionProperty
-        Name="CombinedStadium"
-        PageSize="45"
-        PropertyType="CollectionView$CombinedStadiumItem">
-        <ScreenCollectionProperty.Query>
-          <ScreenQueryDefinition
-            Name="CombinedStadiumQuery"
-            ReturnType="CombinedStadiumItem*">
-            <ScreenQueryDefinition.FilterExpression>
-              <QueryFilterExpressionTree />
-            </ScreenQueryDefinition.FilterExpression>
-            <ScreenQueryDefinition.Source>
-              <QuerySourceExpressionTree>
-                <MemberExpression
-                  Member="WCF_RIA_ServiceData/Members[CombinedStadium]" />
-              </QuerySourceExpressionTree>
-            </ScreenQueryDefinition.Source>
-          </ScreenQueryDefinition>
-        </ScreenCollectionProperty.Query>
-        <ScreenExpressionTree>
-          <ChainExpression>
-            <CallExpression
-              Target="BrowseStadiumSet/Properties[CombinedStadium]/Query" />
-          </ChainExpression>
-        </ScreenExpressionTree>
-      </ScreenCollectionProperty>
     </Screen.Properties>
   </Screen>
   <Application.Methods>

@@ -944,18 +944,27 @@
                     screen.operModePara = operIds;
                     myapp.activeDataWorkspace.WCF_RIA_ServiceData
                         .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
-                        .expand('EcoStatus')
                         .execute()
                         .then(function (proItems) {
-                            var test = screen.CombinedStadium.array;
+                            //var test = screen.CombinedStadium.array;
+                            var test = proItems.results;
                             addPin2Map(test);
                             loadStadiumInfoGrid(test);
-                            var ecoData = lsDataOrger.setData(test);
-                            jqGridMgr.setData('#ecoStatusInfo', ecoData);
-                            util.upDatePivot('#ecoPivot', ecoData);
+                            //var ecoData = lsDataOrger.setData(test);
+                            //jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                            //util.upDatePivot('#ecoPivot', ecoData);
 
                         });
 
+                    myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                        .RiaEcostatusQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                        .execute()
+                        .then(function(proItems) {
+                            var test = proItems.results;
+                            var ecoData = lsDataOrger.setData(test);
+                            jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                            util.upDatePivot('#ecoPivot', ecoData);
+                        });
                 }
 
                 //screen.StadiumQuery.load().then(function (promiseItems) {
@@ -1178,6 +1187,8 @@
             'ClientCount': '平均每周接待健身人次',
             'Income': '收入合计（千元）',
             'Expend': '支出合计（千元）',
+            'StatdiumName': '场地名称',
+            'StreetStr': '所属街道'
             //jqGridColumnsConfigs
         };
 
