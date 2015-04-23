@@ -46,8 +46,9 @@ namespace WCF_RIA_Project
 
         [Include]
         [Association("Stadium_EcoStatus", "SiteId", "StadiumId")]
-        //public IQueryable<CombindeEcoStatus> EcoStatus { get; set; }
-        public ICollection<CombindeEcoStatus> EcoStatus { get; set; }
+        //[Composition]
+        public IQueryable<CombindeEcoStatus> CombinedEcoStatus { get; set; }
+        //public ICollection<CombindeEcoStatus> EcoStatus { get; set; }
 
     }
 
@@ -58,12 +59,12 @@ namespace WCF_RIA_Project
         public int EcoId { get; set; }
         //stadium properties
         public string StatdiumName { get; set; }
-        public int StadiumId { get; set; }
-        public int? PlaceId { get; set; }
-        public int? StreetId { get; set; }
-        public string OwnerIds { get; set; }
-        public int? CateId { get; set; }
-        public string StreetStr { get; set; }
+        public int? StadiumId { get; set; }
+        //public int? PlaceId { get; set; }
+        //public int? StreetId { get; set; }
+        //public string OwnerIds { get; set; }
+        //public int? CateId { get; set; }
+        //public string StreetStr { get; set; }
         //economy properties
         public int? Year { get; set; }
         public int? EmployeeNum { get; set; }
@@ -76,13 +77,13 @@ namespace WCF_RIA_Project
 
         [Include]
         [Association("Stadium_EcoStatus", "StadiumId", "SiteId", IsForeignKey = true)]
-        public virtual CombinedStadium Stadium
+        public virtual CombinedStadium EcoStadium
         {
             get { return this._combinedStadium; }
             set
             {
                 this._combinedStadium = value;
-                if (value == null)
+                if (value != null)
                 {
                     this.StadiumId = value.SiteId;
                 }
@@ -93,6 +94,7 @@ namespace WCF_RIA_Project
 
     }
 
+    //public class WCF_RIA_Service : DomainService
     public class WCF_RIA_Service : DomainService
     {
         private ApplicationData m_context;
@@ -121,7 +123,7 @@ namespace WCF_RIA_Project
         [Query(IsDefault = true)]
         public IQueryable<CombinedStadium> GetAllStadiums()
         {
-            var stadiumsQuery = from stadium in this.Context.StadiumSet
+            var stadiumsQuery = from stadium in this.Context.StadiumSet.Include("EcoStatusCollection")
                                 select new
                                 {
                                     ID = stadium.Id,
@@ -147,7 +149,7 @@ namespace WCF_RIA_Project
                                     Latitude = stadium.StadiumBase.Latitude,
                                     Note = stadium.StadiumBase.Note,
                                     Photo = stadium.StadiumBase.Photo,
-                                    //EcoStatus = stadium.EcoStatusCollection
+                                    CombindeEcoStatus = stadium.EcoStatusCollection.AsEnumerable()
                                 };
 
             var result = stadiumsQuery.AsEnumerable().Select(x => new CombinedStadium()
@@ -174,7 +176,26 @@ namespace WCF_RIA_Project
                 Latitude = x.Latitude,
                 Note = x.Note,
                 Photo = x.Photo,
-                //EcoStatuses = x.EcoStatus
+                //CombinedEcoStatus = (x.CombindeEcoStatus != null?(from eco in x.CombindeEcoStatus
+                //            select new CombindeEcoStatus()
+                //            {
+                //                EcoId = eco.Id,
+                //                StatdiumName = "",
+                //                //StadiumId = eco.StadiumEco.Id,
+                //                Year = eco.Year,
+                //                EmployeeNum = eco.Employee,
+                //                OperateMode = eco.OperateMode,
+                //                OpenStatus = eco.OpenStatus,
+                //                OpeningDays = eco.OpeningDays,
+                //                ClientCount = eco.ClientCount,
+                //                Income = eco.Income,
+                //                Expend = eco.Expend,
+                //                //StreetStr = eco.StadiumEco.Street.Name,
+                //                EcoStadium = null
+                //            }).AsQueryable():null)
+                CombinedEcoStatus = (from ecoStatus in GetAllEcoStatuses()
+                                     where ecoStatus.StadiumId == x.ID
+                                     select ecoStatus)
             }).AsQueryable();
 
             return result;
@@ -188,7 +209,7 @@ namespace WCF_RIA_Project
                              {
                                  EcoId = eco.Id,
                                  StatdiumName = eco.StadiumEco.Name,
-                                 //StadiumId = eco.StadiumEco.Id,
+                                 StadiumId = eco.StadiumEco.Id,
                                  Year = eco.Year,
                                  EmployeeNum = eco.Employee,
                                  OperateMode = eco.OperateMode,
@@ -197,7 +218,7 @@ namespace WCF_RIA_Project
                                  ClientCount = eco.ClientCount,
                                  Income = eco.Income,
                                  Expend = eco.Expend,
-                                 StreetStr = eco.StadiumEco.Street.Name
+                                 //StreetStr = eco.StadiumEco.Street.Name
                              };
             return stadiumEco;
         }
@@ -207,6 +228,10 @@ namespace WCF_RIA_Project
             return queryable.Count();
         }
 
+        //public IQueryable<Stadium> GetAllStadium()
+        //{
+        //    return this.m_context.StadiumSet.Include("EcoStatusCollection");
+        //} 
     }
 
 }

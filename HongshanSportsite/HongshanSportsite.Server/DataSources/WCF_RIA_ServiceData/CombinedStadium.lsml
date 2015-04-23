@@ -160,7 +160,6 @@
     Name="Stadium_EcoStatus1">
     <AssociationEnd
       Name="CombinedStadiumItem"
-      Multiplicity="One"
       EntityType="CombinedStadiumItem">
       <AssociationEnd.Attributes>
         <DeleteRule />
@@ -351,7 +350,7 @@
           Name="Photo"
           Property="CombinedStadiumItem/Properties[Photo]" />
         <WcfRiaProperty
-          Name="EcoStatus"
+          Name="CombinedEcoStatus"
           Property="CombinedStadiumItem/Properties[EcoStatus]" />
       </EntitySetMapping.Attributes>
     </EntitySetMapping>

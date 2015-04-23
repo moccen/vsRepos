@@ -942,29 +942,42 @@
                     screen.openPara = openIds;
                     screen.recievePara = recvIds;
                     screen.operModePara = operIds;
+
+                    screen.CombindedStadiumQuery.load().then(function(data) {
+                        var test = data;
+                        var test2 = screen.CombinedStadium;
+                    });
                     myapp.activeDataWorkspace.WCF_RIA_ServiceData
                         .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                        //.expand('EcoStatus')
                         .execute()
                         .then(function (proItems) {
                             //var test = screen.CombinedStadium.array;
                             var test = proItems.results;
                             addPin2Map(test);
                             loadStadiumInfoGrid(test);
+                            //myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                            //    .RiaEcostatusQuery()
+                            //    .execute()
+                            //    .then(function (proItems) {
+                            //    var test = proItems;
+                            //});
+
                             //var ecoData = lsDataOrger.setData(test);
                             //jqGridMgr.setData('#ecoStatusInfo', ecoData);
                             //util.upDatePivot('#ecoPivot', ecoData);
 
                         });
 
-                    myapp.activeDataWorkspace.WCF_RIA_ServiceData
-                        .RiaEcostatusQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
-                        .execute()
-                        .then(function(proItems) {
-                            var test = proItems.results;
-                            var ecoData = lsDataOrger.setData(test);
-                            jqGridMgr.setData('#ecoStatusInfo', ecoData);
-                            util.upDatePivot('#ecoPivot', ecoData);
-                        });
+                    //myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                    //    .RiaEcostatusQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                    //    .execute()
+                    //    .then(function(proItems) {
+                    //        var test = proItems.results;
+                    //        var ecoData = lsDataOrger.setData(test);
+                    //        jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                    //        util.upDatePivot('#ecoPivot', ecoData);
+                    //    });
                 }
 
                 //screen.StadiumQuery.load().then(function (promiseItems) {

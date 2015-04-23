@@ -159,10 +159,11 @@ namespace LightSwitchApplication
             {
                 query = query.Where(e => place.Contains(e.Stadium.StadiumBase.Place));
             }
-            var street = ParseParaInt(streetPara);
+            //var street = ParseParaInt(streetPara);
+            var street = ParseParaStr(streetPara);
             if (street != null)
             {
-                query = query.Where(e => street.Contains(e.Stadium.Street.Id));
+                query = query.Where(e => street.Contains(e.Stadium.Street.Name));
             }
             var owner = ParseParaInt(ownerPara);
             if (owner != null)
