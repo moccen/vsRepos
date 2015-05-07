@@ -307,6 +307,7 @@
       </ScreenCollectionProperty>
       <ScreenCollectionProperty
         Name="CombindedStadiumQuery"
+        DisablePaging="True"
         PageSize="45"
         PropertyType="CollectionView$CombinedStadiumItem">
         <ScreenCollectionProperty.Query>
@@ -328,6 +329,83 @@
           <ChainExpression>
             <CallExpression
               Target="BrowseStadiumSet/Properties[CombindedStadiumQuery]/Query">
+              <ArgumentExpression
+                Parameter="placePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[placePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="streetPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[streetPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="ownerPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[ownerPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="catePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[catePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="openPara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[openPara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="recievePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[recievePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+              <ArgumentExpression
+                Parameter="operModePara">
+                <ChainExpression>
+                  <MemberExpression
+                    Member="BrowseStadiumSet/Properties[operModePara]" />
+                </ChainExpression>
+              </ArgumentExpression>
+            </CallExpression>
+          </ChainExpression>
+        </ScreenExpressionTree>
+      </ScreenCollectionProperty>
+      <ScreenCollectionProperty
+        Name="RiaEcostatusQuery"
+        DisablePaging="True"
+        PageSize="45"
+        PropertyType="CollectionView$CombindeEcoStatusItem">
+        <ScreenCollectionProperty.Query>
+          <ScreenQueryDefinition
+            Name="RiaEcostatusQueryQuery"
+            ReturnType="CombindeEcoStatusItem*">
+            <ScreenQueryDefinition.FilterExpression>
+              <QueryFilterExpressionTree />
+            </ScreenQueryDefinition.FilterExpression>
+            <ScreenQueryDefinition.Source>
+              <QuerySourceExpressionTree>
+                <MemberExpression
+                  Member="WCF_RIA_ServiceData/Members[RiaEcostatusQuery]" />
+              </QuerySourceExpressionTree>
+            </ScreenQueryDefinition.Source>
+          </ScreenQueryDefinition>
+        </ScreenCollectionProperty.Query>
+        <ScreenExpressionTree>
+          <ChainExpression>
+            <CallExpression
+              Target="BrowseStadiumSet/Properties[RiaEcostatusQuery]/Query">
               <ArgumentExpression
                 Parameter="placePara">
                 <ChainExpression>

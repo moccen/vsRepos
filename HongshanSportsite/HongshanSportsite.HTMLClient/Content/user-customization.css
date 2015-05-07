@@ -6,13 +6,15 @@
 /* Font families for screen and dialog headers.  Font families for content inside a screen 
     or dialog are determined by the theme's global font family setting. */
 .msls-header .ui-title {
-    font-family: 'Segoe Light', 'Segoe UI Light', 'Segoe UI', 'Segoe WP Light', 'Roboto Light','Frutiger','Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: '微软雅黑','Segoe Light', 'Segoe UI Light', 'Segoe UI', 'Segoe WP Light', 'Roboto Light','Frutiger','Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
+    font-size: 40px;
 }
 
-.msls-logo {
-    
+.msls-header .msls-logo img {
+    height: 40px;
 }
+
 /* Customizable font styles for screen controls */
 .msls-font-style-large {
 }

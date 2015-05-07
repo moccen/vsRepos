@@ -168,6 +168,11 @@ var albumMgr = (function () {
             //$('#albumMask').css({ 'display': 'block' });
             //$('#backgroundMask').css({ 'opacity': 0.8 });
             //$('#backgroundMask').fadeTo(500, 0.8);
+            if (stadiumId == 'undefined') {
+                windows.alert("can not get stadium ID!");
+                return;
+            }
+
             $('#albumMask').fadeIn(500);
             $('#loadingAlbum').css({ 'display': 'block' });
             myapp.activeDataWorkspace.ApplicationData.StadiumQueryByIds(stadiumId)

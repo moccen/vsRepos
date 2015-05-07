@@ -12,8 +12,10 @@
         eachProp: function (obj, func) {
             var prop;
             for (prop in obj) {
-                if (util.hasProp(obj, prop)) {
-                    func(obj[prop]);
+                if (obj.hasOwnProperty(prop)) {
+                    if (util.hasProp(obj, prop)) {
+                        func(obj[prop]);
+                    }
                 }
             }
         },
@@ -261,6 +263,7 @@
     };
 
     var eleId = 1;//对于没有id的元素，自动分配一个全局id
+
     var uiBuilder = (function () {
         var builder = {};
         builder.buildLayout = function () {
@@ -282,71 +285,19 @@
         //    }
         //}
 
-        function getLayoutConf() {
-            var layoutConf = {};
-            layoutConf['parent'] = { 'id': 'layout', 'class': 'easyui-layout', 'data-role': 'none', 'elType': 'div' };
-            var regionsConf = getRegionsConfig(arguments[0]);//arguments[0]默认为用户权限
-            layoutConf['children'] = getChildrenConf(regionsConf);
-            return layoutConf;
-            //return { 'parent': { 'id': 'layout', 'class': 'easyui-layout', 'data-role': 'none', 'elType': 'div' } };
+        function getTreeConf(elId) {
+            return { 'id': elId, 'style': "padding:5px", 'class': "easyui-tree", 'data-options': "animate:true,checkbox:true", elType: 'ul' };
         }
 
-        //将各个region的配文件添加到layoutConf['children']上
-        function getChildrenConf(childrenConfs) {
+        //每一个查询面板的配置文件
+        function getPanelConf(configObj) {
+            var panelConf = {};
             var children = {};
-            util.eachProp(childrenConfs, function (confVal) {
-                if (confVal.id) {
-                    children[confVal.id] = confVal;
-                } else if (confVal['parent'] && confVal['parent'].id) {
-                    children[confVal.parent.id] = confVal;
-                }
-                else {
-                    children[confVal.elType + eleId++] = confVal;
-                }
-            });
-            return children;
-        }
+            panelConf['parent'] = { 'id': configObj.parent.Id, 'title': configObj.parent.title, style: 'padding:10px', elType: 'div' };
+            children[configObj.children.Id] = getTreeConf(configObj.children.Id);
+            panelConf['children'] = children;
 
-        function getRegionsConfig(permissions) {
-            var regionConfig = {};
-            if (permissionChecker.hasPermission(permissions, 'regionwest')) {
-
-                //regionConfig['regionWest'] = getRegionConf('west', '查询面板');
-                var accordConf = getAccordConf(permissions);
-                var menuConf = getMenuConf(permissions);
-                regionConfig['regionWest'] = {};
-                regionConfig['regionWest']['parent'] = getRegionConf('west', '查询面板');
-                regionConfig['regionWest']['children'] = { menuConf: menuConf, accordConf: accordConf };
-                //regionConfig['regionWest'] = {
-                //    'parent': getRegionConf('west', '查询面板'),
-                //    'children': getAccordConf(permissions)
-                //};
-            };
-            //if (permissionChecker.hasPermission(permissions, 'regioneast')) {
-            //    regionConfig['regionEast'] = getRegionConf('east', '属性面板');
-            //};
-
-            //regionConfig['regionCenter'] = getRegionConf('center', '内容面板');
-            regionConfig['regionCenter'] = {
-                'parent': getRegionConf('center', '内容面板'),
-                'children': getTabsConf(permissions)
-            };
-            return regionConfig;
-        }
-
-        function getRegionConf(regionPos, regionTitle, regionWidth) {
-            var regionConfig = {
-                'id': 'region' + regionPos,
-                'title': regionTitle,
-                'data-role': 'none',
-                'data-options': "region:'" + regionPos + "',split:true"
-            };
-            if (regionPos !== 'center') {
-                regionConfig.width = regionWidth || $(window).width() * 0.2;
-            }
-            //regionConfig.width = (regionPos !== "center") && (regionWidth || $(window).width() * 0.2);
-            return regionConfig;
-
+            return panelConf;
         }
 
         //查询面板
@@ -381,6 +332,7 @@
             return accordionConfig;
         }
 
+
         function getMenuConf(permissions) {
             var menuConf = {};
             var children = {};
@@ -393,92 +345,146 @@
             return menuConf;
         }
 
-        function getPanelConf(configObj) {
-            var panelConf = {};
-            var children = {};
-            panelConf['parent'] = { 'id': configObj.parent.Id, 'title': configObj.parent.title, style: 'padding:10px', elType: 'div' };
-            children[configObj.children.Id] = getTreeConf(configObj.children.Id);
-            panelConf['children'] = children;
-
-            return panelConf;
-        }
-
-        function getTreeConf(elId) {
-            return { 'id': elId, 'style': "padding:5px", 'class': "easyui-tree", 'data-options': "animate:true,checkbox:true", elType: 'ul' };
-        }
-
-        //主面板
-        function getTabsConf(permissions) {
-            var tabsConfigs = {};
-            var children = {};
-
-            var getMapConf = function () {
-                var mapIdConfig = {};
-                var child = {};
-                mapIdConfig['parent'] = { id: 'mapTab', title: '地图', style: 'padding:10px', elType: 'div' };
-                mapIdConfig['children'] = child;
-                child['mapID'] = { id: 'mapID', style: 'width:100%; height:100%;', elType: 'div' };
-
-                return mapIdConfig;
-            }
-            var getStadiumInfo = function () {
-                var tabConfig = {};
-                var child = {};
-                tabConfig['parent'] = { id: 'stadiumTab', title: '场馆信息', style: 'padding:5px', elType: 'tabs' };
-                tabConfig['children'] = child;
-                //child['label1'] = { text: '分组依据', elType: 'div' };
-                //child['groupSelecter'] = { id: 'stadiumCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
-                child['groupBy-ul'] = { id: 'groupBySelector', elType: 'div' };
-                child['stadiumInfo'] = { id: 'stadiumInfo', elType: 'table' };
-                child['stadiumPager'] = { id: 'stadiumPager', elType: 'div' };
-
-                return tabConfig;
+        function getRegionConf(regionPos, regionTitle, regionWidth) {
+            var regionConfig = {
+                'id': 'region' + regionPos,
+                'title': regionTitle,
+                'data-role': 'none',
+                'data-options': "region:'" + regionPos + "',split:true"
             };
+            if (regionPos !== 'center') {
+                regionConfig.width = regionWidth || $(window).width() * 0.2;
+            }
+            //regionConfig.width = (regionPos !== "center") && (regionWidth || $(window).width() * 0.2);
+            return regionConfig;
 
-            var getEcoInfo = function () {
-                var tabConfig = {};
-                var child = {};
-                tabConfig['parent'] = { id: 'ecoStatusTab', title: '运营情况', style: 'padding:5px', elType: 'tabs' };
-                tabConfig['children'] = child;
-                //child['label1'] = { text: '分组依据', elType: 'div' };
-                //child['groupSelecter'] = { id: 'ecoCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
-                child['groupByEco'] = { id: 'EcoGroupByer', elType: 'div' };
-                child['jqGridTable'] = { id: 'ecoStatusInfo', elType: 'table' };
-                child['jqPager'] = { id: 'ecoStatusPager', elType: 'div' };
+        }
 
-                return tabConfig;
+        function getRegionsConfig(permissions) {
+            var regionConfig = {};
+            if (permissionChecker.hasPermission(permissions, 'regionwest')) {
+
+                //regionConfig['regionWest'] = getRegionConf('west', '查询面板');
+                var accordConf = getAccordConf(permissions);
+                var menuConf = getMenuConf(permissions);
+                regionConfig['regionWest'] = {};
+                regionConfig['regionWest']['parent'] = getRegionConf('west', '查询面板');
+                regionConfig['regionWest']['children'] = { menuConf: menuConf, accordConf: accordConf };
+                //regionConfig['regionWest'] = {
+                //    'parent': getRegionConf('west', '查询面板'),
+                //    'children': getAccordConf(permissions)
+                //};
+            };
+            //if (permissionChecker.hasPermission(permissions, 'regioneast')) {
+            //    regionConfig['regionEast'] = getRegionConf('east', '属性面板');
+            //};
+
+            //regionConfig['regionCenter'] = getRegionConf('center', '内容面板');
+
+            //主面板
+            function getTabsConf(permissions) {
+                var tabsConfigs = {};
+                var children = {};
+
+                var getMapConf = function () {
+                    var mapIdConfig = {};
+                    var child = {};
+                    mapIdConfig['parent'] = { id: 'mapTab', title: '地图', style: 'padding:10px', elType: 'div' };
+                    mapIdConfig['children'] = child;
+                    child['mapID'] = { id: 'mapID', style: 'width:100%; height:100%;', elType: 'div' };
+
+                    return mapIdConfig;
+                }
+                var getStadiumInfo = function () {
+                    var tabConfig = {};
+                    var child = {};
+                    tabConfig['parent'] = { id: 'stadiumTab', title: '场馆信息', style: 'padding:5px', elType: 'tabs' };
+                    tabConfig['children'] = child;
+                    //child['label1'] = { text: '分组依据', elType: 'div' };
+                    //child['groupSelecter'] = { id: 'stadiumCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
+                    child['groupBy-ul'] = { id: 'groupBySelector', elType: 'div' };
+                    child['stadiumInfo'] = { id: 'stadiumInfo', elType: 'table' };
+                    child['stadiumPager'] = { id: 'stadiumPager', elType: 'div' };
+
+                    return tabConfig;
+                };
+
+                var getEcoInfo = function () {
+                    var tabConfig = {};
+                    var child = {};
+                    tabConfig['parent'] = { id: 'ecoStatusTab', title: '运营情况', style: 'padding:5px', elType: 'tabs' };
+                    tabConfig['children'] = child;
+                    //child['label1'] = { text: '分组依据', elType: 'div' };
+                    //child['groupSelecter'] = { id: 'ecoCombo', 'class': 'easyui-combobox', style: 'width:200px', 'data-options': "valueField:'id',textField:'text'", elType: 'input' };
+                    child['groupByEco'] = { id: 'EcoGroupByer', elType: 'div' };
+                    child['jqGridTable'] = { id: 'ecoStatusInfo', elType: 'table' };
+                    child['jqPager'] = { id: 'ecoStatusPager', elType: 'div' };
+
+                    return tabConfig;
+                }
+
+                var getPivotConf = function (configs) {
+                    var pivotConf = {};
+                    var child = {};
+                    var parentId = configs.pivotId + 'tab';
+                    pivotConf['parent'] = { id: parentId, title: configs.tabTitle, style: 'padding:10px', 'class': 'pivottable-master', elType: 'div' };
+                    pivotConf['children'] = child;
+                    child[configs.pivotId] = { id: configs.pivotId, style: 'margin: 10px;width: 100%', elType: 'div' };
+
+                    return pivotConf;
+
+                }
+
+                tabsConfigs['parent'] = { 'class': "easyui-tabs", 'data-options': "fit:true,border:false,plain:true", elType: 'tabs' };
+                tabsConfigs['children'] = children;
+                if (permissionChecker.hasPermission(permissions, 'mapID')) {
+                    children['mapID'] = getMapConf();
+                }
+                if (permissionChecker.hasPermission(permissions, 'stadiumInfo')) {
+                    children['stadiumInfo'] = getStadiumInfo();
+                }
+                if (permissionChecker.hasPermission(permissions, 'ecoStatusInfo')) {
+                    children['ecoStatusInfo'] = getEcoInfo();
+                }
+                if (permissionChecker.hasPermission(permissions, 'stadiumPivot')) {
+                    children['stadiumPivot'] = getPivotConf({ tabTitle: '场馆信息统计', pivotId: 'stadiumPivot' });
+                }
+                if (permissionChecker.hasPermission(permissions, 'ecoPivot')) {
+                    children['ecoPivot'] = getPivotConf({ tabTitle: '运营情况统计', pivotId: 'ecoPivot' });
+                }
+                return tabsConfigs;
             }
 
-            var getPivotConf = function (configs) {
-                var pivotConf = {};
-                var child = {};
-                var parentId = configs.pivotId + 'tab';
-                pivotConf['parent'] = { id: parentId, title: configs.tabTitle, style: 'padding:10px', 'class': 'pivottable-master', elType: 'div' };
-                pivotConf['children'] = child;
-                child[configs.pivotId] = { id: configs.pivotId, style: 'margin: 10px;width: 100%', elType: 'div' };
+            regionConfig['regionCenter'] = {
+                'parent': getRegionConf('center', '内容面板'),
+                'children': getTabsConf(permissions)
+            };
+            return regionConfig;
+        }
 
-                return pivotConf;
+        //将各个region的配文件添加到layoutConf['children']上
+        function getChildrenConf(childrenConfs) {
+            var children = {};
+            util.eachProp(childrenConfs, function (confVal) {
+                if (confVal.id) {
+                    children[confVal.id] = confVal;
+                } else if (confVal['parent'] && confVal['parent'].id) {
+                    children[confVal.parent.id] = confVal;
+                }
+                else {
+                    children[confVal.elType + eleId++] = confVal;
+                }
+            });
+            return children;
+        }
 
-            }
-
-            tabsConfigs['parent'] = { 'class': "easyui-tabs", 'data-options': "fit:true,border:false,plain:true", elType: 'tabs' };
-            tabsConfigs['children'] = children;
-            if (permissionChecker.hasPermission(permissions, 'mapID')) {
-                children['mapID'] = getMapConf();
-            }
-            if (permissionChecker.hasPermission(permissions, 'stadiumInfo')) {
-                children['stadiumInfo'] = getStadiumInfo();
-            }
-            if (permissionChecker.hasPermission(permissions, 'ecoStatusInfo')) {
-                children['ecoStatusInfo'] = getEcoInfo();
-            }
-            if (permissionChecker.hasPermission(permissions, 'stadiumPivot')) {
-                children['stadiumPivot'] = getPivotConf({ tabTitle: '场馆信息统计', pivotId: 'stadiumPivot' });
-            }
-            if (permissionChecker.hasPermission(permissions, 'ecoPivot')) {
-                children['ecoPivot'] = getPivotConf({ tabTitle: '运营情况统计', pivotId: 'ecoPivot' });
-            }
-            return tabsConfigs;
+        function getLayoutConf() {
+            var layoutConf = {};
+            layoutConf['parent'] = { 'id': 'layout', 'class': 'easyui-layout', 'data-role': 'none', 'elType': 'div' };
+            var regionsConf = getRegionsConfig(arguments[0]);//arguments[0]默认为用户权限
+            layoutConf['children'] = getChildrenConf(regionsConf);
+            return layoutConf;
+            //return { 'parent': { 'id': 'layout', 'class': 'easyui-layout', 'data-role': 'none', 'elType': 'div' } };
         }
 
         function elFactory(elConfig, elType) {
@@ -704,7 +710,7 @@
             }
         },
 
-        getStadiumJqConf: function (tbName, pager) {
+        getStadiumJqConf_Old: function (tbName, pager) {
             var config = {};
             config.jqGridConfig = {
                 colNames: ['所属街道', '组织机构代码', '场地代码', '场地名称', '场地分布', '场地归属', '建成年份', '用地面积（㎡）', '建筑面积（㎡）', '场地面积（㎡）', '投资金额（合计）', '财政拨款', '体彩公益金', '单位自筹', '社会捐赠', '其他'],
@@ -747,7 +753,7 @@
             return config;
         },
 
-        getStadiumJqConfTest: function (tbName, pager, colConf) {
+        getStadiumJqConf: function (tbName, pager, colConf) {
             var config = {};
             config.jqGridConfig = {
                 colNames: colConf.colNames,
@@ -809,6 +815,33 @@
             return config;
         },
 
+        getEcoStautsJqConf:function(tbName, pager, colConf) {
+            var config = {};
+            config.jqGridConfig = {
+                colNames: colConf.colNames,
+                colModel: colConf.colModel,
+                pager: pager,
+                sortname: '场地名称',
+                caption: "运营情况",
+                grouping: true,
+                groupingView: {
+                    //groupField: ['所属街道', '场地代码'],
+                    groupColumnShow: [true, true],
+                    groupText: ['<b>{0}<b> 总计: {1}', '{0} 小计: {1}'],
+                    groupCollapse: true,
+                    groupSummary: [false, true]
+                },
+
+            };
+            var navConfigs = [];
+            config.navConfig = navConfigs;
+            navConfigs.push(dataManager.getNavBtnConfig(tbName, '运营情况.xlsx'));
+            navConfigs.push(dataManager.getExpandBtnConfig());
+            navConfigs.push(dataManager.getColaspeBtnConfig());
+            return config;
+
+        },
+
         getExpandBtnConfig: function () {
             return {
                 caption: "展开",
@@ -833,6 +866,117 @@
 
     };
 
+    var lsDataOrger = (function () {
+        var resvDic = {};
+        var dataOrger = {};
+        var resvDict = {
+            //stadium
+            'Name': '场地名称',
+            'Category': '场地代码',
+            'Owner': '场地归属',
+            'Street': '所属街道',
+            'StadiumBase': '基本信息',
+            //stadiumbase
+            'OrgCode': '组织机构代码',
+            'Place': '场地分布',
+            'FoundYear': '建成年份',
+            'LandArea': '用地面积（㎡）',
+            'BuildingArea': '建筑面积（㎡）',
+            'SiteArea': '场地面积（㎡）',
+            'Investment': '投资金额（合计）',
+            'Fiscal': '财政拨款',
+            'CommonWeal': '体彩公益金',
+            'SelfRaised': '单位自筹',
+            'SocialDonate': '社会捐赠',
+            'Other': '其他',
+            //'Owner2StadiumMediatorCollection': '场地归属',
+            //'Owner2StadiumMediator': '场地归属',
+            //ecostatus
+            //'StadiumEco': '场地名称',
+            'Year': '年份',
+            'Employee': '场地从业人员人数',
+            'OperateMode': '运营模式',
+            'OpenStatus': '对外开放情况',
+            'OpeningDays': '年开放天数',
+            'ClientCount': '平均每周接待健身人次',
+            'Income': '收入合计（千元）',
+            'Expend': '支出合计（千元）',
+            'StatdiumName': '场地名称',
+            'StreetStr': '所属街道'
+            //jqGridColumnsConfigs
+        };
+
+
+        function iterateAry(ary, temp) {
+            if (ary && ary.length > 0) {
+                for (var index in ary) {
+                    //iterateProp(ary[index], temp);
+                    if (temp['场地归属']) {
+                        temp['场地归属'] = temp['场地归属'] + ',' + ary[index]['Owner'].Name;
+                    } else {
+                        temp['场地归属'] = ary[index]['Owner'].Name;
+                    }
+                }
+            } else {
+                temp['场地归属'] = '';
+            }
+        }
+
+        //迭代读取从服务器发回的数据
+        function iterateProp(item, parentTemp) {
+            var temp = parentTemp || {};
+            for (var prop in item) {
+                if (resvDic[prop] && resvDic.hasOwnProperty(prop)) {
+                    if (prop === 'StadiumBase') {
+                        iterateProp(item[prop], temp);
+                        continue;
+                    }
+                    if (prop === 'EcoStatus') {
+                        iterateAry(item[prop].array, temp);
+                        continue;
+                    }
+                    switch (typeof (item[prop])) {
+                        case 'object':
+                            {
+                                if (item[prop]) {
+                                    temp[resvDic[prop]] = item[prop]['Name'] || item[prop];
+                                } else {
+                                    temp[resvDic[prop]] = '';
+                                }
+                                break;
+                            }
+                        case 'boolean':
+                            {
+                                temp[resvDic[prop]] = item[prop] ? '是' : '否';
+                                break;
+                            }
+                            //将null和undefined转换为string.empty
+                        case 'undefined':
+                            {
+                                temp[resvDic[prop]] = '';
+                                break;
+                            }
+                        default:
+                            temp[resvDic[prop]] = item[prop];
+                    }
+                }
+            }
+            return temp;
+        }
+
+        dataOrger.setData = function (data, intrinsicDict) {
+            var orgedData = [];
+            resvDic = intrinsicDict || resvDict;//若用户传入自定义字典则替换保留字典
+            util.eachProp(data, function (item) {
+                orgedData.push(iterateProp(item));
+            });
+
+            return orgedData;
+        }
+
+        return dataOrger;
+    })();
+
     var jqGridMgr = (function () {
         var defaultConfig = {
             autowidth: true,
@@ -843,6 +987,16 @@
             viewrecords: true,
             shrinkToFit: true,
             rownumbers: true,
+        };
+
+        //将默认的jqgrid属性和每个表单独的属性结合
+        function mergeProps(formerconfig, colConfigs) {
+            for (var prop in colConfigs) {
+                if (colConfigs.hasOwnProperty(prop)) {
+                    if (formerconfig.hasOwnProperty[prop]) continue;
+                    formerconfig[prop] = colConfigs[prop];
+                }
+            }
         };
 
         var jqgridMgr = {};
@@ -883,24 +1037,221 @@
             //$(jqGridId).jqGrid('setGridParam', { url: '', postData: '' }).trigger('reloadGrid'); //刷新一下表格
         };
 
-        //将默认的jqgrid属性和每个表单独的属性结合
-        function mergeProps(formerconfig, colConfigs) {
-            for (var prop in colConfigs) {
-                if (formerconfig.hasOwnProperty[prop]) continue;
-                formerconfig[prop] = colConfigs[prop];
-            }
-        };
 
         return jqgridMgr;
+    })();
+
+    var baiduMap = (function () {
+        var bMap;
+
+        var baiduapi = {};
+        // ReSharper disable once WrongExpressionStatement
+        baiduapi.markerClusterer;
+
+        function initialPanorama(map) {
+            var stCtrl = new window.BMap.PanoramaControl(); //构造全景控件
+            stCtrl.setOffset(new window.BMap.Size(20, 45));
+            map.addControl(stCtrl);//添加全景控件
+        }
+
+        function showTraffic() {
+            var trafficCtrl = new window.BMapLib.TrafficControl({ showPanel: false });
+            bMap.addControl(trafficCtrl);
+            trafficCtrl.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT);
+        }
+
+        function addContextMenu() {
+            try {
+                var menu = new window.BMap.ContextMenu();
+                var txtMenuItem = [
+                {
+                    text: '回到初始位置',
+                    callback: function () { bMap.centerAndZoom('武汉 洪山区', 12); }
+                },
+                {
+                    text: '地图测距',
+                    callback: function () {
+                        var disTool = new window.BMapLib.DistanceTool(bMap);
+                        disTool.open();
+                    }
+                }
+                ];
+                for (var i = 0, len = txtMenuItem.length; i < len; i++) {
+                    menu.addItem(new window.BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+                }
+                bMap.addContextMenu(menu);
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
+
+        baiduapi.initialMapCtrls = function () {
+            baiduapi.bmap = new window.BMap.Map('mapID');
+            bMap = baiduapi.bmap;
+            bMap.centerAndZoom('武汉 洪山区', 12);
+            bMap.addControl(new window.BMap.NavigationControl()); // 添加平移缩放控件
+            bMap.addControl(new window.BMap.ScaleControl()); // 添加比例尺控件
+            bMap.addControl(new window.BMap.OverviewMapControl()); //添加缩略地图控件
+            bMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+            bMap.addControl(new window.BMap.MapTypeControl()); //添加地图类型控件
+            initialPanorama(bMap);
+            showTraffic();
+            addContextMenu();
+        }
+
+        function getInfoWindowPara(stadiumItem) {
+            var para = {};
+            para.title = stadiumItem.Name;
+            para.width = 300;
+            para.height = 180;
+            para.panel = 'panel';
+            para.enableAutoPan = true;
+            para.searchTypes = [];
+            para.enableSendToPhone = false;
+            return para;
+        }
+
+        function getContent(stadiumItem) {
+            //var baseInfo = stadiumItem.StadiumBase;
+            var orgCode = stadiumItem.OrgCode || '未填报';
+            var place = stadiumItem.Place || '未填报';
+            var foundYear = stadiumItem.FoundYear || '未填报';
+            var cate = stadiumItem.Category || '未填报';
+            var street = stadiumItem.Street || '未填报';
+            var noteInfo = stadiumItem.Note || '未填报';
+            var stadiumId = stadiumItem.SiteId;
+            //var content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
+            //              '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
+            //              '<b>地址:</b>' + addrStr + '<br/>' +
+            //              '<b>电话:</b>' + phoneStr + '<br/>' +
+            //              '<b>公司名称:</b>' + nameStr + '<br/>' +
+            //              '<b>网址:</b>' + '<a href=' + websiteStr + 'target="_blank">' + website + '</a>' +
+            //              '</div>';
+
+            var content;
+            if (stadiumItem.Photo) {
+                var imageSrc = 'data:image/svg;base64,' + stadiumItem.Photo;
+                var imageStr = '\"' + imageSrc.toString() + '\"';
+
+                content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
+                    '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
+                    '<b>场地代码   ：</b>' + cate + '<br/>' +
+                    '<b>组织机构代码：</b>' + orgCode + '<br/>' +
+                    '<b>场地分布   ：</b>' + place + '<br/>' +
+                    '<b>建成年份   ：</b>' + foundYear + '<br/>' +
+                    '<b>所属街道   ：</b>' + street + '<br/>' +
+                    '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
+                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
+                    '</div>';
+            } else {
+                content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
+                    '<b>场地代码   ：</b>' + cate + '<br/>' +
+                    '<b>组织机构代码：</b>' + orgCode + '<br/>' +
+                    '<b>场地分布   ：</b>' + place + '<br/>' +
+                    '<b>建成年份   ：</b>' + foundYear + '<br/>' +
+                    '<b>所属街道   ：</b>' + street + '<br/>' +
+                    '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
+                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
+                    '</div>';
+            }
+
+            return content;
+        }
+
+        function showInfoWindow(stadiumItem, pMarker) {
+            var winPara = getInfoWindowPara(stadiumItem);
+            var content = getContent(stadiumItem);
+            var searchInfoWindow = new window.BMapLib.SearchInfoWindow(bMap, content, winPara);
+            searchInfoWindow.open(pMarker);
+        }
+
+        //这里传入stadium对象
+        baiduapi.addPin2Map = function (stadiumItem) {
+            try {
+                //如果存储百度地图才运行下面代码
+                var x = stadiumItem.Longitude, y = stadiumItem.Latitude;
+                var siteName = stadiumItem.Name;
+                if (bMap) {
+                    var marker;//点聚合
+
+                    var stadiumName = stadiumItem.Name;
+                    if (x && y) {
+                        var point = new window.BMap.Point(x, y);
+                        marker = new window.BMap.Marker(point, { title: stadiumName });
+                        marker.addEventListener("click", function () { showInfoWindow(stadiumItem, marker); });
+                        //bMap.addOverlay(marker);
+                        //setPanoramaLabel(_baiduMap, point, enterpriseName);
+                    } else {
+                        // 将地址解析结果显示在地图上,并调整地图视野
+                        if (siteName) {
+                            // 创建地址解析器实例
+                            var myGeo = new window.BMap.Geocoder();
+
+                            myGeo.getPoint(siteName, function (pt) {
+                                if (pt) {
+                                    //_baiduMap.centerAndZoom(point, 12);
+                                    marker = new window.BMap.Marker(pt, { title: stadiumName });
+                                    marker.addEventListener("click", function () { showInfoWindow(stadiumItem, marker); });
+                                    //bMap.addOverlay(marker);
+                                    //setPanoramaLabel(_baiduMap, point, enterpriseName);
+                                }
+                            }, "武汉市 洪山区");
+                        }
+                    }
+                    return marker;
+                }
+            } catch (e) {
+                console.log(e.message);
+            }
+
+        }
+
+        return baiduapi;
     })();
 
     var queryManager = (function () {
         var queryMgr = {};
         var panel2Tree = { '#streetPanel': '#streetTree', '#catePanel': '#cateTree', '#placePanel': '#placeTree', '#ownerPanel': '#ownerTree', '#openingPanel': '#openingTree', '#recievePanel': '#recieveTree', '#operModePanel': '#operModeTree' };
-        var treeNodeType = { '#streetTree': 'id', '#cateTree': 'id', '#placeTree': 'text', '#ownerTree': 'id', '#openingTree': 'text', '#recieveTree': 'text', '#operModeTree': 'text' };
+        var treeNodeType = { '#streetTree': 'id', '#cateTree': 'id', '#placeTree': 'text', '#ownerTree': 'text', '#openingTree': 'text', '#recieveTree': 'text', '#operModeTree': 'text' };
         var screenPara = { '#streetTree': 'streetPara', '#cateTree': 'catePara', '#placeTree': 'placePara', '#ownerTree': 'ownerPara', '#openingTree': 'openPara', '#recieveTree': 'recievePara', '#operModeTree': 'operModePara' };
 
         //panel为单项查询项目
+        function addPin2Map(promiseItems) {
+            if (baiduMap.bmap) {
+                //baiduMap.bmap.clearOverlays();
+                var markers = [];
+                util.eachProp(promiseItems, function (pStadium) {
+                    var marker = baiduMap.addPin2Map(pStadium);
+                    markers.push(marker);
+                });
+                //for (var index in promiseItems.data) {
+                //    var stadiumItem = promiseItems.data[index];
+                //    if (stadiumItem) {
+                //        var marker = baiduMap.addPin2Map(stadiumItem);
+                //        markers.push(marker);
+                //    }
+                //};
+
+                //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+                if (baiduMap.markerClusterer) {
+                    baiduMap.markerClusterer.clearMarkers();
+                    baiduMap.markerClusterer.addMarkers(markers);
+                } else {
+                    baiduMap.markerClusterer = new window.BMapLib.MarkerClusterer(baiduMap.bmap, { markers: markers });
+                    //baiduMap.markerClusterer.setMaxZoom(16);
+                    //baiduMap.markerClusterer.setGridSize(20);
+                    baiduMap.markerClusterer.isAverangeCenter = true;
+                }
+            }
+        }
+
+        //载入场馆基本信息
+        function loadStadiumInfoGrid(stadiumItems) {
+            var stadiumData = lsDataOrger.setData(stadiumItems);
+            jqGridMgr.setData('#stadiumInfo', stadiumData);
+            util.upDatePivot('#stadiumPivot', stadiumData);
+        }
+
         queryMgr.doQuery = function (screen, panelId) {
             try {
                 if (panelId) {
@@ -909,6 +1260,7 @@
                         var ids = util.getCheckedTreeNode(treeId, treeNodeType[treeId]);
                         var para = screenPara[treeId];
                         screen[para] = ids;
+                        //将其余选项卡中的参数设置为空
                         util.eachProp(screenPara, function (val) {
                             if (val !== para) {
                                 screen[val] = undefined;
@@ -916,11 +1268,11 @@
                         });
                     }
                 } else {
-                    //var streetIds = util.getCheckedTreeNode('#streetTree', 'id');
-                    var streetIds = util.getCheckedTreeNode('#streetTree', 'text');
+                    var streetIds = util.getCheckedTreeNode('#streetTree', 'id');
+                    //var streetIds = util.getCheckedTreeNode('#streetTree', 'text');
 
-                    //var cateIds = util.getCheckedTreeNode('#cateTree', 'id');
-                    var cateIds = util.getCheckedTreeNode('#cateTree', 'text');
+                    var cateIds = util.getCheckedTreeNode('#cateTree', 'id');
+                    //var cateIds = util.getCheckedTreeNode('#cateTree', 'text');
 
                     var placeStrs = util.getCheckedTreeNode('#placeTree', 'text');
                     //var ownerIds = util.getCheckedTreeNode('#ownerTree', 'id');
@@ -943,31 +1295,28 @@
                     screen.recievePara = recvIds;
                     screen.operModePara = operIds;
 
-                    screen.CombindedStadiumQuery.load().then(function(data) {
-                        var test = data;
-                        var test2 = screen.CombinedStadium;
-                    });
-                    myapp.activeDataWorkspace.WCF_RIA_ServiceData
-                        .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
-                        //.expand('EcoStatus')
-                        .execute()
-                        .then(function (proItems) {
-                            //var test = screen.CombinedStadium.array;
-                            var test = proItems.results;
-                            addPin2Map(test);
-                            loadStadiumInfoGrid(test);
-                            //myapp.activeDataWorkspace.WCF_RIA_ServiceData
-                            //    .RiaEcostatusQuery()
-                            //    .execute()
-                            //    .then(function (proItems) {
-                            //    var test = proItems;
-                            //});
 
-                            //var ecoData = lsDataOrger.setData(test);
-                            //jqGridMgr.setData('#ecoStatusInfo', ecoData);
-                            //util.upDatePivot('#ecoPivot', ecoData);
+                    //myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                    //    .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
+                    //    //.expand('EcoStatus')
+                    //    .execute()
+                    //    .then(function (proItems) {
+                    //        //var test = screen.CombinedStadium.array;
+                    //        var test = proItems.results;
+                    //        addPin2Map(test);
+                    //        loadStadiumInfoGrid(test);
+                    //        //myapp.activeDataWorkspace.WCF_RIA_ServiceData
+                    //        //    .RiaEcostatusQuery()
+                    //        //    .execute()
+                    //        //    .then(function (proItems) {
+                    //        //    var test = proItems;
+                    //        //});
 
-                        });
+                    //        //var ecoData = lsDataOrger.setData(test);
+                    //        //jqGridMgr.setData('#ecoStatusInfo', ecoData);
+                    //        //util.upDatePivot('#ecoPivot', ecoData);
+
+                    //    });
 
                     //myapp.activeDataWorkspace.WCF_RIA_ServiceData
                     //    .RiaEcostatusQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
@@ -979,6 +1328,17 @@
                     //        util.upDatePivot('#ecoPivot', ecoData);
                     //    });
                 }
+                screen.CombindedStadiumQuery.load().then(function () {
+                    var combinedStadiums = screen.CombindedStadiumQuery.data;
+                    addPin2Map(combinedStadiums);
+                    loadStadiumInfoGrid(combinedStadiums);
+                    screen.RiaEcostatusQuery.load().then(function () {
+                        var combinedEco = screen.RiaEcostatusQuery.data;
+                        var ecoStatusData = lsDataOrger.setData(combinedEco);
+                        jqGridMgr.setData('#ecoStatusInfo', ecoStatusData);
+                        util.upDatePivot('#ecoPivot', ecoStatusData);
+                    });
+                });
 
                 //screen.StadiumQuery.load().then(function (promiseItems) {
                 //    //var ids = getSelectedIDs(promiseItems);
@@ -1042,42 +1402,6 @@
         //    addPin2Map(stadiumItems);
         //    //loadGridData(stadiumItems);
         //}
-
-        function addPin2Map(promiseItems) {
-            if (baiduMap.bmap) {
-                //baiduMap.bmap.clearOverlays();
-                var markers = [];
-                util.eachProp(promiseItems, function (pStadium) {
-                    var marker = baiduMap.addPin2Map(pStadium);
-                    markers.push(marker);
-                });
-                //for (var index in promiseItems.data) {
-                //    var stadiumItem = promiseItems.data[index];
-                //    if (stadiumItem) {
-                //        var marker = baiduMap.addPin2Map(stadiumItem);
-                //        markers.push(marker);
-                //    }
-                //};
-
-                //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-                if (baiduMap.markerClusterer) {
-                    baiduMap.markerClusterer.clearMarkers();
-                    baiduMap.markerClusterer.addMarkers(markers);
-                } else {
-                    baiduMap.markerClusterer = new window.BMapLib.MarkerClusterer(baiduMap.bmap, { markers: markers });
-                    //baiduMap.markerClusterer.setMaxZoom(16);
-                    //baiduMap.markerClusterer.setGridSize(20);
-                    baiduMap.markerClusterer.isAverangeCenter = true;
-                }
-            }
-        }
-
-        //载入场馆基本信息
-        function loadStadiumInfoGrid(stadiumItems) {
-            var stadiumData = lsDataOrger.setData(stadiumItems);
-            jqGridMgr.setData('#stadiumInfo', stadiumData);
-            util.upDatePivot('#stadiumPivot', stadiumData);
-        }
 
         //function loadGridData(promiseItems) {
         //    var ids = getSelectedIDs(promiseItems);
@@ -1165,284 +1489,6 @@
         return queryMgr;
     })();
 
-    var lsDataOrger = (function () {
-        var resvDic = {};
-        var dataOrger = {};
-        var resvDict = {
-            //stadium
-            'Name': '场地名称',
-            'Category': '场地代码',
-            'Owner': '场地归属',
-            'Street': '所属街道',
-            'StadiumBase': '基本信息',
-            //stadiumbase
-            'OrgCode': '组织机构代码',
-            'Place': '场地分布',
-            'FoundYear': '建成年份',
-            'LandArea': '用地面积（㎡）',
-            'BuildingArea': '建筑面积（㎡）',
-            'SiteArea': '场地面积（㎡）',
-            'Investment': '投资金额（合计）',
-            'Fiscal': '财政拨款',
-            'CommonWeal': '体彩公益金',
-            'SelfRaised': '单位自筹',
-            'SocialDonate': '社会捐赠',
-            'Other': '其他',
-            //'Owner2StadiumMediatorCollection': '场地归属',
-            //'Owner2StadiumMediator': '场地归属',
-            //ecostatus
-            'StadiumEco': '场地名称',
-            'Year': '年份',
-            'Employee': '场地从业人员人数',
-            'OperateMode': '运营模式',
-            'OpenStatus': '对外开放情况',
-            'OpeningDays': '年开放天数',
-            'ClientCount': '平均每周接待健身人次',
-            'Income': '收入合计（千元）',
-            'Expend': '支出合计（千元）',
-            'StatdiumName': '场地名称',
-            'StreetStr': '所属街道'
-            //jqGridColumnsConfigs
-        };
-
-        dataOrger.setData = function (data, intrinsicDict) {
-            var orgedData = [];
-            resvDic = intrinsicDict || resvDict;//若用户传入自定义字典则替换保留字典
-            util.eachProp(data, function (item) {
-                orgedData.push(iterateProp(item));
-            });
-
-            return orgedData;
-        }
-
-        //迭代读取从服务器发回的数据
-        function iterateProp(item, parentTemp) {
-            var temp = parentTemp || {};
-            for (var prop in item) {
-                if (resvDic[prop] && resvDic.hasOwnProperty(prop)) {
-                    if (prop === 'StadiumBase') {
-                        iterateProp(item[prop], temp);
-                        continue;
-                    }
-                    if (prop === 'EcoStatus') {
-                        iterateAry(item[prop].array, temp);
-                        continue;
-                    }
-                    switch (typeof (item[prop])) {
-                        case 'object':
-                            {
-                                if (item[prop]) {
-                                    temp[resvDic[prop]] = item[prop]['Name'] || item[prop];
-                                } else {
-                                    temp[resvDic[prop]] = '';
-                                }
-                                break;
-                            }
-                        case 'boolean':
-                            {
-                                temp[resvDic[prop]] = item[prop] ? '是' : '否';
-                                break;
-                            }
-                            //将null和undefined转换为string.empty
-                        case 'undefined':
-                            {
-                                temp[resvDic[prop]] = '';
-                                break;
-                            }
-                        default:
-                            temp[resvDic[prop]] = item[prop];
-                    }
-                }
-            }
-            return temp;
-        }
-
-        function iterateAry(ary, temp) {
-            if (ary && ary.length > 0) {
-                for (var index in ary) {
-                    //iterateProp(ary[index], temp);
-                    if (temp['场地归属']) {
-                        temp['场地归属'] = temp['场地归属'] + ',' + ary[index]['Owner'].Name;
-                    } else {
-                        temp['场地归属'] = ary[index]['Owner'].Name;
-                    }
-                }
-            } else {
-                temp['场地归属'] = '';
-            }
-        }
-
-        return dataOrger;
-    })();
-
-    var baiduMap = (function () {
-        var bMap;
-
-        var baiduapi = {};
-        // ReSharper disable once WrongExpressionStatement
-        baiduapi.markerClusterer;
-        baiduapi.initialMapCtrls = function () {
-            baiduapi.bmap = new window.BMap.Map('mapID');
-            bMap = baiduapi.bmap;
-            bMap.centerAndZoom('武汉 洪山区', 12);
-            bMap.addControl(new window.BMap.NavigationControl()); // 添加平移缩放控件
-            bMap.addControl(new window.BMap.ScaleControl()); // 添加比例尺控件
-            bMap.addControl(new window.BMap.OverviewMapControl()); //添加缩略地图控件
-            bMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-            bMap.addControl(new window.BMap.MapTypeControl()); //添加地图类型控件
-            initialPanorama(bMap);
-            showTraffic();
-            addContextMenu();
-        }
-
-        function initialPanorama(map) {
-            var stCtrl = new window.BMap.PanoramaControl(); //构造全景控件
-            stCtrl.setOffset(new window.BMap.Size(20, 45));
-            map.addControl(stCtrl);//添加全景控件
-        }
-
-        //这里传入stadium对象
-        baiduapi.addPin2Map = function (stadiumItem) {
-            try {
-                //如果存储百度地图才运行下面代码
-                var x = stadiumItem.Longitude, y = stadiumItem.Latitude;
-                var siteName = stadiumItem.Name;
-                if (bMap) {
-                    var marker;//点聚合
-
-                    var stadiumName = stadiumItem.Name;
-                    if (x && y) {
-                        var point = new window.BMap.Point(x, y);
-                        marker = new window.BMap.Marker(point, { title: stadiumName });
-                        marker.addEventListener("click", function () { showInfoWindow(stadiumItem, marker); });
-                        //bMap.addOverlay(marker);
-                        //setPanoramaLabel(_baiduMap, point, enterpriseName);
-                    } else {
-                        // 将地址解析结果显示在地图上,并调整地图视野
-                        if (siteName) {
-                            // 创建地址解析器实例
-                            var myGeo = new window.BMap.Geocoder();
-
-                            myGeo.getPoint(siteName, function (pt) {
-                                if (pt) {
-                                    //_baiduMap.centerAndZoom(point, 12);
-                                    marker = new window.BMap.Marker(pt, { title: stadiumName });
-                                    marker.addEventListener("click", function () { showInfoWindow(stadiumItem, marker); });
-                                    //bMap.addOverlay(marker);
-                                    //setPanoramaLabel(_baiduMap, point, enterpriseName);
-                                }
-                            }, "武汉市 洪山区");
-                        }
-                    }
-                    return marker;
-                }
-            } catch (e) {
-                console.log(e.message);
-            }
-
-        }
-
-        function getInfoWindowPara(stadiumItem) {
-            var para = {};
-            para.title = stadiumItem.Name;
-            para.width = 300;
-            para.height = 180;
-            para.panel = 'panel';
-            para.enableAutoPan = true;
-            para.searchTypes = [];
-            para.enableSendToPhone = false;
-            return para;
-        }
-
-        function getContent(stadiumItem) {
-            //var baseInfo = stadiumItem.StadiumBase;
-            var orgCode = stadiumItem.OrgCode || '未填报';
-            var place = stadiumItem.Place || '未填报';
-            var foundYear = stadiumItem.FoundYear || '未填报';
-            var cate = stadiumItem.Category.Name || '未填报';
-            var street = stadiumItem.Street.Name || '未填报';
-            var noteInfo = stadiumItem.Note || '未填报';
-            var stadiumId = stadiumItem.Id;
-            //var content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
-            //              '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
-            //              '<b>地址:</b>' + addrStr + '<br/>' +
-            //              '<b>电话:</b>' + phoneStr + '<br/>' +
-            //              '<b>公司名称:</b>' + nameStr + '<br/>' +
-            //              '<b>网址:</b>' + '<a href=' + websiteStr + 'target="_blank">' + website + '</a>' +
-            //              '</div>';
-
-            var content;
-            if (stadiumItem.Photo) {
-                var imageSrc = 'data:image/svg;base64,' + stadiumItem.Photo;
-                var imageStr = '\"' + imageSrc.toString() + '\"';
-
-                content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
-                    '<img src=' + imageStr + 'alt=\"\" style=\"float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;\"/>' +
-                    '<b>场地代码   ：</b>' + cate + '<br/>' +
-                    '<b>组织机构代码：</b>' + orgCode + '<br/>' +
-                    '<b>场地分布   ：</b>' + place + '<br/>' +
-                    '<b>建成年份   ：</b>' + foundYear + '<br/>' +
-                    '<b>所属街道   ：</b>' + street + '<br/>' +
-                    '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
-                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
-                    '</div>';
-            } else {
-                content = '<div style=\"margin:0;line-height:20px;padding:2px;\">' +
-                    '<b>场地代码   ：</b>' + cate + '<br/>' +
-                    '<b>组织机构代码：</b>' + orgCode + '<br/>' +
-                    '<b>场地分布   ：</b>' + place + '<br/>' +
-                    '<b>建成年份   ：</b>' + foundYear + '<br/>' +
-                    '<b>所属街道   ：</b>' + street + '<br/>' +
-                    '<b>相册       :</b>' + '<a data-para = ' + stadiumId + ' href = \'#\' onclick = "window.albumMgr.init(this);">点击查看场地图片</a>' + '<br/>' +
-                    '<b>备注信息   ：</b>' + noteInfo + '<br/>' +
-                    '</div>';
-            }
-
-            return content;
-        }
-
-        function showInfoWindow(stadiumItem, pMarker) {
-            var searchInfoWindow = null;
-            var winPara = getInfoWindowPara(stadiumItem);
-            var content = getContent(stadiumItem);
-            searchInfoWindow = new window.BMapLib.SearchInfoWindow(bMap, content, winPara);
-            searchInfoWindow.open(pMarker);
-        }
-
-        function showTraffic() {
-            var trafficCtrl = new window.BMapLib.TrafficControl({ showPanel: false });
-            bMap.addControl(trafficCtrl);
-            trafficCtrl.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT);
-        }
-
-        function addContextMenu() {
-            try {
-                var menu = new window.BMap.ContextMenu();
-                var txtMenuItem = [
-                {
-                    text: '回到初始位置',
-                    callback: function () { bMap.centerAndZoom('武汉 洪山区', 12); }
-                },
-                {
-                    text: '地图测距',
-                    callback: function () {
-                        var disTool = new window.BMapLib.DistanceTool(bMap);
-                        disTool.open();
-                    }
-                }
-                ];
-                for (var i = 0, len = txtMenuItem.length; i < len; i++) {
-                    menu.addItem(new window.BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
-                }
-                bMap.addContextMenu(menu);
-            } catch (e) {
-                console.log(e.message);
-            }
-        }
-
-        return baiduapi;
-    })();
-
     var uiManager = (function () {
         var contentItem, element, screen;
         // ReSharper disable once InconsistentNaming
@@ -1501,7 +1547,7 @@
                         return e.JqGrid === 'Stadium';
                     });
                     var colConfEconomy = $.grep(colConf, function (e) {
-                        return e.jqGrid === 'Ecostatus';
+                        return e.JqGrid === 'Ecostatus';
                     });
                     util.eachAry(colConf, function (aryItem) {
                         if (aryItem.JqGrid === 'Ecostatus') {
@@ -1511,11 +1557,12 @@
                         }
                         //colNames.push(aryItem.name);
                     });
-                    var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
-                    var stadiumConf = dataManager.getStadiumJqConfTest('#stadiumInfo', '#stadiumPager', { colNames: colNamesStadium, colModel: colConfStatdium });
+                    //var stadiumConf2 = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager');
+                    var stadiumConf = dataManager.getStadiumJqConf('#stadiumInfo', '#stadiumPager', { colNames: colNamesStadium, colModel: colConfStatdium });
                     jqGridMgr.setJqGridWithCustomBtns('#stadiumInfo', '#stadiumPager', stadiumConf);
 
-                    var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
+                    //var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
+                    var ecoStatusConf = dataManager.getEcoStautsJqConf('#ecoStatusInfo', '#ecoStatusPager',{colNames:colNamesEconomy,colModel:colConfEconomy});
                     jqGridMgr.setJqGridWithCustomBtns('#ecoStatusInfo', '#ecoStatusPager', ecoStatusConf);
 
                     util.resizJqGrid();
@@ -1702,7 +1749,6 @@
                 util.resizeLayout();
                 baiduMap.initialMapCtrls();
             },
-
         }
 
         return UiManager;

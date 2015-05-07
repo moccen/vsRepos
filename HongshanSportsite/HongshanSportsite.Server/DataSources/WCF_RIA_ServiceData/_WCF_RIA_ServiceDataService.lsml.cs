@@ -67,16 +67,24 @@ namespace LightSwitchApplication
             {
                 query = query.Where(e => place.Contains(e.Place));
             }
-            var street = ParseParaStr(streetPara);
+            //var street = ParseParaStr(streetPara);
+            var street = ParseParaNullableInt(streetPara);
             if (street != null)
             {
-                query = query.Where(e => street.Contains(e.Street));
+                query = query.Where(e => street.Contains(e.StreetId));
             }
-            var owner = ParseParaInt(ownerPara);
+            //var owner = ParseParaInt(ownerPara);
             //if (owner != null)
             //{
             //    query = query.Where(e => e.StadiumEco.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
             //}
+            var owner = ParseParaStr(ownerPara);
+            if (owner != null)
+            {
+                //query = query.Where(e => e.StadiumEco.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
+                query = query.Where(e => owner.All(o => e.Owner.Contains(o)));
+            }
+
             var cate = ParseParaNullableInt(catePara);
             if (cate != null)
             {
@@ -109,50 +117,53 @@ namespace LightSwitchApplication
 
         partial void RiaEcostatusQuery_PreprocessQuery(string placePara, string streetPara, string ownerPara, string catePara, string openPara, string recievePara, string operModePara, ref IQueryable<CombindeEcoStatusItem> query)
         {
-            //var place = ParseParaStr(placePara);
-            //if (place != null)
-            //{
-            //    //query = query.Where(e => place.Contains(e));
-            //}
-            //var street = ParseParaStr(streetPara);
-            //if (street != null)
-            //{
-            //    query = query.Where(e => street.Contains(e.StreetStr));
-            //}
-            //var owner = ParseParaInt(ownerPara);
-            ////if (owner != null)
-            ////{
-            ////    query = query.Where(e => e.StadiumEco.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
-            ////}
-            //var cate = ParseParaNullableInt(catePara);
-            //if (cate != null)
-            //{
-            //    //query = query.Where(e => cate.Contains(e.Stadium.CateId));
-            //}
-            //var open = ParseParaStr(openPara);
-            //if (open != null)
-            //{
-            //    //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => open.Contains(eco.OpenStatus)));
-            //    query = query.Where(e => open.Contains(e.OpenStatus));
-            //}
-            //var recv = ParseParaStr(recievePara);
-            //if (recv != null)
-            //{
-            //    //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => recv.Contains(eco.ClientCount)));
-            //    query = query.Where(e => recv.Contains(e.ClientCount));
-            //}
-            //var operMode = ParseParaStr(operModePara);
-            //if (operMode != null)
-            //{
-            //    //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => operMode.Contains(eco.OperateMode)));
-            //    query = query.Where(e => operMode.Contains(e.OperateMode));
-            //}
-            //if (place == null && street == null && owner == null && cate == null && open == null && recv == null &&
-            //    operMode == null)
-            //{
-            //    query = query.Where(item => false);
-            //}
-            query.OrderBy(e => e.StatdiumName);
+            var place = ParseParaStr(placePara);
+            if (place != null)
+            {
+                query = query.Where(e => place.Contains(e.PlaceStrs));
+                //query = query.Where(e => place.Contains(e.));
+            }
+            var street = ParseParaNullableInt(streetPara);
+            if (street != null)
+            {
+                //query = query.Where(e => street.Contains(e.Stadium.Street));
+                query = query.Where(e => street.Contains(e.StreetId));
+            }
+            var owner = ParseParaStr(ownerPara);
+            if (owner != null)
+            {
+                //query = query.Where(e => e.StadiumEco.Owner2StadiumMediatorCollection.Any(o => owner.Contains(o.Owner.Id)));
+                query = query.Where(e => owner.All(o => e.OwnerStrs.Contains(o)));
+            }
+            var cate = ParseParaNullableInt(catePara);
+            if (cate != null)
+            {
+                query = query.Where(e => cate.Contains(e.CateId));
+            }
+            var open = ParseParaStr(openPara);
+            if (open != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => open.Contains(eco.OpenStatus)));
+                query = query.Where(e => open.Contains(e.OpenStatus));
+            }
+            var recv = ParseParaStr(recievePara);
+            if (recv != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => recv.Contains(eco.ClientCount)));
+                query = query.Where(e => recv.Contains(e.ClientCount));
+            }
+            var operMode = ParseParaStr(operModePara);
+            if (operMode != null)
+            {
+                //query = query.Where(e => e.StadiumEco.EcoStatusCollection.Any(eco => operMode.Contains(eco.OperateMode)));
+                query = query.Where(e => operMode.Contains(e.OperateMode));
+            }
+            if (place == null && street == null && owner == null && cate == null && open == null && recv == null &&
+                operMode == null)
+            {
+                query = query.Where(item => false);
+            }
+            query.OrderBy(e => e.Stadium.SiteId);
         }
     }
 }

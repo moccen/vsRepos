@@ -60,10 +60,10 @@ namespace WCF_RIA_Project
         //stadium properties
         public string StatdiumName { get; set; }
         public int? StadiumId { get; set; }
-        //public int? PlaceId { get; set; }
-        //public int? StreetId { get; set; }
-        //public string OwnerIds { get; set; }
-        //public int? CateId { get; set; }
+        public string PlaceStrs { get; set; }
+        public int? StreetId { get; set; }
+        public string OwnerStrs { get; set; }
+        public int? CateId { get; set; }
         //public string StreetStr { get; set; }
         //economy properties
         public int? Year { get; set; }
@@ -77,6 +77,7 @@ namespace WCF_RIA_Project
 
         [Include]
         [Association("Stadium_EcoStatus", "StadiumId", "SiteId", IsForeignKey = true)]
+        [Composition]
         public virtual CombinedStadium EcoStadium
         {
             get { return this._combinedStadium; }
@@ -204,23 +205,70 @@ namespace WCF_RIA_Project
         [Query(IsDefault = true)]
         public IQueryable<CombindeEcoStatus> GetAllEcoStatuses()
         {
-            var stadiumEco = from eco in this.Context.EcoStatusSet
-                             select new CombindeEcoStatus()
-                             {
-                                 EcoId = eco.Id,
-                                 StatdiumName = eco.StadiumEco.Name,
-                                 StadiumId = eco.StadiumEco.Id,
-                                 Year = eco.Year,
-                                 EmployeeNum = eco.Employee,
-                                 OperateMode = eco.OperateMode,
-                                 OpenStatus = eco.OpenStatus,
-                                 OpeningDays = eco.OpeningDays,
-                                 ClientCount = eco.ClientCount,
-                                 Income = eco.Income,
-                                 Expend = eco.Expend,
-                                 //StreetStr = eco.StadiumEco.Street.Name
-                             };
-            return stadiumEco;
+            var ecoStatus = from eco in this.Context.EcoStatusSet
+                            select new
+                            {
+                                EcoId = eco.Id,
+                                StatdiumName = eco.StadiumEco.Name,
+                                StadiumId = eco.StadiumEco.Id,
+                                Year = eco.Year,
+                                EmployeeNum = eco.Employee,
+                                OperateMode = eco.OperateMode,
+                                OpenStatus = eco.OpenStatus,
+                                OpeningDays = eco.OpeningDays,
+                                ClientCount = eco.ClientCount,
+                                Income = eco.Income,
+                                Expend = eco.Expend,
+                                //EcoStadium = (from stadium in GetAllStadiums() where stadium.SiteId == eco.StadiumEco.Id select stadium).FirstOrDefault()
+                                //StreetStr = eco.StadiumEco.Street.Name,
+                                StreetId = eco.StadiumEco.Street.Id,
+                                PlaceStrs = eco.StadiumEco.StadiumBase.Place,
+                                CateId = eco.StadiumEco.Category.Id,
+                                OwnerParts = eco.StadiumEco.Owner2StadiumMediatorCollection.Select(x => x.Owner.Name)
+                            };
+
+            var result = ecoStatus.AsEnumerable().Select(eco => new CombindeEcoStatus()
+            {
+                EcoId = eco.EcoId,
+                StatdiumName = eco.StatdiumName,
+                StadiumId = eco.StadiumId,
+                Year = eco.Year,
+                EmployeeNum = eco.EmployeeNum,
+                OperateMode = eco.OperateMode,
+                OpenStatus = eco.OpenStatus,
+                OpeningDays = eco.OpeningDays,
+                ClientCount = eco.ClientCount,
+                Income = eco.Income,
+                Expend = eco.Expend,
+                //EcoStadium = (from stadium in GetAllStadiums() where stadium.SiteId == eco.StadiumEco.Id select stadium).FirstOrDefault()
+                //StreetStr = eco.StadiumEco.Street.Name,
+                StreetId = eco.StreetId,
+                PlaceStrs = eco.PlaceStrs,
+                CateId = eco.CateId,
+                OwnerStrs = string.Join("/", eco.OwnerParts),
+            }).AsQueryable();
+            //var result = from eco in this.Context.EcoStatusSet
+            //                 select new CombindeEcoStatus()
+            //                 {
+            //                     EcoId = eco.Id,
+            //                     StatdiumName = eco.StadiumEco.Name,
+            //                     StadiumId = eco.StadiumEco.Id,
+            //                     Year = eco.Year,
+            //                     EmployeeNum = eco.Employee,
+            //                     OperateMode = eco.OperateMode,
+            //                     OpenStatus = eco.OpenStatus,
+            //                     OpeningDays = eco.OpeningDays,
+            //                     ClientCount = eco.ClientCount,
+            //                     Income = eco.Income,
+            //                     Expend = eco.Expend,
+            //                     //EcoStadium = (from stadium in GetAllStadiums() where stadium.SiteId == eco.StadiumEco.Id select stadium).FirstOrDefault()
+            //                     //StreetStr = eco.StadiumEco.Street.Name,
+            //                     StreetId = eco.StadiumEco.Street.Id,
+            //                     PlaceStrs = eco.StadiumEco.StadiumBase.Place,
+            //                     CateId = eco.StadiumEco.Category.Id,
+            //                     //OwnerStrs = string.Join("/", eco.OwnerParts),
+            //                 };
+            return result;
         }
 
         protected override int Count<T>(IQueryable<T> queryable)
