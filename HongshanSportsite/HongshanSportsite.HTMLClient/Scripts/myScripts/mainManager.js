@@ -2,6 +2,7 @@
     context[name] = factory();
 })('mainManager', this, function () {
     window.__pivotHash__ = {};
+    var streetDict = {},cateDict ={};//所属街道、场地类别的id和text对应字典
     var util = {
         eachAry: function (ary, func) {
             for (var i = 0, len = ary.length; i < len; i++) {
@@ -150,6 +151,27 @@
 
         getPermissionAry: function (permissionStr) {
             return permissionStr.split(',');
+        },
+
+        //构建所属街道的id和中文名称对应字典
+        getStreeTreeDict: function (treeId, treeData) {
+            if (treeId === '#streetTree') {
+                var treeDict = {};
+                for (var i = 0, len = treeData.length; i < len; i++) {
+                    var treeItem = treeData[i];
+                    treeDict[treeItem.id] = treeItem.text;
+                }
+                streetDict = treeDict;
+            }
+
+        },
+
+        getCateTreeDict:function(treeData) {
+            var treeDict = {};
+            util.eachAry(treeData, function(item) {
+                treeDict[item.Id] = item.Name;
+            });
+            cateDict = treeDict;
         }
     };
 
@@ -253,7 +275,7 @@
             if (!elPermissions) {
                 return true; //如果在getElPermissions()中没有找到对应的permissions，说明不需要验证
             }
-            if (!userPermissions || userPermissions['length'] < 1) return false; //用户传入权限为空，返回假
+            if (!userPermissions || userPermissions['length'] < 1) return false; //用户传入权限为空，返回假，用户没有权限访问当前元素
             var intersect = this.getIntersect(userPermissions, elPermissions);
             if (intersect.length > 0) {
                 return true;
@@ -266,14 +288,6 @@
 
     var uiBuilder = (function () {
         var builder = {};
-        builder.buildLayout = function () {
-            var permissions = arguments[0];
-            var layoutConf = getLayoutConf(permissions);
-            //var layout = createCombinedElement(layoutConf);
-            var layout = createTreeEle(layoutConf);
-            return layout;
-
-        };
         //function UiBuilder() { };
         //UiBuilder.prototype = {
         //    buildLayout: function () {
@@ -597,6 +611,7 @@
 
         }
 
+        //根据配置文件，生成html树节点
         function createTreeEle(configs) {
             var parent = arguments[1];
             if (configs['parent']) {
@@ -629,6 +644,15 @@
             return parent;
         }
 
+        builder.buildLayout = function () {
+            var permissions = arguments[0];
+            var layoutConf = getLayoutConf(permissions);
+            //var layout = createCombinedElement(layoutConf);
+            var layout = createTreeEle(layoutConf);
+            return layout;
+
+        };
+
         return builder;
     })();
 
@@ -648,6 +672,9 @@
                         treeData[i] = val;
                     }
                     $(treeId).tree({ data: treeData });
+
+                    // return treeData;//返回树的数据，构建id和内容的字典，方便数据从服务器传回来后，将id转换为对应的文字
+                    util.getStreeTreeDict(treeId, treeData);
                 });
                 //$(treeId).tree({
                 //    onCheck: function (node, checked) {
@@ -662,6 +689,7 @@
             myapp.activeDataWorkspace.ApplicationData.CategorySet.expand('Parent').execute().then(function (promiseItem) {
                 cateTree = util.buildTree(promiseItem.results);
                 $(treeId).tree({ data: cateTree });
+                util.getCateTreeDict(promiseItem.results);
             });
         },
 
@@ -815,7 +843,7 @@
             return config;
         },
 
-        getEcoStautsJqConf:function(tbName, pager, colConf) {
+        getEcoStautsJqConf: function (tbName, pager, colConf) {
             var config = {};
             config.jqGridConfig = {
                 colNames: colConf.colNames,
@@ -866,15 +894,183 @@
 
     };
 
+    //在slider.js中也要使用消息提醒功能，所以放到全局中
+    window.notifier = (function () {
+        var notifObj = {};
+        var to, width, height, position, autohide, opacity;
+
+        function notifitSetDefaultValues() {
+            // Default size
+            width = 400;
+            height = 60;
+            // Default position
+            position = "right";
+            // Default autohide
+            autohide = true;
+            // Default msg
+            msg = "";
+            // Default opacity (Only Chrome, Firefox and Safari)
+            opacity = 1;
+        }
+
+        function notifitDismiss() {
+            clearInterval(to);
+            if (position == "center") {
+                $("#ui_notifIt").animate({
+                    top: parseInt(height - (height / 2))
+                }, 100, function () {
+                    $("#ui_notifIt").animate({
+                        top: parseInt(0 - (height * 2))
+                    }, 100, function () {
+                        $("#ui_notifIt").remove();
+                    });
+                });
+            } else if (position == "right") {
+                $("#ui_notifIt").animate({
+                    right: parseFloat(width - (width * 0.9))
+                }, 100, function () {
+                    $("#ui_notifIt").animate({
+                        right: parseInt(0 - (width * 2))
+                    }, 100, function () {
+                        $("#ui_notifIt").remove();
+                    });
+                });
+            } else if (position == "left") {
+                $("#ui_notifIt").animate({
+                    left: parseFloat(width - (width * 0.9))
+                }, 100, function () {
+                    $("#ui_notifIt").animate({
+                        left: parseInt(0 - (width * 2))
+                    }, 100, function () {
+                        $("#ui_notifIt").remove();
+                    });
+                });
+            }
+            notifitSetDefaultValues();
+        }
+
+        notifObj.showNotice = function notif(config) {
+
+            notifitSetDefaultValues();
+
+            if (config.position) {
+                if (config.position == "center" ||
+                    config.position == "left" ||
+                    config.position == "right") {
+                    position = config.position; // Take the position
+                }
+            }
+            if (config.width) {
+                if (config.width > 0) {
+                    width = config.width; // Take the width in pixels
+                } else if (config.width === "all") {
+                    width = screen.width - 60; // Margin difference
+                }
+            }
+            if (config.height) {
+                if (config.height < 100 && config.height > 0) {
+                    height = config.height; // Take the height in pixels
+                }
+            }
+            if (typeof config.autohide !== "undefined")
+                autohide = config.autohide;
+            var div = "<div id='ui_notifIt'><p>" + ((config.msg) ? config.msg : "") + "</p></div>";
+
+            $("#ui_notifIt").remove(); // Preventive remove
+            clearInterval(to); // Preventive clearInterval
+            $("body").append(div);
+            $("#ui_notifIt").css("height", height);
+            $("#ui_notifIt").css("width", width);
+
+            switch (position) {
+                case "center":
+                    $("#ui_notifIt").css("top", parseInt(0 - (height + 10)));
+                    break;
+                case "right":
+                    $("#ui_notifIt").css("right", parseInt(0 - (width + 10)));
+                    break;
+                case "left":
+                    $("#ui_notifIt").css("left", parseInt(0 - (width + 10)));
+                    break;
+                default:
+                    $("#ui_notifIt").css("right", parseInt(0 - (width + 10)));
+                    break;
+            }
+
+            if (config.opacity) { $("#ui_notifIt").css("opacity", config.opacity); }
+
+            switch (config.type) {
+                case "error":
+                    $("#ui_notifIt").addClass("error");
+                    break;
+                case "success":
+                    $("#ui_notifIt").addClass("success");
+                    break;
+                case "info":
+                    $("#ui_notifIt").addClass("info");
+                    break;
+                case "warning":
+                    $("#ui_notifIt").addClass("warning");
+                    break;
+                default:
+                    $("#ui_notifIt").addClass("default");
+                    break;
+            }
+
+            switch (position) {
+                case "left":
+                    $("#ui_notifIt").css("left", parseInt(0 - (width * 2)));
+                    break;
+                case "right":
+                    $("#ui_notifIt").css("right", parseInt(0 - (width * 2)));
+                    break;
+                case "center":
+                    var mid = window.innerWidth / 2;
+                    $("#ui_notifIt").css("left", mid - parseInt(width / 2));
+                    break;
+                default:
+                    var mid = window.innerWidth / 2;
+                    $("#ui_notifIt").css("left", mid - parseInt(width / 2));
+                    break;
+            }
+            $("#ui_notifIt p").css("line-height", height + "px");
+
+            switch (position) {
+                case "center":
+                    $("#ui_notifIt").animate({ top: 10 });
+                    break;
+                case "right":
+                    $("#ui_notifIt").animate({ right: 10 });
+                    break;
+                case "left":
+                    $("#ui_notifIt").animate({ left: 10 });
+                    break;
+                default:
+                    $("#ui_notifIt").animate({ right: 10 });
+                    break;
+            }
+
+
+            $("#ui_notifIt").click(function () {
+                notifitDismiss();
+            });
+
+            if (autohide == true)
+                to = setTimeout(function () { notifitDismiss(); }, 3000);
+        }
+
+        return notifObj;
+    })();
+
     var lsDataOrger = (function () {
         var resvDic = {};
         var dataOrger = {};
         var resvDict = {
             //stadium
             'Name': '场地名称',
-            'Category': '场地代码',
+            //'Category': '场地代码',
             'Owner': '场地归属',
-            'Street': '所属街道',
+            //'Street': '所属街道',
             'StadiumBase': '基本信息',
             //stadiumbase
             'OrgCode': '组织机构代码',
@@ -902,7 +1098,8 @@
             'Income': '收入合计（千元）',
             'Expend': '支出合计（千元）',
             'StatdiumName': '场地名称',
-            'StreetStr': '所属街道'
+            'StreetId': '所属街道',
+            'CateId': '场地代码',
             //jqGridColumnsConfigs
         };
 
@@ -927,38 +1124,84 @@
             var temp = parentTemp || {};
             for (var prop in item) {
                 if (resvDic[prop] && resvDic.hasOwnProperty(prop)) {
-                    if (prop === 'StadiumBase') {
-                        iterateProp(item[prop], temp);
-                        continue;
-                    }
-                    if (prop === 'EcoStatus') {
-                        iterateAry(item[prop].array, temp);
-                        continue;
-                    }
-                    switch (typeof (item[prop])) {
-                        case 'object':
-                            {
-                                if (item[prop]) {
-                                    temp[resvDic[prop]] = item[prop]['Name'] || item[prop];
-                                } else {
-                                    temp[resvDic[prop]] = '';
-                                }
-                                break;
-                            }
-                        case 'boolean':
-                            {
-                                temp[resvDic[prop]] = item[prop] ? '是' : '否';
-                                break;
-                            }
-                            //将null和undefined转换为string.empty
-                        case 'undefined':
-                            {
-                                temp[resvDic[prop]] = '';
-                                break;
-                            }
+                    switch (prop) {
+                        case 'StadiumBase':
+                            iterateProp(item[prop], temp);
+                            break;
+                        case 'EcoStatus':
+                            break;
+                        case 'StreetId':
+                            temp[resvDic[prop]] = streetDict[item[prop]];
+                            break;
+                        case 'CateId':
+                            temp[resvDic[prop]] = cateDict[item[prop]];
+                            break;
                         default:
-                            temp[resvDic[prop]] = item[prop];
+                        {
+                            switch (typeof (item[prop])) {
+                                case 'object':
+                                    {
+                                        if (item[prop]) {
+                                            temp[resvDic[prop]] = item[prop]['Name'] || item[prop];
+                                        } else {
+                                            temp[resvDic[prop]] = '';
+                                        }
+                                        break;
+                                    }
+                                case 'boolean':
+                                    {
+                                        temp[resvDic[prop]] = item[prop] ? '是' : '否';
+                                        break;
+                                    }
+                                    //将null和undefined转换为string.empty
+                                case 'undefined':
+                                    {
+                                        temp[resvDic[prop]] = '';
+                                        break;
+                                    }
+                                default:
+                                    temp[resvDic[prop]] = item[prop];
+                            }
+
+                        }
                     }
+                    //if (prop === 'StadiumBase') {
+                    //    iterateProp(item[prop], temp);
+                    //    continue;
+                    //}
+                    //if (prop === 'EcoStatus') {
+                    //    //使用RIA后，直接从服务器组织owner数据，不需要从‘EcoStatus’中获取
+                    //    //iterateAry(item[prop].array, temp);
+                    //    continue;
+                    //}
+                    //if (prop === 'StreetId') {
+                    //    temp[resvDic[prop]] = streetDict[item[prop]];
+                    //    continue;
+                    //}
+                    //switch (typeof (item[prop])) {
+                    //    case 'object':
+                    //        {
+                    //            if (item[prop]) {
+                    //                temp[resvDic[prop]] = item[prop]['Name'] || item[prop];
+                    //            } else {
+                    //                temp[resvDic[prop]] = '';
+                    //            }
+                    //            break;
+                    //        }
+                    //    case 'boolean':
+                    //        {
+                    //            temp[resvDic[prop]] = item[prop] ? '是' : '否';
+                    //            break;
+                    //        }
+                    //        //将null和undefined转换为string.empty
+                    //    case 'undefined':
+                    //        {
+                    //            temp[resvDic[prop]] = '';
+                    //            break;
+                    //        }
+                    //    default:
+                    //        temp[resvDic[prop]] = item[prop];
+                    //}
                 }
             }
             return temp;
@@ -1254,6 +1497,7 @@
 
         queryMgr.doQuery = function (screen, panelId) {
             try {
+                window.timeStart = new Date();
                 if (panelId) {
                     var treeId = panel2Tree[panelId];
                     if (treeId) {
@@ -1294,7 +1538,7 @@
                     screen.openPara = openIds;
                     screen.recievePara = recvIds;
                     screen.operModePara = operIds;
-
+                    
 
                     //myapp.activeDataWorkspace.WCF_RIA_ServiceData
                     //    .CombindedStadiumQuery(placeStrs, streetIds, ownerIds, cateIds, openIds, recvIds, operIds)
@@ -1337,6 +1581,16 @@
                         var ecoStatusData = lsDataOrger.setData(combinedEco);
                         jqGridMgr.setData('#ecoStatusInfo', ecoStatusData);
                         util.upDatePivot('#ecoPivot', ecoStatusData);
+                        var timeNow = new Date();
+                        var timeSpan = timeNow - window.timeStart;
+                        var timeSec = Math.floor(timeSpan / 1000);
+                        notifier.showNotice({
+                            msg:  '<b>查询完毕！耗时约:</b>' + timeSec + '<b>秒</b>',
+                            type: 'success',
+                            position: 'center',
+                            //autohide: false
+                            opacity: 0.9
+                        });
                     });
                 });
 
@@ -1562,7 +1816,7 @@
                     jqGridMgr.setJqGridWithCustomBtns('#stadiumInfo', '#stadiumPager', stadiumConf);
 
                     //var ecoStatusConf = dataManager.getEcoStatusConf('#ecoStatusInfo', '#ecoStatusPager');
-                    var ecoStatusConf = dataManager.getEcoStautsJqConf('#ecoStatusInfo', '#ecoStatusPager',{colNames:colNamesEconomy,colModel:colConfEconomy});
+                    var ecoStatusConf = dataManager.getEcoStautsJqConf('#ecoStatusInfo', '#ecoStatusPager', { colNames: colNamesEconomy, colModel: colConfEconomy });
                     jqGridMgr.setJqGridWithCustomBtns('#ecoStatusInfo', '#ecoStatusPager', ecoStatusConf);
 
                     util.resizJqGrid();
@@ -1708,13 +1962,14 @@
                 //}
 
 
-                dataManager.loadCateTree('#cateTree');
                 dataManager.loadTree('#streetTree', 'StreetSet');
                 dataManager.loadTree('#ownerTree', 'OwnerSet');
                 dataManager.loadStaticTree('#placeTree', dataManager.getPlaceTreeData());
                 dataManager.loadStaticTree('#openingTree', dataManager.getOpenTreeData());
                 dataManager.loadStaticTree('#recieveTree', dataManager.getRecvTreeData());
                 dataManager.loadStaticTree('#operModeTree', dataManager.getOperModeTreeData());
+                dataManager.loadCateTree('#cateTree');
+
 
                 $('#lbSeachID').bind('click', function (e) {
                     queryManager.doQuery(screen);

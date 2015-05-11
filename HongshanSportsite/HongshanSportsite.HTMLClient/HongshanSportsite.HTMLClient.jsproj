@@ -67,6 +67,7 @@
     <Content Include="Content\msls-light-2.0.0.css" />
     <Content Include="Content\baiduAlbum.css" />
     <Content Include="Content\mygroup.css" />
+    <Content Include="Content\notifier.css" />
     <Content Include="Content\welcomePage.css" />
     <Content Include="default.htm" />
     <Content Include="Content\user-customization.css" />
@@ -801,6 +802,7 @@
     <Content Include="Scripts\myScripts\cluster.js" />
     <Content Include="Scripts\myScripts\groupMgr.js" />
     <Content Include="Scripts\myScripts\mainManager.js" />
+    <Content Include="Scripts\myScripts\mainManager.min.js" />
     <Content Include="Scripts\myScripts\slider.js" />
     <Content Include="Scripts\myScripts\welcomePage.js" />
     <Content Include="Scripts\winjs-1.0.js" />

@@ -1262,7 +1262,6 @@
     <Screen.Properties>
       <ScreenCollectionProperty
         Name="StadiumSet"
-        DisablePaging="True"
         PageSize="45"
         PropertyType="CollectionView$Stadium">
         <ScreenCollectionProperty.Query>

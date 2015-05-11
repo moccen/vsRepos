@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 SliderJS - jQuery Slider with CSS Transitions
 */
 var supports = (function () {
@@ -162,7 +162,7 @@ var slider = (function ($) {
 
 var albumMgr = (function () {
     var module = {
-        //eÊÇµã»÷µÄÏà²áÁ¬½Ó
+        //eæ˜¯ç‚¹å‡»çš„ç›¸å†Œè¿æ¥
         init: function (e) {
             var stadiumId = e.getAttribute('data-para');
             //$('#albumMask').css({ 'display': 'block' });
@@ -187,7 +187,14 @@ var albumMgr = (function () {
                         $('#albumMask').css({ 'display': 'none' });
                         $('#loadingAlbum').css({ 'display': 'none' });
                         //module.close();
-                        window.alert("no photo now !");
+                        //window.alert("no photo now !");
+                        notifier.showNotice({
+                            msg: '<b>å½“å‰åœºé¦†æ²¡æœ‰å›¾ç‰‡ï¼</b>',
+                            type: 'warning',
+                            position: 'center',
+                            //autohide: false,
+                            opacity: 0.9
+                        });
                     }
                 });
             //window.alert(stadiumName);
@@ -198,10 +205,12 @@ var albumMgr = (function () {
             }
             var pichtml = '';
             for (var i in imgdata) {
-                if (i.Photo) {
-                    pichtml += "<img src=\'data:image/svg;base64," + i.Photo + "\' class = \'slide\'/>";
-                } else {
-                    pichtml += "<img src=\'data:image/svg;base64," + imgdata[i].Photo + "\' class = \'slide\'/>";
+                if (imgdata.hasOwnProperty(i)) {
+                    if (i.Photo) {
+                        pichtml += "<img src=\'data:image/svg;base64," + i.Photo + "\' class = \'slide\'/>";
+                    } else {
+                        pichtml += "<img src=\'data:image/svg;base64," + imgdata[i].Photo + "\' class = \'slide\'/>";
+                    }
                 }
             }
             $('#picWrapper').html(pichtml);
